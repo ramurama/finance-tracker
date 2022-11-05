@@ -13,7 +13,7 @@ import { routes } from './routes'
 
 const Tab = createBottomTabNavigator()
 
-const iconSize = 24
+const iconSize = 30
 
 export const TabNavigator = () => {
   const { colors } = useTheme()
