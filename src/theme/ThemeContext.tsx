@@ -4,9 +4,17 @@ import { lightColors } from './colors'
 
 export type ThemeType = 'dark' | 'light'
 
+export type ColorType = {
+  background: string
+  secondaryBackground: string
+  text: string
+  tabIconActiveColor: string
+  tabIconInactiveColor: string
+}
+
 interface ThemeContextData {
   isDark: boolean
-  colors: {}
+  colors: ColorType
   setScheme: (scheme: ThemeType) => void
 }
 
