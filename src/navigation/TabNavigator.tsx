@@ -9,7 +9,7 @@ import { CreateTransactions } from '../screens/Transactions'
 import { useTheme } from '../theme'
 import { BooksNavigator } from './BooksNavigator'
 import { CategoriesNavigator } from './CategoriesNavigator'
-import { AddIcon } from './components/AddIcon'
+import { AddLogTabButton } from './components/AddLogTabButton'
 import { routes } from './routes'
 
 const Tab = createBottomTabNavigator()
@@ -32,6 +32,9 @@ export const TabNavigator = () => {
               [routes.REPORTS]: (
                 <MaterialIcons name="insert-chart" size={iconSize} color={iconColor} />
               ),
+              [routes.CREATE_TRANSACTION]: (
+                <MaterialIcons name="add" size={iconSize} color={colors.background} />
+              ),
               [routes.CATEGORIES_NAV]: (
                 <MaterialIcons name="category" size={iconSize} color={iconColor} />
               ),
@@ -45,7 +48,7 @@ export const TabNavigator = () => {
           ),
           tabBarButton: (props) => {
             if (route.name === routes.CREATE_TRANSACTION) {
-              return <AddIcon size={iconSize} {...props} />
+              return <AddLogTabButton {...props} />
             }
 
             return <TouchableOpacity {...props} />

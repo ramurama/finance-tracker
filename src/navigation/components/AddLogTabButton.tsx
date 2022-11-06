@@ -1,4 +1,3 @@
-import { MaterialIcons } from '@expo/vector-icons'
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs'
 import * as Haptics from 'expo-haptics'
 import { FC } from 'react'
@@ -6,9 +5,9 @@ import { StyleSheet, TouchableOpacity } from 'react-native'
 
 import { useTheme } from '../../theme'
 
-export type AddIconProps = { size: number } & BottomTabBarButtonProps
+export type AddLogTabButtonProps = BottomTabBarButtonProps
 
-export const AddIcon: FC<AddIconProps> = ({ size, onPress }) => {
+export const AddLogTabButton: FC<AddLogTabButtonProps> = ({ onPress, children }) => {
   const { colors } = useTheme()
 
   return (
@@ -22,7 +21,7 @@ export const AddIcon: FC<AddIconProps> = ({ size, onPress }) => {
           onPress(e)
         }
       }}>
-      <MaterialIcons name="add" size={size} color={colors.background} />
+      {children}
     </TouchableOpacity>
   )
 }
