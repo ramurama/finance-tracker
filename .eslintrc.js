@@ -20,6 +20,7 @@ module.exports = {
     'react-native/no-inline-styles': 'error',
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
+    'react/no-unstable-nested-components': 'off',
     complexity: ['warn', 10],
     'prefer-const': ['error'],
     '@typescript-eslint/no-unused-vars': 'error',
