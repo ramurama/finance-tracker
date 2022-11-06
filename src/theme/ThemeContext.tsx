@@ -8,6 +8,7 @@ export type ColorType = {
   background: string
   secondaryBackground: string
   text: string
+  secondaryText: string
   tabIconActiveColor: string
   tabIconInactiveColor: string
 }

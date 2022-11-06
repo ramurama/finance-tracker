@@ -1,14 +1,11 @@
-import { Text } from 'react-native'
-
 import { Container } from '../../components'
-import { useTheme } from '../../theme'
+import { BookItem } from './components/BookItem'
 
 export const BookList = () => {
-  const { colors } = useTheme()
-
   return (
     <Container>
-      <Text style={{ color: colors.text }}>Book List screen</Text>
+      <BookItem title="Germany" currency="EUR" onPress={() => {}} isDefault />
+      <BookItem title="India" currency="INR" onPress={() => {}} />
     </Container>
   )
 }

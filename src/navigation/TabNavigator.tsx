@@ -1,5 +1,4 @@
-/* eslint-disable react/no-unstable-nested-components */
-import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
@@ -28,7 +27,9 @@ export const TabNavigator = () => {
             const iconColor = focused ? colors.tabIconActiveColor : colors.tabIconInactiveColor
 
             return {
-              [routes.BOOKS_NAV]: <MaterialIcons name="book" size={iconSize} color={iconColor} />,
+              [routes.BOOKS_NAV]: (
+                <MaterialCommunityIcons name="bookshelf" size={iconSize} color={iconColor} />
+              ),
               [routes.REPORTS]: (
                 <MaterialIcons name="insert-chart" size={iconSize} color={iconColor} />
               ),
