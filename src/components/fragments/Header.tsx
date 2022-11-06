@@ -18,6 +18,7 @@ export const Header: FC<HeaderProps> = ({ title, iconRight, backButton }) => {
   const BackButton = () => (
     <TouchableOpacity
       style={styles.backButton}
+      activeOpacity={0.2}
       onPress={() => {
         navigation.goBack()
       }}>
