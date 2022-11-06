@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { MaterialIcons } from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import { Reports } from '../screens/Reports'
 import { Settings } from '../screens/Settings'
@@ -9,6 +9,7 @@ import { CreateTransactions } from '../screens/Transactions'
 import { useTheme } from '../theme'
 import { BooksNavigator } from './BooksNavigator'
 import { CategoriesNavigator } from './CategoriesNavigator'
+import { AddIcon } from './components/AddIcon'
 import { routes } from './routes'
 
 const Tab = createBottomTabNavigator()
@@ -31,9 +32,6 @@ export const TabNavigator = () => {
               [routes.REPORTS]: (
                 <MaterialIcons name="insert-chart" size={iconSize} color={iconColor} />
               ),
-              [routes.CREATE_TRANSACTION]: (
-                <MaterialIcons name="add" size={iconSize} color={iconColor} />
-              ),
               [routes.CATEGORIES_NAV]: (
                 <MaterialIcons name="category" size={iconSize} color={iconColor} />
               ),
@@ -45,6 +43,13 @@ export const TabNavigator = () => {
           tabBarBackground: () => (
             <View style={{ ...styles.background, backgroundColor: colors.background }} />
           ),
+          tabBarButton: (props) => {
+            if (route.name === routes.CREATE_TRANSACTION) {
+              return <AddIcon size={iconSize} {...props} />
+            }
+
+            return <TouchableOpacity {...props} />
+          },
           tabBarShowLabel: false,
           headerShown: false,
           tabBarStyle: { borderTopWidth: 0 },

@@ -24,6 +24,7 @@
     "dotenv": "^16.0.3",
     "expo": "~46.0.16",
     "expo-background-fetch": "~10.3.0",
+    "expo-haptics": "~11.3.0",
     "expo-localization": "~13.1.0",
     "expo-print": "~11.3.0",
     "expo-sharing": "~10.3.0",

@@ -1,17 +1,17 @@
 import { ColorType } from './ThemeContext'
 
 export const lightColors: ColorType = {
-  background: 'white',
+  background: '#f2f2f2',
   secondaryBackground: '#f2f2f2',
-  text: 'black',
-  tabIconActiveColor: '#1e1e1e',
-  tabIconInactiveColor: '#c5c7c5',
+  text: '#212121',
+  tabIconActiveColor: '#212121',
+  tabIconInactiveColor: '#bdbdbd',
 } as const
 
 export const darkColors: ColorType = {
-  background: 'black',
-  secondaryBackground: '#1e1e1e',
-  text: '#FFFFFF',
+  background: '#212121',
+  secondaryBackground: '#212121',
+  text: '#ffffff',
   tabIconActiveColor: '#f2f2f2',
-  tabIconInactiveColor: '#545454',
+  tabIconInactiveColor: '#616161',
 } as const
