@@ -41,7 +41,13 @@ export const BookItem: FC<BookItemProps> = ({ title, currency, isDefault, onPres
   )
 
   return (
-    <TouchableOpacity onPress={onPress} style={{ ...styles.container }}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={{
+        ...styles.container,
+        backgroundColor: colors.background,
+        shadowColor: colors.secondaryBackground,
+      }}>
       <Icon />
       <Content />
     </TouchableOpacity>
@@ -50,10 +56,16 @@ export const BookItem: FC<BookItemProps> = ({ title, currency, isDefault, onPres
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: 'gray',
-    padding: 10,
     flexDirection: 'row',
     height: 80,
+    padding: 10,
+    borderRadius: 15,
+    shadowOpacity: 0.5,
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    margin: 10,
   },
   iconView: {
     flex: 1,
