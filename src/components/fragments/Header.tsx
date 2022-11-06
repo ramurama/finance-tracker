@@ -15,21 +15,29 @@ export const Header: FC<HeaderProps> = ({ title, iconRight, backButton }) => {
   const { colors } = useTheme()
   const navigation = useNavigation()
 
+  const BackButton = () => (
+    <TouchableOpacity
+      style={styles.backButton}
+      onPress={() => {
+        navigation.goBack()
+      }}>
+      <MaterialIcons name="arrow-back-ios" color={colors.text} size={24} />
+    </TouchableOpacity>
+  )
+
+  const Title = () => (
+    <View style={styles.titleView}>
+      {title && <Text style={{ ...styles.title, color: colors.text }}>{title}</Text>}
+    </View>
+  )
+
+  const RightIcon = () => <View style={styles.iconContainer}>{iconRight}</View>
+
   return (
     <View style={{ ...styles.headerContainer, backgroundColor: colors.background }}>
-      {backButton && (
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => {
-            navigation.goBack()
-          }}>
-          <MaterialIcons name="arrow-back-ios" color={colors.text} size={24} />
-        </TouchableOpacity>
-      )}
-      <View style={styles.titleView}>
-        {title && <Text style={{ ...styles.title, color: colors.text }}>{title}</Text>}
-      </View>
-      {iconRight && <View style={styles.iconContainer}>{iconRight}</View>}
+      {backButton && <BackButton />}
+      {title && <Title />}
+      {iconRight && <RightIcon />}
     </View>
   )
 }
@@ -57,7 +65,7 @@ const styles = StyleSheet.create({
   backButton: {
     position: 'absolute',
     top: 0,
-    left: 15,
+    left: 10,
     height: 30,
     width: 30,
     justifyContent: 'center',
