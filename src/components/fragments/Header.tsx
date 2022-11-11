@@ -1,4 +1,4 @@
-import { MaterialIcons } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/core'
 import { FC, ReactNode } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
@@ -18,11 +18,10 @@ export const Header: FC<HeaderProps> = ({ title, iconRight, backButton }) => {
   const BackButton = () => (
     <TouchableOpacity
       style={styles.backButton}
-      activeOpacity={0.2}
       onPress={() => {
         navigation.goBack()
       }}>
-      <MaterialIcons name="arrow-back-ios" color={colors.text} size={24} />
+      <Ionicons name="ios-arrow-back" color={colors.text} size={24} />
     </TouchableOpacity>
   )
 
@@ -64,12 +63,12 @@ const styles = StyleSheet.create({
     right: 10,
   },
   backButton: {
-    position: 'absolute',
-    top: 0,
-    left: 10,
     height: 30,
-    width: 30,
+    width: 40,
+    paddingLeft: 10,
     justifyContent: 'center',
-    alignItems: 'flex-end',
+    alignItems: 'center',
+    position: 'absolute',
+    zIndex: 1,
   },
 })
