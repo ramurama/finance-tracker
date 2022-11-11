@@ -31,10 +31,14 @@ export const BookItem: FC<BookItemProps> = ({ title, currency, isDefault, onPres
   const Content = () => (
     <View style={styles.contentView}>
       <View style={styles.titleView}>
-        <Text style={{ ...styles.title, color: colors.text }}>{title}</Text>
-        <View style={styles.chipContainer}>
-          {isDefault && <Chip text={i18n.t('common.default')} />}
+        <View style={styles.titleContainer}>
+          <Text style={{ ...styles.title, color: colors.text }}>{title}</Text>
         </View>
+        {isDefault && (
+          <View style={styles.chipContainer}>
+            <Chip text={i18n.t('common.default')} />
+          </View>
+        )}
       </View>
       <Currency />
     </View>
@@ -94,6 +98,11 @@ const styles = StyleSheet.create({
   currency: {
     fontSize: 14,
     fontWeight: '400',
+  },
+  titleContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   chipContainer: {
     flex: 1,

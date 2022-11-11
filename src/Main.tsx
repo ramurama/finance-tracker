@@ -6,7 +6,7 @@ import { DBConnectionProvider } from './db/DBConnectionProvider'
 import { Navigation } from './navigation/Navigation'
 import { TabNavigator } from './navigation/TabNavigator'
 import { persistor, store } from './redux/store'
-import { defineBackgroundSyncTask } from './services/dataSync.service'
+import { defineBackgroundSyncTask } from './services'
 import { ThemeProvider } from './theme'
 
 defineBackgroundSyncTask()
