@@ -20,7 +20,7 @@ export const TabNavigator = () => {
 
   return (
     <Tab.Navigator
-      backBehavior="history"
+      backBehavior="none"
       screenOptions={({ route }) => {
         return {
           tabBarIcon: ({ focused }) => {
