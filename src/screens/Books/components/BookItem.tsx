@@ -2,7 +2,7 @@ import { FontAwesome } from '@expo/vector-icons'
 import { FC } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-import { Chip } from '../../../components/atoms/Chip'
+import { Chip } from '../../../components/atoms'
 import { i18n } from '../../../locales'
 import { useTheme } from '../../../theme'
 

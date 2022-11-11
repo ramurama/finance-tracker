@@ -1,4 +1,14 @@
-import { ColorType } from './ThemeContext'
+export type ColorType = {
+  background: string
+  secondaryBackground: string
+  text: string
+  secondaryText: string
+  tabIconActiveColor: string
+  tabIconInactiveColor: string
+  error: string
+  borderColor: string
+  inputFieldBgColor: string
+}
 
 export const lightColors: ColorType = {
   background: '#f5f5f5',
@@ -7,6 +17,9 @@ export const lightColors: ColorType = {
   secondaryText: '#616161',
   tabIconActiveColor: '#212121',
   tabIconInactiveColor: '#bdbdbd',
+  error: '#fc050d',
+  borderColor: '#bab8b8',
+  inputFieldBgColor: '#f5f5f5',
 } as const
 
 export const darkColors: ColorType = {
@@ -16,4 +29,7 @@ export const darkColors: ColorType = {
   secondaryText: '#e0e0e0',
   tabIconActiveColor: '#f2f2f2',
   tabIconInactiveColor: '#616161',
+  error: '#fc050d',
+  borderColor: '#525050',
+  inputFieldBgColor: '#1b1b1b',
 } as const
