@@ -5,10 +5,9 @@ import { useTheme } from '../../../theme'
 
 export type InputProps = {
   value: string
-  onChange: (text: string) => void
 } & TextInputProps
 
-export const Input: FC<InputProps> = ({ onChange, value, onBlur, editable = true, ...props }) => {
+export const Input: FC<InputProps> = ({ value, onBlur, editable = true, ...props }) => {
   const { colors } = useTheme()
 
   return (
@@ -21,7 +20,6 @@ export const Input: FC<InputProps> = ({ onChange, value, onBlur, editable = true
       }}
       placeholderTextColor={colors.tabIconInactiveColor}
       spellCheck={false}
-      onChangeText={(text) => onChange(text)}
       value={value}
       onBlur={onBlur}
       editable={editable}

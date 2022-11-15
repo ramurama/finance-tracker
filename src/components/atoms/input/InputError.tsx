@@ -5,13 +5,12 @@ import { useTheme } from '../../../theme'
 
 export type InputErrorProps = {
   error?: string | undefined
-  isErrorVisible?: boolean
 }
 
-export const InputError: FC<InputErrorProps> = ({ error = '', isErrorVisible = false }) => {
+export const InputError: FC<InputErrorProps> = ({ error = '' }) => {
   const { colors } = useTheme()
 
-  if (isErrorVisible) {
+  if (error.length > 0) {
     return <Text style={{ ...styles.error, color: colors.error }}>{error}</Text>
   }
 

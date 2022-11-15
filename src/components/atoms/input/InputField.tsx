@@ -7,17 +7,12 @@ import { Label, LabelProps } from './Label'
 
 export type InputFieldProps = {} & InputProps & InputErrorProps & LabelProps
 
-export const InputField: FC<InputFieldProps> = ({
-  label,
-  error,
-  isErrorVisible,
-  ...inputProps
-}) => {
+export const InputField: FC<InputFieldProps> = ({ label, error, ...inputProps }) => {
   return (
     <View style={styles.container}>
       <Label label={label} />
       <Input {...inputProps} />
-      <InputError error={error} isErrorVisible={isErrorVisible} />
+      <InputError error={error} />
     </View>
   )
 }
