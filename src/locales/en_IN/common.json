@@ -4,5 +4,7 @@
   "delete": "Delete",
   "edit": "Edit",
   "cancel": "Cancel",
-  "caution": "Caution!"
+  "caution": "Caution!",
+  "yes": "Yes",
+  "no": "No"
 }

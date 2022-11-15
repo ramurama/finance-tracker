@@ -37,14 +37,14 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
   const deleteBook = (bookId: number) => {
     Alert.alert(i18n.t('common.caution'), i18n.t('books.deleteBookConfirmation'), [
       {
-        text: 'Yes',
+        text: i18n.t('common.yes'),
         onPress: async () => {
           await bookService.deleteBook(bookId)
           await loadBooks()
         },
       },
       {
-        text: 'No',
+        text: i18n.t('common.no'),
       },
     ])
   }
