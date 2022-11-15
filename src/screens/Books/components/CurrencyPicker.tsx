@@ -21,7 +21,7 @@ export const CurrencyPicker: FC<CurrencyPickerProps> = ({ value, onChange, disab
       <Picker
         selectedValue={value}
         onValueChange={(itemValue) => {
-          onChange(itemValue, currency[itemValue]?.symbol)
+          onChange(itemValue, currency[itemValue]!.symbol)
         }}
         itemStyle={styles.pickerItem}
         enabled={!disabled}>
