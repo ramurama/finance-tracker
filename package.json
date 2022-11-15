@@ -15,6 +15,7 @@
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
     "@react-native-async-storage/async-storage": "^1.17.10",
+    "@react-native-picker/picker": "2.4.2",
     "@react-navigation/bottom-tabs": "^6.4.0",
     "@react-navigation/core": "^6.4.0",
     "@react-navigation/native": "^6.0.13",
@@ -24,6 +25,7 @@
     "dotenv": "^16.0.3",
     "expo": "~46.0.16",
     "expo-background-fetch": "~10.3.0",
+    "expo-checkbox": "~2.2.0",
     "expo-haptics": "~11.3.0",
     "expo-localization": "~13.1.0",
     "expo-print": "~11.3.0",
