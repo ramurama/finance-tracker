@@ -1,4 +1,5 @@
 import { Formik } from 'formik'
+import { StyleSheet } from 'react-native'
 import * as yup from 'yup'
 
 import { Container } from '../../components'
@@ -53,10 +54,23 @@ export const CreateBook = () => {
               color={values.isDefault ? 'grey' : ''}
             />
 
-            <Button label={i18n.t('books.create')} onPress={handleSubmit} disabled={!isValid} />
+            <Button
+              label={i18n.t('books.create')}
+              onPress={handleSubmit}
+              disabled={!isValid}
+              style={styles.createButton}
+            />
           </>
         )}
       </Formik>
     </Container>
   )
 }
+
+const styles = StyleSheet.create({
+  createButton: {
+    position: 'absolute',
+    bottom: 0,
+    width: '95%',
+  },
+})
