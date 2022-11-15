@@ -1,4 +1,5 @@
 import 'reflect-metadata'
+import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 
@@ -17,9 +18,11 @@ export default function Main() {
       <PersistGate persistor={persistor}>
         <ThemeProvider>
           <DBConnectionProvider>
-            <Navigation>
-              <TabNavigator />
-            </Navigation>
+            <ActionSheetProvider>
+              <Navigation>
+                <TabNavigator />
+              </Navigation>
+            </ActionSheetProvider>
           </DBConnectionProvider>
         </ThemeProvider>
       </PersistGate>

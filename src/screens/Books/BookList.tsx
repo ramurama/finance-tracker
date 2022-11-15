@@ -1,3 +1,4 @@
+import { useActionSheet } from '@expo/react-native-action-sheet'
 import { MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/core'
 import { FC, useEffect } from 'react'
@@ -23,6 +24,7 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
   const { colors } = useTheme()
   const navigation = useNavigation()
   const { bookService } = useDb()
+  const { showActionSheetWithOptions } = useActionSheet()
 
   useEffect(() => {
     const loadBooks = async () => {
@@ -33,22 +35,57 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
     loadBooks()
   }, [bookService, setBooks])
 
+  const longPressHandler = () => {
+    const options = [
+      i18n.t('common.delete'),
+      i18n.t('common.edit'),
+      i18n.t('books.defaultBook'),
+      i18n.t('common.cancel'),
+    ]
+    const destructiveButtonIndex = 0
+    const cancelButtonIndex = 3
+
+    showActionSheetWithOptions(
+      { options, cancelButtonIndex, destructiveButtonIndex },
+      (selectedIndex?: number) => {
+        switch (selectedIndex) {
+          case 1:
+            // edit
+            break
+
+          case 2:
+            // make default book
+            break
+
+          case destructiveButtonIndex:
+            // Delete
+            break
+
+          case cancelButtonIndex:
+            // Canceled
+            break
+          default:
+            break
+        }
+      },
+    )
+  }
+
   const Books = () => (
     <FlatList
       data={books}
       extraData={books}
       ListEmptyComponent={<Text>Empty</Text>}
-      renderItem={({ item }) => {
-        return (
-          <BookItem
-            key={item.id}
-            title={item.name}
-            currency={item.currencySymbol}
-            onPress={() => {}}
-            isDefault={Boolean(item.isDefault)}
-          />
-        )
-      }}
+      renderItem={({ item }) => (
+        <BookItem
+          key={item.id}
+          title={item.name}
+          currency={item.currencySymbol}
+          isDefault={Boolean(item.isDefault)}
+          onPress={() => {}}
+          onLongPress={longPressHandler}
+        />
+      )}
     />
   )
 

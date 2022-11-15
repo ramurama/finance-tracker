@@ -1,4 +1,7 @@
 {
   "pressMe": "என்னை அழுத்தவும் :)",
-  "default": "முன்னிருப்பு"
+  "default": "முன்னிருப்பு",
+  "delete": "Delete",
+  "edit": "Edit",
+  "cancel": "Cancel"
 }

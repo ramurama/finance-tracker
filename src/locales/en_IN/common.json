@@ -1,4 +1,7 @@
 {
   "pressMe": "Press me :)",
-  "default": "Default"
+  "default": "Default",
+  "delete": "Delete",
+  "edit": "Edit",
+  "cancel": "Cancel"
 }
