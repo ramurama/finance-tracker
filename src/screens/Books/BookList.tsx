@@ -2,7 +2,7 @@ import { useActionSheet } from '@expo/react-native-action-sheet'
 import { MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/core'
 import { FC, useCallback, useEffect } from 'react'
-import { FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { Alert, FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 
 import { Container } from '../../components'
@@ -34,9 +34,19 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
     loadBooks()
   }, [loadBooks])
 
-  const deleteBook = async (bookId: number) => {
-    await bookService.deleteBook(bookId)
-    await loadBooks()
+  const deleteBook = (bookId: number) => {
+    Alert.alert(i18n.t('common.caution'), i18n.t('books.deleteBookConfirmation'), [
+      {
+        text: 'Yes',
+        onPress: async () => {
+          await bookService.deleteBook(bookId)
+          await loadBooks()
+        },
+      },
+      {
+        text: 'No',
+      },
+    ])
   }
 
   const makeBookDefault = async (bookId: number) => {

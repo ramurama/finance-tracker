@@ -3,5 +3,6 @@
   "default": "Default",
   "delete": "Delete",
   "edit": "Edit",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "caution": "Caution!"
 }

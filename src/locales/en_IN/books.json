@@ -4,5 +4,6 @@
   "bookName": "Book Name",
   "create": "Create",
   "errorBookName": "Name is required for book.",
-  "defaultBook": "Make this book default"
+  "defaultBook": "Make this book default",
+  "deleteBookConfirmation": "Deleting book will also delete all of its transactions. Are you sure want to delete?"
 }
