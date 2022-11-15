@@ -26,7 +26,7 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
 
   useEffect(() => {
     const loadBooks = async () => {
-      // bookService.deleteAllBooks()
+      // bookService.deleteBook(15)
       setBooks(await bookService.getBooks())
     }
 

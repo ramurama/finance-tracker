@@ -30,8 +30,8 @@ const CreateBook: FC<CreateBookProps> = ({ setBooks }) => {
 
   const initialValues: ValuesType = {
     bookName: '',
-    currencyCode: '',
-    currencySymbol: '',
+    currencyCode: 'USD',
+    currencySymbol: '$',
     isDefault: false,
   }
 
