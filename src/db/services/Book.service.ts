@@ -20,6 +20,11 @@ export class BookService {
     book.currencySymbol = currencySymbol
     book.isDefault = Number(isDefault)
 
+    //reset isDefault in all the other books if isDefault for the current book is true
+    if (isDefault) {
+      await this.updateIsDefaultInBooks()
+    }
+
     return await this.repository.save(book)
   }
 
@@ -41,6 +46,11 @@ export class BookService {
     book.currencySymbol = currencySymbol
     book.isDefault = Number(isDefault)
 
+    //reset isDefault in all the other books if isDefault for the current book is true
+    if (isDefault) {
+      await this.updateIsDefaultInBooks()
+    }
+
     return this.repository.save(book)
   }
 
@@ -58,5 +68,21 @@ export class BookService {
 
   async deleteBook(id: number) {
     return await this.repository.delete({ id })
+  }
+
+  async updateIsDefaultInBooks() {
+    const book = await this.repository.findOne({
+      where: {
+        isDefault: 1,
+      },
+    })
+
+    if (!book) {
+      return
+    }
+
+    book.isDefault = 0
+
+    await this.repository.save(book)
   }
 }
