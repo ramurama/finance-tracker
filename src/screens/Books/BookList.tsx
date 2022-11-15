@@ -1,17 +1,56 @@
 import { MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/core'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { FC, useEffect } from 'react'
+import { FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { connect } from 'react-redux'
 
 import { Container } from '../../components'
 import { Header } from '../../components/fragments'
+import { BookEntity } from '../../db/entities/Book.entity'
+import { useDb } from '../../db/useDb'
 import { i18n } from '../../locales'
 import { routes } from '../../navigation/routes'
+import { setBooks as setBooksAction } from '../../redux/actions'
 import { useTheme } from '../../theme'
 import { BookItem } from './components/BookItem'
 
-export const BookList = () => {
+export type BooksListProps = {
+  books: BookEntity[]
+  setBooks: (books: BookEntity[]) => void
+}
+
+const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
   const { colors } = useTheme()
   const navigation = useNavigation()
+  const { bookService } = useDb()
+
+  useEffect(() => {
+    const loadBooks = async () => {
+      // bookService.deleteAllBooks()
+      setBooks(await bookService.getBooks())
+    }
+
+    loadBooks()
+  }, [bookService, setBooks])
+
+  const Books = () => (
+    <FlatList
+      data={books}
+      extraData={books}
+      ListEmptyComponent={<Text>Empty</Text>}
+      renderItem={({ item }) => {
+        return (
+          <BookItem
+            key={item.id}
+            title={item.name}
+            currency={item.currencySymbol}
+            onPress={() => {}}
+            isDefault={Boolean(item.isDefault)}
+          />
+        )
+      }}
+    />
+  )
 
   const AddBook = () => (
     <TouchableOpacity
@@ -26,11 +65,21 @@ export const BookList = () => {
   return (
     <Container>
       <Header title={i18n.t('books.books')} iconRight={<AddBook />} />
-      <BookItem title="Germany" currency="EUR" onPress={() => {}} isDefault />
-      <BookItem title="India" currency="INR" onPress={() => {}} />
+      <Books />
     </Container>
   )
 }
+
+const mapStateToProps = (state: any) => ({
+  books: state.books.list,
+})
+
+const mapDispatchToProps = (dispatch: (arg0: any) => void) => ({
+  dispatch,
+  setBooks: (books: BookEntity[]) => dispatch(setBooksAction(books)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookList)
 
 const styles = StyleSheet.create({
   iconTouchable: {
@@ -38,5 +87,6 @@ const styles = StyleSheet.create({
     width: 30,
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 1,
   },
 })

@@ -13,10 +13,12 @@ export class BookService {
   async createBook(createBookDto: CreateBookDto) {
     const book = new BookEntity()
 
-    const { name, currency } = createBookDto
+    const { name, currencyCode, currencySymbol, isDefault } = createBookDto
 
     book.name = name
-    book.currency = currency
+    book.currencyCode = currencyCode
+    book.currencySymbol = currencySymbol
+    book.isDefault = Number(isDefault)
 
     return await this.repository.save(book)
   }
@@ -32,10 +34,12 @@ export class BookService {
       return null
     }
 
-    const { name, currency } = updateBookDto
+    const { name, currencyCode, currencySymbol, isDefault } = updateBookDto
 
     book.name = name
-    book.currency = currency
+    book.currencyCode = currencyCode
+    book.currencySymbol = currencySymbol
+    book.isDefault = Number(isDefault)
 
     return this.repository.save(book)
   }

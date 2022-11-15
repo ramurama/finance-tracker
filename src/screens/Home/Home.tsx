@@ -2,11 +2,11 @@
 import { StyleSheet, View } from 'react-native'
 
 import { Container } from '../../components'
-// import { useDB } from '../../db/useDB'
+// import { useDb } from '../../db/useDb'
 import { HeaderHome } from './components/HeaderHome'
 
 export const Home = () => {
-  //   const { transactionService, categoryService, bookService } = useDB()
+  //   const { transactionService, categoryService, bookService } = useDb()
 
   //   useEffect(() => {
   //     ;

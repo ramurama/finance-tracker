@@ -1,7 +1,7 @@
 import { PURGE } from 'redux-persist/es/constants'
 
 import { UserInfo } from '../../types/UserInfo'
-import { SET_USER_INFO } from '../actions/userActions'
+import { SET_USER_INFO } from '../actions'
 import { ReduxAction } from '../actionType'
 
 type UserReducer = {

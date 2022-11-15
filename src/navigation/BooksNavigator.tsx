@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import { BookList, CreateBook } from '../screens/Books'
+import BookList from '../screens/Books/BookList'
+import CreateBook from '../screens/Books/CreateBook'
 import { routes } from './routes'
 
 const BooksStackNavigator = createNativeStackNavigator()

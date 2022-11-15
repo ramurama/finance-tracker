@@ -11,7 +11,13 @@ export class BookEntity {
   name!: string
 
   @Column({ type: 'text' })
-  currency!: string
+  currencyCode!: string
+
+  @Column({ type: 'text' })
+  currencySymbol!: string
+
+  @Column({ type: 'integer', nullable: false })
+  isDefault!: number
 
   @CreateDateColumn()
   created!: Date
