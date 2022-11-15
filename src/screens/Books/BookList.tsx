@@ -102,7 +102,7 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
           currency={item.currencySymbol}
           isDefault={Boolean(item.isDefault)}
           onPress={() => {}}
-          onLongPress={() => longPressHandler(item.id, item.isDefault)}
+          onLongPress={() => longPressHandler(item.id, Boolean(item.isDefault))}
         />
       )}
     />
