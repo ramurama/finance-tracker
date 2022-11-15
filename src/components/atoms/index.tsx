@@ -1,3 +1,4 @@
 export * from './Button'
 export * from './Chip'
-export * from './input/InputField'
+export * from './input'
+export * from './Label'

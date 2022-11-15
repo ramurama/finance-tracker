@@ -7,11 +7,9 @@ export const Container: FC<PropsWithChildren> = ({ children }) => {
   const { colors } = useTheme()
 
   return (
-    <>
-      <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
-        {children}
-      </SafeAreaView>
-    </>
+    <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
+      {children}
+    </SafeAreaView>
   )
 }
 
