@@ -1,4 +1,7 @@
 {
   "books": "Books",
-  "createBook": "Create Book"
+  "createBook": "Create Book",
+  "bookName": "Book Name",
+  "create": "Create",
+  "errorBookName": "Name is required for book."
 }
