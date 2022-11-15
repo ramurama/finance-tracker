@@ -1,7 +1,7 @@
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/core'
-import { FC, useEffect } from 'react'
+import { FC, useCallback, useEffect } from 'react'
 import { FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 
@@ -26,16 +26,25 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
   const { bookService } = useDb()
   const { showActionSheetWithOptions } = useActionSheet()
 
-  useEffect(() => {
-    const loadBooks = async () => {
-      // bookService.deleteBook(15)
-      setBooks(await bookService.getBooks())
-    }
-
-    loadBooks()
+  const loadBooks = useCallback(async () => {
+    setBooks(await bookService.getBooks())
   }, [bookService, setBooks])
 
-  const longPressHandler = () => {
+  useEffect(() => {
+    loadBooks()
+  }, [loadBooks])
+
+  const deleteBook = async (bookId: number) => {
+    await bookService.deleteBook(bookId)
+    await loadBooks()
+  }
+
+  const makeBookDefault = async (bookId: number) => {
+    await bookService.makeBookDefault(bookId)
+    await loadBooks()
+  }
+
+  const longPressHandler = (bookId: number, isDefaultBook: boolean) => {
     const options = [
       i18n.t('common.delete'),
       i18n.t('common.edit'),
@@ -44,26 +53,26 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
     ]
     const destructiveButtonIndex = 0
     const cancelButtonIndex = 3
+    const disabledButtonIndices = isDefaultBook ? [0] : []
 
     showActionSheetWithOptions(
-      { options, cancelButtonIndex, destructiveButtonIndex },
-      (selectedIndex?: number) => {
+      { options, cancelButtonIndex, destructiveButtonIndex, disabledButtonIndices },
+      async (selectedIndex?: number) => {
         switch (selectedIndex) {
           case 1:
             // edit
             break
 
           case 2:
-            // make default book
+            // make book default
+            await makeBookDefault(bookId)
             break
 
           case destructiveButtonIndex:
-            // Delete
+            // delete
+            await deleteBook(bookId)
             break
 
-          case cancelButtonIndex:
-            // Canceled
-            break
           default:
             break
         }
@@ -83,7 +92,7 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
           currency={item.currencySymbol}
           isDefault={Boolean(item.isDefault)}
           onPress={() => {}}
-          onLongPress={longPressHandler}
+          onLongPress={() => longPressHandler(item.id, item.isDefault)}
         />
       )}
     />

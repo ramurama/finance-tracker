@@ -85,4 +85,23 @@ export class BookService {
 
     await this.repository.save(book)
   }
+
+  async makeBookDefault(id: number) {
+    const book = await this.repository.findOne({
+      where: {
+        id,
+      },
+    })
+
+    if (!book) {
+      return
+    }
+
+    // reset the default book
+    await this.updateIsDefaultInBooks()
+
+    book.isDefault = 1
+
+    await this.repository.save(book)
+  }
 }
