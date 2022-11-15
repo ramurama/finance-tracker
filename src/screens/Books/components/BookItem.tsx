@@ -11,9 +11,16 @@ export type BookItemProps = {
   currency: string
   isDefault?: boolean
   onPress: () => void
+  onLongPress: () => void
 }
 
-export const BookItem: FC<BookItemProps> = ({ title, currency, isDefault, onPress }) => {
+export const BookItem: FC<BookItemProps> = ({
+  title,
+  currency,
+  isDefault,
+  onPress,
+  onLongPress,
+}) => {
   const { colors } = useTheme()
 
   const Icon = () => (
@@ -24,7 +31,7 @@ export const BookItem: FC<BookItemProps> = ({ title, currency, isDefault, onPres
 
   const Currency = () => (
     <View style={styles.currencyView}>
-      <Text style={{ ...styles.currency, color: colors.text }}>{currency}</Text>
+      <Text style={{ ...styles.currency, color: colors.greyText }}>{currency}</Text>
     </View>
   )
 
@@ -47,10 +54,11 @@ export const BookItem: FC<BookItemProps> = ({ title, currency, isDefault, onPres
   return (
     <TouchableOpacity
       onPress={onPress}
+      onLongPress={onLongPress}
       style={{
         ...styles.container,
         backgroundColor: colors.background,
-        shadowColor: colors.secondaryBackground,
+        borderBottomColor: colors.borderColor,
       }}>
       <Icon />
       <Content />
@@ -63,13 +71,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 80,
     padding: 10,
-    borderRadius: 15,
-    shadowOpacity: 0.5,
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    margin: 10,
+    // borderRadius: 15,
+    // shadowOpacity: 0.5,
+    // shadowOffset: {
+    //   width: 2,
+    //   height: 2,
+    // },
+    // margin: 10,
+    marginBottom: 10,
+    borderBottomWidth: 1,
   },
   iconView: {
     flex: 1,
@@ -96,7 +106,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   currency: {
-    fontSize: 14,
+    fontSize: 50,
     fontWeight: '400',
   },
   titleContainer: {

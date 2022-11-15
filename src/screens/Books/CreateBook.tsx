@@ -22,10 +22,11 @@ type ValuesType = {
 }
 
 export type CreateBookProps = {
+  books: BookEntity[]
   setBooks: (books: BookEntity[]) => void
 }
 
-const CreateBook: FC<CreateBookProps> = ({ setBooks }) => {
+const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
   const navigation = useNavigation()
 
   const initialValues: ValuesType = {
@@ -54,7 +55,7 @@ const CreateBook: FC<CreateBookProps> = ({ setBooks }) => {
       name: bookName.trim(),
       currencyCode,
       currencySymbol,
-      isDefault,
+      isDefault: books.length === 0 ? true : isDefault,
     })
 
     setBooks(await bookService.getBooks())
@@ -88,7 +89,7 @@ const CreateBook: FC<CreateBookProps> = ({ setBooks }) => {
           />
 
           <Checkbox
-            label="Default"
+            label={i18n.t('books.defaultBook')}
             value={values.isDefault}
             onValueChange={(value) => setFieldValue('isDefault', value)}
             color={values.isDefault ? 'grey' : ''}
@@ -113,12 +114,16 @@ const CreateBook: FC<CreateBookProps> = ({ setBooks }) => {
   )
 }
 
+const mapStateToProps = (state: any) => ({
+  books: state.books.list,
+})
+
 const mapDispatchToProps = (dispatch: (arg0: any) => void) => ({
   dispatch,
   setBooks: (books: BookEntity[]) => dispatch(setBooksAction(books)),
 })
 
-export default connect(null, mapDispatchToProps)(CreateBook)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateBook)
 
 const styles = StyleSheet.create({
   createButton: {

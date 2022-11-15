@@ -3,5 +3,6 @@
   "createBook": "புத்தகத்தை உருவாக்க",
   "bookName": "புத்தகத்தின் பெயர்",
   "create": "உருவாக்க",
-  "errorBookName": "புத்தகத்தின் பெயர் தேவை."
+  "errorBookName": "புத்தகத்தின் பெயர் தேவை.",
+  "defaultBook": "Make this book default"
 }

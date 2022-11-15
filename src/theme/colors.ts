@@ -3,6 +3,7 @@ export type ColorType = {
   secondaryBackground: string
   text: string
   secondaryText: string
+  greyText: string
   tabIconActiveColor: string
   tabIconInactiveColor: string
   error: string
@@ -20,6 +21,7 @@ export const lightColors: ColorType = {
   error: '#fc050d',
   borderColor: '#bab8b8',
   inputFieldBgColor: '#f5f5f5',
+  greyText: '#bdbdbd',
 } as const
 
 export const darkColors: ColorType = {
@@ -32,4 +34,5 @@ export const darkColors: ColorType = {
   error: '#fc050d',
   borderColor: '#525050',
   inputFieldBgColor: '#1b1b1b',
+  greyText: '#616161',
 } as const
