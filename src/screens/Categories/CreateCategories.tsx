@@ -1,9 +1,13 @@
-import { Text } from 'react-native'
+import { Container } from '../../components'
+import { Header } from '../../components/fragments'
+import { i18n } from '../../locales'
 
-export const CreateCategories = () => {
+const CreateCategories = () => {
   return (
-    <>
-      <Text>Create categories screen</Text>
-    </>
+    <Container>
+      <Header title={i18n.t('categories.createCategory')} backButton />
+    </Container>
   )
 }
+
+export default CreateCategories

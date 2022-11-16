@@ -1,14 +1,27 @@
-import { Text } from 'react-native'
+import { useNavigation } from '@react-navigation/core'
 
 import { Container } from '../../components'
-import { useTheme } from '../../theme'
+import { HeaderAddButton } from '../../components/atoms/HeaderAddButton'
+import { Header } from '../../components/fragments'
+import { i18n } from '../../locales'
+import { routes } from '../../navigation/routes'
 
-export const CategoriesList = () => {
-  const { colors } = useTheme()
+const CategoriesList = () => {
+  const { navigate } = useNavigation()
+
+  const AddCategories = () => (
+    <HeaderAddButton
+      onPress={() => {
+        navigate(routes.CREATE_CATEGORIES)
+      }}
+    />
+  )
 
   return (
     <Container>
-      <Text style={{ color: colors.text }}>Categories list screen</Text>
+      <Header title={i18n.t('categories.categories')} iconRight={<AddCategories />} />
     </Container>
   )
 }
+
+export default CategoriesList

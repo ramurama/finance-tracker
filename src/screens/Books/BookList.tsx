@@ -1,18 +1,17 @@
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/core'
 import { FC, useCallback, useEffect } from 'react'
-import { Alert, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
+import { Alert, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 
 import { Container } from '../../components'
+import { HeaderAddButton } from '../../components/atoms/HeaderAddButton'
 import { Header } from '../../components/fragments'
 import { BookEntity } from '../../db/entities/Book.entity'
 import { useDb } from '../../db/useDb'
 import { i18n } from '../../locales'
 import { routes } from '../../navigation/routes'
 import { setBooks as setBooksAction } from '../../redux/actions'
-import { useTheme } from '../../theme'
 import { BookItem } from './components/BookItem'
 import { EmptyBooks } from './components/EmptyBooks'
 
@@ -22,7 +21,6 @@ export type BooksListProps = {
 }
 
 const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
-  const { colors } = useTheme()
   const { navigate } = useNavigation()
   const { bookService } = useDb()
   const { showActionSheetWithOptions } = useActionSheet()
@@ -120,13 +118,11 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
   )
 
   const AddBook = () => (
-    <TouchableOpacity
-      style={styles.iconTouchable}
+    <HeaderAddButton
       onPress={() => {
         navigate(routes.CREATE_BOOK)
-      }}>
-      <MaterialIcons name="add" size={24} color={colors.text} />
-    </TouchableOpacity>
+      }}
+    />
   )
 
   return (
@@ -147,13 +143,3 @@ const mapDispatchToProps = (dispatch: (arg0: any) => void) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookList)
-
-const styles = StyleSheet.create({
-  iconTouchable: {
-    height: 30,
-    width: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 1,
-  },
-})
