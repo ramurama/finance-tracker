@@ -6,5 +6,5 @@
   "defaultBook": "Make this book default",
   "deleteBookConfirmation": "Deleting book will also delete all of its transactions. Are you sure want to delete?",
   "emptyBooks": "You don't have any books.",
-  "createBookMessage": "Click here to create a book."
+  "createBookMessage": "Tap to create a book."
 }

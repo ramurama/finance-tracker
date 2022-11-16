@@ -1,4 +1,6 @@
 {
   "categories": "Categories",
-  "createCategory": "Create Category"
+  "createCategory": "Create Category",
+  "emptyCategories": "You don't have any categories.",
+  "createCategoryMessage": "Tap to create a category."
 }
