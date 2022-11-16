@@ -25,7 +25,9 @@ export class BookService {
       await this.updateIsDefaultInBooks()
     }
 
-    return await this.repository.save(book)
+    await this.repository.save(book)
+
+    return await this.getBooks()
   }
 
   async updateBook(updateBookDto: UpdateBookDto) {
@@ -36,7 +38,7 @@ export class BookService {
     })
 
     if (!book) {
-      return null
+      return
     }
 
     const { name, currencyCode, currencySymbol, isDefault } = updateBookDto
@@ -51,11 +53,17 @@ export class BookService {
       await this.updateIsDefaultInBooks()
     }
 
-    return this.repository.save(book)
+    await this.repository.save(book)
+
+    return await this.getBooks()
   }
 
   async getBooks() {
-    return await this.repository.find()
+    return await this.repository.find({
+      order: {
+        isDefault: 'DESC',
+      },
+    })
   }
 
   async getBookById(id: number) {

@@ -6,5 +6,7 @@
   "cancel": "Cancel",
   "caution": "Caution!",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "create": "Create",
+  "update": "Update"
 }

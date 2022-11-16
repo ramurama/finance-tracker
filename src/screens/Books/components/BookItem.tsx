@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   currency: {
-    fontSize: 50,
+    fontSize: 30,
     fontWeight: '400',
   },
   titleContainer: {

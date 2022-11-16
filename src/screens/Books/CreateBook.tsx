@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation, useRoute } from '@react-navigation/core'
 import { Formik } from 'formik'
 import { FC } from 'react'
 import { StyleSheet } from 'react-native'
@@ -12,6 +12,7 @@ import { BookEntity } from '../../db/entities/Book.entity'
 import { useDb } from '../../db/useDb'
 import { i18n } from '../../locales'
 import { setBooks as setBooksAction } from '../../redux/actions'
+import { Book } from '../../types'
 import { CurrencyPicker } from './components/CurrencyPicker'
 
 type ValuesType = {
@@ -28,12 +29,24 @@ export type CreateBookProps = {
 
 const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
   const { goBack } = useNavigation()
+  const { params } = useRoute()
 
   const initialValues: ValuesType = {
     bookName: '',
     currencyCode: 'USD',
     currencySymbol: '$',
     isDefault: false,
+  }
+
+  const isEditMode = params && params.book && params.book.id
+
+  if (isEditMode) {
+    const { name, currencyCode, currencySymbol, isDefault } = params.book as Book
+
+    initialValues.bookName = name
+    initialValues.currencyCode = currencyCode
+    initialValues.currencySymbol = currencySymbol
+    initialValues.isDefault = isDefault
   }
 
   const bookValidationSchema = yup.object().shape({
@@ -51,14 +64,30 @@ const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
     currencySymbol,
     isDefault,
   }: ValuesType) => {
-    await bookService.createBook({
-      name: bookName.trim(),
-      currencyCode,
-      currencySymbol,
-      isDefault: books.length === 0 ? true : isDefault,
-    })
+    let booksList: BookEntity[] | undefined
 
-    setBooks(await bookService.getBooks())
+    const name = bookName.trim()
+
+    if (isEditMode) {
+      booksList = await bookService.updateBook({
+        id: params.book.id,
+        name,
+        currencyCode,
+        currencySymbol,
+        isDefault,
+      })
+    } else {
+      booksList = await bookService.createBook({
+        name,
+        currencyCode,
+        currencySymbol,
+        isDefault: books.length === 0 ? true : isDefault,
+      })
+    }
+
+    if (booksList) {
+      setBooks(booksList)
+    }
 
     goBack()
   }
@@ -93,10 +122,11 @@ const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
             value={values.isDefault}
             onValueChange={(value) => setFieldValue('isDefault', value)}
             color={values.isDefault ? 'grey' : ''}
+            disabled={values.isDefault && isEditMode}
           />
 
           <Button
-            label={i18n.t('books.create')}
+            label={isEditMode ? i18n.t('common.update') : i18n.t('common.create')}
             onPress={handleSubmit}
             disabled={!isValid}
             style={styles.createButton}

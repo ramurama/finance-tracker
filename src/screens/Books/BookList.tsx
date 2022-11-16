@@ -55,7 +55,19 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
     await loadBooks()
   }
 
-  const longPressHandler = (bookId: number, isDefaultBook: boolean) => {
+  const goToEditMode = (book: BookEntity) => {
+    navigate(routes.CREATE_BOOK, {
+      book: {
+        id: book.id,
+        name: book.name,
+        currencyCode: book.currencyCode,
+        currencySymbol: book.currencySymbol,
+        isDefault: Boolean(book.isDefault),
+      },
+    })
+  }
+
+  const longPressHandler = (bookId: number, book: BookEntity) => {
     const options = [
       i18n.t('common.delete'),
       i18n.t('common.edit'),
@@ -64,23 +76,21 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
     ]
     const destructiveButtonIndex = 0
     const cancelButtonIndex = 3
-    const disabledButtonIndices = isDefaultBook ? [0] : []
+    const disabledButtonIndices = book.isDefault ? [0] : []
 
     showActionSheetWithOptions(
       { options, cancelButtonIndex, destructiveButtonIndex, disabledButtonIndices },
       async (selectedIndex?: number) => {
         switch (selectedIndex) {
           case 1:
-            // edit
+            goToEditMode(book)
             break
 
           case 2:
-            // make book default
             await makeBookDefault(bookId)
             break
 
           case destructiveButtonIndex:
-            // delete
             await deleteBook(bookId)
             break
 
@@ -103,7 +113,7 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
           currency={item.currencySymbol}
           isDefault={Boolean(item.isDefault)}
           onPress={() => {}}
-          onLongPress={() => longPressHandler(item.id, Boolean(item.isDefault))}
+          onLongPress={() => longPressHandler(item.id, item)}
         />
       )}
     />
