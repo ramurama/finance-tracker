@@ -13,13 +13,13 @@ interface HeaderProps {
 
 export const Header: FC<HeaderProps> = ({ title, iconRight, backButton }) => {
   const { colors } = useTheme()
-  const navigation = useNavigation()
+  const { goBack } = useNavigation()
 
   const BackButton = () => (
     <TouchableOpacity
       style={styles.backButton}
       onPress={() => {
-        navigation.goBack()
+        goBack()
       }}>
       <Ionicons name="ios-arrow-back" color={colors.text} size={24} />
     </TouchableOpacity>

@@ -27,7 +27,7 @@ export type CreateBookProps = {
 }
 
 const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
-  const navigation = useNavigation()
+  const { goBack } = useNavigation()
 
   const initialValues: ValuesType = {
     bookName: '',
@@ -60,7 +60,7 @@ const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
 
     setBooks(await bookService.getBooks())
 
-    navigation.goBack()
+    goBack()
   }
 
   const BookForm = () => (

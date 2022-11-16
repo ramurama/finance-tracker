@@ -2,7 +2,7 @@ import { useActionSheet } from '@expo/react-native-action-sheet'
 import { MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/core'
 import { FC, useCallback, useEffect } from 'react'
-import { Alert, FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { Alert, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 
 import { Container } from '../../components'
@@ -14,6 +14,7 @@ import { routes } from '../../navigation/routes'
 import { setBooks as setBooksAction } from '../../redux/actions'
 import { useTheme } from '../../theme'
 import { BookItem } from './components/BookItem'
+import { EmptyBooks } from './components/EmptyBooks'
 
 export type BooksListProps = {
   books: BookEntity[]
@@ -22,7 +23,7 @@ export type BooksListProps = {
 
 const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
   const { colors } = useTheme()
-  const navigation = useNavigation()
+  const { navigate } = useNavigation()
   const { bookService } = useDb()
   const { showActionSheetWithOptions } = useActionSheet()
 
@@ -94,7 +95,7 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
     <FlatList
       data={books}
       extraData={books}
-      ListEmptyComponent={<Text>Empty</Text>}
+      ListEmptyComponent={<EmptyBooks />}
       renderItem={({ item }) => (
         <BookItem
           key={item.id}
@@ -112,7 +113,7 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
     <TouchableOpacity
       style={styles.iconTouchable}
       onPress={() => {
-        navigation.navigate(routes.CREATE_BOOK)
+        navigate(routes.CREATE_BOOK)
       }}>
       <MaterialIcons name="add" size={24} color={colors.text} />
     </TouchableOpacity>
