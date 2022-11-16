@@ -19,14 +19,16 @@ export class CategoryService {
     category.name = name
     category.type = type
 
-    return await this.repository.save(category)
+    await this.repository.save(category)
+
+    return await this.getCategories()
   }
 
   async updateCategory(updateCategoryDto: UpdateCategoryDto) {
     const category = await this.repository.findOne({ where: { id: updateCategoryDto.id } })
 
     if (!category) {
-      return null
+      return
     }
 
     const { name, type } = updateCategoryDto
@@ -34,7 +36,9 @@ export class CategoryService {
     category.name = name
     category.type = type
 
-    return await this.repository.save(category)
+    await this.repository.save(category)
+
+    return await this.getCategories()
   }
 
   async getCategories(type?: TransactionType) {

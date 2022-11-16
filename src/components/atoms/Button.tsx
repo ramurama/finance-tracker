@@ -6,14 +6,21 @@ import { useTheme } from '../../theme'
 export type ButtonProps = {
   label: string
   style?: FlexStyle
+  bottom?: boolean
+  fullWidth?: boolean
 } & TouchableOpacityProps
 
-export const Button: FC<ButtonProps> = ({ label, style, ...props }) => {
+export const Button: FC<ButtonProps> = ({ label, style, bottom, fullWidth, ...props }) => {
   const { colors } = useTheme()
 
   return (
     <TouchableOpacity
-      style={[{ ...styles.button, backgroundColor: colors.secondaryText }, style]}
+      style={[
+        { ...styles.button, backgroundColor: colors.secondaryText },
+        bottom ? styles.bottom : {},
+        fullWidth ? styles.fullWidth : {},
+        style,
+      ]}
       {...props}>
       <Text style={{ ...styles.label, color: colors.background }}>{label}</Text>
     </TouchableOpacity>
@@ -32,5 +39,12 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: '600',
+  },
+  bottom: {
+    position: 'absolute',
+    bottom: 0,
+  },
+  fullWidth: {
+    width: '95%',
   },
 })

@@ -1,7 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/core'
 import { Formik } from 'formik'
 import { FC } from 'react'
-import { StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import * as yup from 'yup'
 
@@ -129,7 +128,8 @@ const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
             label={isEditMode ? i18n.t('common.update') : i18n.t('common.create')}
             onPress={handleSubmit}
             disabled={!isValid}
-            style={styles.createButton}
+            bottom
+            fullWidth
           />
         </>
       )}
@@ -154,11 +154,3 @@ const mapDispatchToProps = (dispatch: (arg0: any) => void) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateBook)
-
-const styles = StyleSheet.create({
-  createButton: {
-    position: 'absolute',
-    bottom: 0,
-    width: '95%',
-  },
-})

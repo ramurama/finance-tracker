@@ -2,5 +2,7 @@
   "categories": "Categories",
   "createCategory": "Create Category",
   "emptyCategories": "You don't have any categories.",
-  "createCategoryMessage": "Tap to create a category."
+  "createCategoryMessage": "Tap to create a category.",
+  "categoryName": "Category Name",
+  "errorCategoryName": "Category name is required."
 }
