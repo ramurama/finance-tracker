@@ -1,14 +1,43 @@
-import { Text } from 'react-native'
+import { FC } from 'react'
+import { ScrollView, StyleSheet } from 'react-native'
+import { connect } from 'react-redux'
 
 import { Container } from '../../components'
-import { useTheme } from '../../theme'
+import { Header } from '../../components/molecules'
+import { i18n } from '../../locales'
+import { setTheme as setThemeAction } from '../../redux/actions'
+import { ThemeType } from '../../theme/ThemeContext'
+import { AppearanceItem } from './components/AppearanceItem'
 
-export const Settings = () => {
-  const { colors } = useTheme()
+export type SettingsProps = {
+  theme: ThemeType
+  setTheme: (theme: ThemeType) => void
+}
 
+const Settings: FC<SettingsProps> = ({ theme, setTheme }) => {
   return (
     <Container>
-      <Text style={{ color: colors.foreground }}>Settings screen</Text>
+      <Header title={i18n.t('settings.settings')} />
+      <ScrollView style={styles.scrollContainer}>
+        <AppearanceItem theme={theme} setTheme={setTheme} />
+      </ScrollView>
     </Container>
   )
 }
+
+const mapStateToProps = (state: any) => ({
+  theme: state.settings.theme,
+})
+
+const mapDispatchToProps = (dispatch: (arg0: any) => void) => ({
+  dispatch,
+  setTheme: (theme: ThemeType) => dispatch(setThemeAction(theme)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings)
+
+const styles = StyleSheet.create({
+  scrollContainer: {
+    flex: 1,
+  },
+})

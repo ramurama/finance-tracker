@@ -3,13 +3,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import { Reports } from '../screens/Reports'
-import { Settings } from '../screens/Settings'
 import { CreateTransactions } from '../screens/Transactions'
 import { useTheme } from '../theme'
 import { BooksNavigator } from './BooksNavigator'
 import { CategoriesNavigator } from './CategoriesNavigator'
 import { AddLogTabButton } from './components/AddLogTabButton'
 import { routes } from './routes'
+import { SettingsNavigator } from './SettingsNavigator'
 
 const Tab = createBottomTabNavigator()
 
@@ -39,7 +39,7 @@ export const TabNavigator = () => {
               [routes.CATEGORIES_NAV]: (
                 <MaterialIcons name="category" size={iconSize} color={iconColor} />
               ),
-              [routes.SETTINGS]: (
+              [routes.SETTINGS_NAV]: (
                 <MaterialIcons name="settings" size={iconSize} color={iconColor} />
               ),
             }[route.name]
@@ -63,7 +63,7 @@ export const TabNavigator = () => {
       <Tab.Screen name={routes.REPORTS} component={Reports} />
       <Tab.Screen name={routes.CREATE_TRANSACTION} component={CreateTransactions} />
       <Tab.Screen name={routes.CATEGORIES_NAV} component={CategoriesNavigator} />
-      <Tab.Screen name={routes.SETTINGS} component={Settings} />
+      <Tab.Screen name={routes.SETTINGS_NAV} component={SettingsNavigator} />
     </Tab.Navigator>
   )
 }

@@ -16,6 +16,7 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     isDark,
     colors: isDark ? darkColors : lightColors,
     setScheme: (scheme: ThemeType) => setIsDark(scheme === 'dark'),
+    systemScheme: colorScheme,
   }
 
   return <ThemeContext.Provider value={defaultTheme}>{children}</ThemeContext.Provider>

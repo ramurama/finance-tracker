@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 
 import { DBConnectionProvider } from './db/DBConnectionProvider'
-import { Navigation } from './navigation/Navigation'
+import Navigation from './navigation/Navigation'
 import { TabNavigator } from './navigation/TabNavigator'
 import { persistor, store } from './redux/store'
 import { defineBackgroundSyncTask } from './services/dataSync.service'

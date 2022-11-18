@@ -6,7 +6,7 @@ export const routes = {
   CATEGORIES_NAV: 'Categories',
   CATEGORIES_LIST: 'Categories List',
   CREATE_CATEGORY: 'Create Categories',
+  SETTINGS_NAV: 'Settings List',
   SETTINGS: 'Settings',
-
   CREATE_BOOK: 'Create Book',
 }

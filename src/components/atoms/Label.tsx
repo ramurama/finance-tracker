@@ -5,12 +5,17 @@ import { useTheme } from '../../theme'
 
 export type LabelProps = {
   label: string
+  bigFont?: boolean
 }
 
-export const Label: FC<LabelProps> = ({ label }) => {
+export const Label: FC<LabelProps> = ({ label, bigFont }) => {
   const { colors } = useTheme()
 
-  return <Text style={{ ...styles.label, color: colors.secondaryText }}>{label}</Text>
+  return (
+    <Text style={[{ ...styles.label, color: colors.secondaryText }, bigFont ? styles.bigFont : {}]}>
+      {label}
+    </Text>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -19,5 +24,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 8,
     marginTop: 12,
+  },
+  bigFont: {
+    fontSize: 16,
   },
 })
