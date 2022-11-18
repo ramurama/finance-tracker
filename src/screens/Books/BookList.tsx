@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 
 import { Container } from '../../components'
 import { HeaderAddButton } from '../../components/atoms'
-import { Header } from '../../components/fragments'
+import { Header } from '../../components/molecules'
 import { BookEntity } from '../../db/entities/Book.entity'
 import { useDb } from '../../db/useDb'
 import { i18n } from '../../locales'

@@ -8,5 +8,7 @@
   "yes": "Yes",
   "no": "No",
   "create": "Create",
-  "update": "Update"
+  "update": "Update",
+  "expense": "Expense",
+  "income": "Income"
 }

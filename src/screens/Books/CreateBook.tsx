@@ -6,7 +6,7 @@ import * as yup from 'yup'
 
 import { Container } from '../../components'
 import { Button } from '../../components/atoms'
-import { Checkbox, Header, InputField } from '../../components/fragments'
+import { Checkbox, Header, InputField } from '../../components/molecules'
 import { BookEntity } from '../../db/entities/Book.entity'
 import { useDb } from '../../db/useDb'
 import { i18n } from '../../locales'

@@ -4,5 +4,7 @@
   "emptyCategories": "You don't have any categories.",
   "createCategoryMessage": "Tap to create a category.",
   "categoryName": "Category Name",
-  "errorCategoryName": "Category name is required."
+  "errorCategoryName": "Category name is required.",
+  "type": "Type",
+  "errorEmoji": "Please select an emoji."
 }

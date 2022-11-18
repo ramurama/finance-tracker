@@ -1,14 +1,10 @@
 import { FC } from 'react'
 import { StyleSheet, View } from 'react-native'
 
-import { Label, LabelProps } from '../../../components/atoms'
-import {
-  RadioButtonGroup,
-  RadioButtonGroupProps,
-  RadioButtonItem,
-} from '../../../components/fragments'
-import { i18n } from '../../../locales'
-import { useTheme } from '../../../theme'
+import { i18n } from '../../locales'
+import { useTheme } from '../../theme'
+import { Label, LabelProps } from '../atoms'
+import { RadioButtonGroup, RadioButtonGroupProps, RadioButtonItem } from '../molecules'
 
 export type TransactionTypeRadioButtonProps = Pick<
   RadioButtonGroupProps,

@@ -5,4 +5,5 @@ export interface Category extends MetaData {
   id: number
   name: string
   type: TransactionType
+  emoji: string
 }

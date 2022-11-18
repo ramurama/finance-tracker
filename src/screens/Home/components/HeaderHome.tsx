@@ -1,4 +1,4 @@
-import { Header } from '../../../components/fragments'
+import { Header } from '../../../components/molecules'
 import { i18n } from '../../../locales'
 
 export const HeaderHome = () => {
