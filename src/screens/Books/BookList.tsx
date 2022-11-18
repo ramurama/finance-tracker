@@ -65,7 +65,7 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
     })
   }
 
-  const longPressHandler = (bookId: number, book: BookEntity) => {
+  const longPressHandler = (book: BookEntity) => {
     const options = [
       i18n.t('common.delete'),
       i18n.t('common.edit'),
@@ -85,11 +85,11 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
             break
 
           case 2:
-            await makeBookDefault(bookId)
+            await makeBookDefault(book.id)
             break
 
           case destructiveButtonIndex:
-            await deleteBook(bookId)
+            await deleteBook(book.id)
             break
 
           default:
@@ -111,7 +111,7 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
           currency={item.currencySymbol}
           isDefault={Boolean(item.isDefault)}
           onPress={() => {}}
-          onLongPress={() => longPressHandler(item.id, item)}
+          onLongPress={() => longPressHandler(item)}
         />
       )}
     />

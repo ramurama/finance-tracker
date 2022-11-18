@@ -106,6 +106,7 @@ const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
             onChangeText={handleChange('bookName')}
             onBlur={handleBlur('bookName')}
             keyboardType="default"
+            autoCapitalize="words"
           />
 
           <CurrencyPicker

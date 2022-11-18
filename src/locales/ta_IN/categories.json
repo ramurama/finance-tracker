@@ -6,5 +6,6 @@
   "categoryName": "Category Name",
   "errorCategoryName": "Category name is required.",
   "type": "Type",
-  "errorEmoji": "Please select an emoji."
+  "errorEmoji": "Please select an emoji.",
+  "deleteCategoryConfirmation": "This can't be undone. Deleting a category will also delete all of its transactions. Are you sure want to delete?"
 }

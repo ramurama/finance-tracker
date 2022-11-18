@@ -16,7 +16,7 @@ export const EmptyCategories = () => {
       caption={i18n.t('categories.emptyCategories')}
       suggestion={i18n.t('categories.createCategoryMessage')}
       onPress={() => {
-        navigate(routes.CREATE_CATEGORIES)
+        navigate(routes.CREATE_CATEGORY)
       }}
     />
   )

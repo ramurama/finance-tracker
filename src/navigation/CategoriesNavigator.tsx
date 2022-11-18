@@ -9,6 +9,6 @@ const CategoriesStackNavigator = createNativeStackNavigator()
 export const CategoriesNavigator = () => (
   <CategoriesStackNavigator.Navigator screenOptions={{ headerShown: false }}>
     <CategoriesStackNavigator.Screen name={routes.CATEGORIES_LIST} component={CategoriesList} />
-    <CategoriesStackNavigator.Screen name={routes.CREATE_CATEGORIES} component={CreateCategories} />
+    <CategoriesStackNavigator.Screen name={routes.CREATE_CATEGORY} component={CreateCategories} />
   </CategoriesStackNavigator.Navigator>
 )

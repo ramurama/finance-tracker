@@ -44,15 +44,20 @@ export class CategoryService {
   }
 
   async getCategories(type?: TransactionType) {
+    let where = {}
+
     if (type) {
-      return await this.repository.find({
-        where: {
-          type,
-        },
-      })
+      where = {
+        type,
+      }
     }
 
-    return await this.repository.find()
+    return await this.repository.find({
+      order: {
+        name: 'ASC',
+      },
+      where,
+    })
   }
 
   async getCategoryById(id: number) {

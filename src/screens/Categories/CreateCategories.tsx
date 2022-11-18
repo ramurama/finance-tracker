@@ -13,7 +13,7 @@ import { CategoryEntity } from '../../db/entities/Category.entity'
 import { useDb } from '../../db/useDb'
 import { i18n } from '../../locales'
 import { setCategories as setCategoriesAction } from '../../redux/actions'
-import { TransactionType } from '../../types'
+import { Category, TransactionType } from '../../types'
 
 type ValuesType = {
   categoryName: string
@@ -36,13 +36,21 @@ const CreateCategories: FC<CategoriesListProps> = ({ setCategories }) => {
     emoji: '',
   }
 
+  const isEditMode = params && params.category && params.category.id
+
+  if (isEditMode) {
+    const { name, type, emoji } = params.category as Category
+
+    initialValues.categoryName = name
+    initialValues.type = type
+    initialValues.emoji = emoji
+  }
+
   const categoriesValidationSchema = yup.object().shape({
     categoryName: yup.string().required(i18n.t('categories.errorCategoryName')),
-    type: yup.number().default(2).required(),
+    type: yup.number().required(),
     emoji: yup.string().required(i18n.t('categories.errorEmoji')),
   })
-
-  const isEditMode = params && params.category && params.category.id
 
   const submitHandler = async ({ categoryName, type, emoji }: ValuesType) => {
     let categoriesList: CategoryEntity[] | undefined
@@ -86,6 +94,7 @@ const CreateCategories: FC<CategoriesListProps> = ({ setCategories }) => {
             onChangeText={handleChange('categoryName')}
             onBlur={handleBlur('categoryName')}
             keyboardType="default"
+            autoCapitalize="words"
           />
 
           <TransactionTypeRadioButton

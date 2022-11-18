@@ -4,7 +4,7 @@
   "bookName": "புத்தகத்தின் பெயர்",
   "errorBookName": "புத்தகத்தின் பெயர் தேவை.",
   "defaultBook": "Make this book default",
-  "deleteBookConfirmation": "Deleting book will also delete all of its transactions. Are you sure want to delete?",
+  "deleteBookConfirmation": "This can't be undone. Deleting a book will also delete all of its transactions. Are you sure want to delete?",
   "emptyBooks": "You don't have any books.",
   "createBookMessage": "Tap to create a book."
 }

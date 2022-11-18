@@ -1,6 +1,7 @@
+import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/core'
 import { FC, useCallback, useEffect } from 'react'
-import { FlatList } from 'react-native'
+import { Alert, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 
 import { Container } from '../../components'
@@ -11,6 +12,8 @@ import { useDb } from '../../db/useDb'
 import { i18n } from '../../locales'
 import { routes } from '../../navigation/routes'
 import { setCategories as setCategoriesAction } from '../../redux/actions'
+import { TransactionType } from '../../types'
+import { CategoryItem } from './components/CategoryItem'
 import { EmptyCategories } from './components/EmptyCategories'
 
 export type CategoriesListProps = {
@@ -21,6 +24,7 @@ export type CategoriesListProps = {
 const CategoriesList: FC<CategoriesListProps> = ({ categories, setCategories }) => {
   const { navigate } = useNavigation()
   const { categoryService } = useDb()
+  const { showActionSheetWithOptions } = useActionSheet()
 
   const loadCategories = useCallback(async () => {
     setCategories(await categoryService.getCategories())
@@ -30,23 +34,77 @@ const CategoriesList: FC<CategoriesListProps> = ({ categories, setCategories }) 
     loadCategories()
   }, [loadCategories])
 
+  const goToEditMode = (category: CategoryEntity) => {
+    navigate(routes.CREATE_CATEGORY, {
+      category: {
+        id: category.id,
+        name: category.name,
+        emoji: category.emoji,
+        type: category.type,
+      },
+    })
+  }
+
+  const deleteCategory = (categoryId: number) => {
+    Alert.alert(i18n.t('common.caution'), i18n.t('categories.deleteCategoryConfirmation'), [
+      {
+        text: i18n.t('common.yes'),
+        onPress: async () => {
+          await categoryService.deleteCategory(categoryId)
+          await loadCategories()
+        },
+      },
+      {
+        text: i18n.t('common.no'),
+      },
+    ])
+  }
+
+  const longPressHandler = (category: CategoryEntity) => {
+    const options = [i18n.t('common.delete'), i18n.t('common.edit'), i18n.t('common.cancel')]
+    const destructiveButtonIndex = 0
+    const cancelButtonIndex = 2
+
+    showActionSheetWithOptions(
+      { options, cancelButtonIndex, destructiveButtonIndex },
+      async (selectedIndex?: number) => {
+        switch (selectedIndex) {
+          case 1:
+            goToEditMode(category)
+            break
+
+          case destructiveButtonIndex:
+            await deleteCategory(category.id)
+            break
+
+          default:
+            break
+        }
+      },
+    )
+  }
+
   const Categories = () => (
     <FlatList
       data={categories}
       extraData={categories}
       ListEmptyComponent={<EmptyCategories />}
-      renderItem={({ item }) => {
-        console.log(item)
-
-        return <></>
-      }}
+      renderItem={({ item }) => (
+        <CategoryItem
+          name={item.name}
+          type={item.type as TransactionType}
+          emoji={item.emoji}
+          onPress={() => {}}
+          onLongPress={() => longPressHandler(item)}
+        />
+      )}
     />
   )
 
   const AddCategories = () => (
     <HeaderAddButton
       onPress={() => {
-        navigate(routes.CREATE_CATEGORIES)
+        navigate(routes.CREATE_CATEGORY)
       }}
     />
   )

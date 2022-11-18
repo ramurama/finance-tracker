@@ -5,7 +5,7 @@ export const routes = {
   CREATE_TRANSACTION: 'Add Transaction',
   CATEGORIES_NAV: 'Categories',
   CATEGORIES_LIST: 'Categories List',
-  CREATE_CATEGORIES: 'Create Categories',
+  CREATE_CATEGORY: 'Create Categories',
   SETTINGS: 'Settings',
 
   CREATE_BOOK: 'Create Book',

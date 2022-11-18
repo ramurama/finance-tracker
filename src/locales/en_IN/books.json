@@ -4,7 +4,7 @@
   "bookName": "Book Name",
   "errorBookName": "Name is required for book.",
   "defaultBook": "Make this book default",
-  "deleteBookConfirmation": "Deleting book will also delete all of its transactions. Are you sure want to delete?",
+  "deleteBookConfirmation": "This can't be undone. Deleting a book will also delete all of its transactions. Are you sure want to delete?",
   "emptyBooks": "You don't have any books.",
   "createBookMessage": "Tap to create a book."
 }
