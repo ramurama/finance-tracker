@@ -1,18 +1,16 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/core'
+import { StyleSheet, Text } from 'react-native'
 
 import { EmptyList } from '../../../components/atoms'
 import { i18n } from '../../../locales'
 import { routes } from '../../../navigation/routes'
-import { useTheme } from '../../../theme'
 
 export const EmptyBooks = () => {
-  const { colors } = useTheme()
   const { navigate } = useNavigation()
 
   return (
     <EmptyList
-      icon={<MaterialCommunityIcons name="book-plus" size={50} color={colors.grey} />}
+      icon={<Text style={styles.emoji}>📚</Text>}
       caption={i18n.t('books.emptyBooks')}
       suggestion={i18n.t('books.createBookMessage')}
       onPress={() => {
@@ -21,3 +19,9 @@ export const EmptyBooks = () => {
     />
   )
 }
+
+const styles = StyleSheet.create({
+  emoji: {
+    fontSize: 60,
+  },
+})
