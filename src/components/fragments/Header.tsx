@@ -21,13 +21,13 @@ export const Header: FC<HeaderProps> = ({ title, iconRight, backButton }) => {
       onPress={() => {
         goBack()
       }}>
-      <Ionicons name="ios-arrow-back" color={colors.text} size={24} />
+      <Ionicons name="ios-arrow-back" color={colors.foreground} size={24} />
     </TouchableOpacity>
   )
 
   const Title = () => (
     <View style={styles.titleView}>
-      {title && <Text style={{ ...styles.title, color: colors.text }}>{title}</Text>}
+      {title && <Text style={{ ...styles.title, color: colors.foreground }}>{title}</Text>}
     </View>
   )
 

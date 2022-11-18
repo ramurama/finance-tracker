@@ -39,7 +39,7 @@ export const BookItem: FC<BookItemProps> = ({
     <View style={styles.contentView}>
       <View style={styles.titleView}>
         <View style={styles.titleContainer}>
-          <Text style={{ ...styles.title, color: colors.text }}>{title}</Text>
+          <Text style={{ ...styles.title, color: colors.foreground }}>{title}</Text>
         </View>
         {isDefault && (
           <View style={styles.chipContainer}>

@@ -1,7 +1,7 @@
 export type ColorType = {
   background: string
   secondaryBackground: string
-  text: string
+  foreground: string
   secondaryText: string
   grey: string
   tabIconActiveColor: string
@@ -14,7 +14,7 @@ export type ColorType = {
 export const lightColors: ColorType = {
   background: '#f5f5f5',
   secondaryBackground: '#e0e0e0',
-  text: '#1b1b1b',
+  foreground: '#1b1b1b',
   secondaryText: '#616161',
   tabIconActiveColor: '#212121',
   tabIconInactiveColor: '#bdbdbd',
@@ -27,7 +27,7 @@ export const lightColors: ColorType = {
 export const darkColors: ColorType = {
   background: '#1b1b1b',
   secondaryBackground: '#424242',
-  text: '#ffffff',
+  foreground: '#ffffff',
   secondaryText: '#e0e0e0',
   tabIconActiveColor: '#f2f2f2',
   tabIconInactiveColor: '#616161',

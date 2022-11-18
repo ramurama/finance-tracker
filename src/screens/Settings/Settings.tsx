@@ -8,7 +8,7 @@ export const Settings = () => {
 
   return (
     <Container>
-      <Text style={{ color: colors.text }}>Settings screen</Text>
+      <Text style={{ color: colors.foreground }}>Settings screen</Text>
     </Container>
   )
 }

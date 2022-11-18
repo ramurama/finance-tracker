@@ -12,6 +12,7 @@ import { useDb } from '../../db/useDb'
 import { i18n } from '../../locales'
 import { setCategories as setCategoriesAction } from '../../redux/actions'
 import { TransactionType } from '../../types'
+import { TransactionTypeRadioButton } from '../shared/components/TransactionTypeRadioButton'
 
 type ValuesType = {
   categoryName: string
@@ -29,7 +30,7 @@ const CreateCategories: FC<CategoriesListProps> = ({ setCategories }) => {
 
   const initialValues: ValuesType = {
     categoryName: '',
-    type: 2,
+    type: 1,
   }
 
   const categoriesValidationSchema = yup.object().shape({
@@ -69,7 +70,7 @@ const CreateCategories: FC<CategoriesListProps> = ({ setCategories }) => {
       validationSchema={categoriesValidationSchema}
       initialValues={initialValues}
       onSubmit={submitHandler}>
-      {({ handleChange, handleBlur, handleSubmit, values, errors, isValid }) => (
+      {({ handleChange, handleBlur, handleSubmit, setFieldValue, values, errors, isValid }) => (
         <>
           <InputField
             label={i18n.t('categories.categoryName')}
@@ -79,6 +80,14 @@ const CreateCategories: FC<CategoriesListProps> = ({ setCategories }) => {
             onChangeText={handleChange('categoryName')}
             onBlur={handleBlur('categoryName')}
             keyboardType="default"
+          />
+
+          <TransactionTypeRadioButton
+            label="Type"
+            selected={values.type}
+            onSelected={(value) => {
+              setFieldValue('type', value)
+            }}
           />
 
           <Button

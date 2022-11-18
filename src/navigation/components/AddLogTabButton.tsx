@@ -12,7 +12,7 @@ export const AddLogTabButton: FC<AddLogTabButtonProps> = ({ onPress, children })
 
   return (
     <TouchableOpacity
-      style={{ ...styles.iconView, backgroundColor: colors.text }}
+      style={{ ...styles.iconView, backgroundColor: colors.foreground }}
       activeOpacity={0.2}
       onPress={(e) => {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)

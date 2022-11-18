@@ -8,7 +8,7 @@ export const Reports = () => {
 
   return (
     <Container>
-      <Text style={{ color: colors.text }}>Reports screen</Text>
+      <Text style={{ color: colors.foreground }}>Reports screen</Text>
     </Container>
   )
 }

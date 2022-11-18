@@ -16,7 +16,7 @@ export const Input: FC<InputProps> = ({ value, onBlur, editable = true, ...props
         ...styles.textInput,
         backgroundColor: colors.inputFieldBgColor,
         borderColor: colors.borderColor,
-        color: editable ? colors.text : colors.tabIconInactiveColor,
+        color: editable ? colors.foreground : colors.tabIconInactiveColor,
       }}
       placeholderTextColor={colors.tabIconInactiveColor}
       spellCheck={false}

@@ -8,7 +8,7 @@ export const CreateTransactions = () => {
 
   return (
     <Container>
-      <Text style={{ color: colors.text }}>Create transactions screen</Text>
+      <Text style={{ color: colors.foreground }}>Create transactions screen</Text>
     </Container>
   )
 }

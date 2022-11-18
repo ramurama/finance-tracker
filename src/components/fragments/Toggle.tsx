@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { StyleSheet, Switch, View } from 'react-native'
 
 import { useTheme } from '../../theme'
-import { Label } from './Label'
+import { Label } from '../atoms/Label'
 
 export type ToggleProps = {
   label: string
@@ -18,7 +18,7 @@ export const Toggle: FC<ToggleProps> = ({ label, value, onChange }) => {
       <Label label={label} />
       <Switch
         trackColor={{ false: colors.secondaryBackground, true: colors.grey }}
-        thumbColor={colors.text}
+        thumbColor={colors.foreground}
         onValueChange={() => {
           onChange(!value)
         }}

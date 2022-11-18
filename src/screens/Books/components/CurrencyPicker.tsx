@@ -29,7 +29,7 @@ export const CurrencyPicker: FC<CurrencyPickerProps> = ({ value, onChange, disab
           <Picker.Item
             label={`${item.name} - ${item.symbol}`}
             value={item.code}
-            color={colors.text}
+            color={colors.foreground}
             key={item.code}
           />
         ))}

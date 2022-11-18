@@ -1,7 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/core'
 
-import { EmptyList } from '../../../components/atoms/EmptyList'
+import { EmptyList } from '../../../components/atoms'
 import { i18n } from '../../../locales'
 import { routes } from '../../../navigation/routes'
 import { useTheme } from '../../../theme'

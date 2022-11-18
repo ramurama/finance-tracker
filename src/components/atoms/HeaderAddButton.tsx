@@ -13,7 +13,7 @@ export const HeaderAddButton: FC<HeaderAddButtonProps> = ({ onPress }) => {
 
   return (
     <TouchableOpacity style={styles.iconTouchable} onPress={onPress}>
-      <MaterialIcons name="add" size={24} color={colors.text} />
+      <MaterialIcons name="add" size={24} color={colors.foreground} />
     </TouchableOpacity>
   )
 }

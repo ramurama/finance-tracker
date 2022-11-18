@@ -4,7 +4,7 @@ import { FlatList } from 'react-native'
 import { connect } from 'react-redux'
 
 import { Container } from '../../components'
-import { HeaderAddButton } from '../../components/atoms/HeaderAddButton'
+import { HeaderAddButton } from '../../components/atoms'
 import { Header } from '../../components/fragments'
 import { CategoryEntity } from '../../db/entities/Category.entity'
 import { useDb } from '../../db/useDb'
