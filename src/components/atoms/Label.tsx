@@ -12,7 +12,11 @@ export const Label: FC<LabelProps> = ({ label, bigFont }) => {
   const { colors } = useTheme()
 
   return (
-    <Text style={[{ ...styles.label, color: colors.secondaryText }, bigFont ? styles.bigFont : {}]}>
+    <Text
+      style={[
+        { ...styles.label, color: colors.secondaryForeground },
+        bigFont ? styles.bigFont : {},
+      ]}>
       {label}
     </Text>
   )

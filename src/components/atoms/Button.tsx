@@ -16,7 +16,7 @@ export const Button: FC<ButtonProps> = ({ label, style, bottom, fullWidth, ...pr
   return (
     <TouchableOpacity
       style={[
-        { ...styles.button, backgroundColor: colors.secondaryText },
+        { ...styles.button, backgroundColor: colors.secondaryForeground },
         bottom ? styles.bottom : {},
         fullWidth ? styles.fullWidth : {},
         style,

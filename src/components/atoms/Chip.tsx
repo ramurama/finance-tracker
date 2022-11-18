@@ -22,17 +22,26 @@ export const Chip: FC<ChipProps> = ({ text, touchable, onPress, isActive }) => {
         }
       }}
       style={[
-        { ...styles.container, backgroundColor: colors.secondaryBackground },
+        {
+          ...styles.container,
+          backgroundColor: colors.background,
+          borderColor: colors.listItemBorderColor,
+        },
         isActive
           ? {
-              backgroundColor: colors.background,
-              borderColor: colors.listItemBorderColor,
+              backgroundColor: colors.secondaryBackground,
               ...styles.activeChip,
             }
           : {},
-        touchable ? styles.touchableChip : {},
+        touchable || isActive ? styles.touchableChip : {},
       ]}>
-      <Text style={{ ...styles.text, color: colors.secondaryText }}>{text}</Text>
+      <Text
+        style={[
+          { ...styles.text, color: colors.secondaryForeground },
+          touchable || isActive ? styles.touchableText : {},
+        ]}>
+        {text}
+      </Text>
     </TouchableOpacity>
   )
 }
@@ -48,6 +57,9 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 13,
+  },
+  touchableText: {
+    fontSize: 16,
   },
   touchableChip: {
     marginLeft: 10,

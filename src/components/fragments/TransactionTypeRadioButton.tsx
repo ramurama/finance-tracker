@@ -26,7 +26,7 @@ export const TransactionTypeRadioButton: FC<TransactionTypeRadioButtonProps> = (
         containerStyle={styles.radioButtonGroup}
         selected={selected}
         onSelected={onSelected}
-        selectedRadioColor={colors.foreground}
+        selectedRadioColor={colors.secondaryForeground}
         deSelectedRadioColor={colors.background}
         radioStyle={styles.radio}>
         <RadioButtonItem value={1} label={i18n.t('common.expense')} />
