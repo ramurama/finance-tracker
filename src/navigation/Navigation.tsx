@@ -1,19 +1,13 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { StatusBar } from 'expo-status-bar'
 import { FC, PropsWithChildren } from 'react'
-import { connect } from 'react-redux'
 
 import { useTheme } from '../theme'
-import { ThemeType } from '../theme/ThemeContext'
 
-type NavigationProps = { theme: ThemeType } & PropsWithChildren
+type NavigationProps = PropsWithChildren
 
-const Navigation: FC<NavigationProps> = ({ theme, children }) => {
-  const { isDark, colors, setScheme } = useTheme()
-
-  if (theme !== 'system') {
-    setScheme(theme)
-  }
+export const Navigation: FC<NavigationProps> = ({ children }) => {
+  const { isDark, colors } = useTheme()
 
   return (
     <NavigationContainer>
@@ -22,9 +16,3 @@ const Navigation: FC<NavigationProps> = ({ theme, children }) => {
     </NavigationContainer>
   )
 }
-
-const mapStateToProps = (state: any) => ({
-  theme: state.settings.theme,
-})
-
-export default connect(mapStateToProps)(Navigation)
