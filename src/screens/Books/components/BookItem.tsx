@@ -1,4 +1,3 @@
-import { FontAwesome } from '@expo/vector-icons'
 import { FC } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
@@ -6,7 +5,13 @@ import { Chip } from '../../../components/atoms'
 import { i18n } from '../../../locales'
 import { useTheme } from '../../../theme'
 
+// TODO: emoji picker should be added for create emoji screen
+// TODO: below 4 options should be available for the emoji picker
+// TODO: emoji value should be saved to the database
+const BookEmojis = ['📕', '📗', '📘', '📙']
+
 export type BookItemProps = {
+  index: number
   title: string
   currency: string
   isDefault?: boolean
@@ -15,6 +20,7 @@ export type BookItemProps = {
 }
 
 export const BookItem: FC<BookItemProps> = ({
+  index,
   title,
   currency,
   isDefault,
@@ -25,7 +31,7 @@ export const BookItem: FC<BookItemProps> = ({
 
   const Icon = () => (
     <View style={styles.iconView}>
-      <FontAwesome name="book" color={colors.tabIconInactiveColor} size={40} />
+      <Text style={styles.emoji}>{BookEmojis[index % BookEmojis.length]}</Text>
     </View>
   )
 
@@ -71,13 +77,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 80,
     padding: 10,
-    // borderRadius: 15,
-    // shadowOpacity: 0.5,
-    // shadowOffset: {
-    //   width: 2,
-    //   height: 2,
-    // },
-    // margin: 10,
     marginBottom: 10,
     borderBottomWidth: 1,
   },
@@ -118,5 +117,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'flex-end',
+  },
+  emoji: {
+    fontSize: 45,
   },
 })

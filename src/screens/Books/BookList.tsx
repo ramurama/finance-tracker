@@ -104,9 +104,10 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
       data={books}
       extraData={books}
       ListEmptyComponent={<EmptyBooks />}
-      renderItem={({ item }) => (
+      renderItem={({ item, index }) => (
         <BookItem
           key={item.id}
+          index={index}
           title={item.name}
           currency={item.currencySymbol}
           isDefault={Boolean(item.isDefault)}
