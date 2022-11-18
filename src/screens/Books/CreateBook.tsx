@@ -12,6 +12,7 @@ import { useDb } from '../../db/useDb'
 import { i18n } from '../../locales'
 import { setBooks as setBooksAction } from '../../redux/actions'
 import { Book } from '../../types'
+import { capitalizeFirstLetter } from '../../utils'
 import { CurrencyPicker } from './components/CurrencyPicker'
 
 type ValuesType = {
@@ -65,7 +66,7 @@ const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
   }: ValuesType) => {
     let booksList: BookEntity[] | undefined
 
-    const name = bookName.trim()
+    const name = capitalizeFirstLetter(bookName.trim())
 
     if (isEditMode) {
       booksList = await bookService.updateBook({

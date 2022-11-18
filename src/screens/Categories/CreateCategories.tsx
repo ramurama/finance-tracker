@@ -14,6 +14,7 @@ import { useDb } from '../../db/useDb'
 import { i18n } from '../../locales'
 import { setCategories as setCategoriesAction } from '../../redux/actions'
 import { Category, TransactionType } from '../../types'
+import { capitalizeFirstLetter } from '../../utils'
 
 type ValuesType = {
   categoryName: string
@@ -55,7 +56,7 @@ const CreateCategories: FC<CategoriesListProps> = ({ setCategories }) => {
   const submitHandler = async ({ categoryName, type, emoji }: ValuesType) => {
     let categoriesList: CategoryEntity[] | undefined
 
-    const name = categoryName.trim()
+    const name = capitalizeFirstLetter(categoryName.trim())
 
     if (isEditMode) {
       categoriesList = await categoryService.updateCategory({

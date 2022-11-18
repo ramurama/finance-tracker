@@ -47,7 +47,7 @@ export const EmojiPicker: FC<EmojiPickerProps> = ({ label, value = '', onSelecti
 
   const EmojiPickerModal = () => (
     <Modal visible={visible} animationType="slide" style={{ backgroundColor: colors.background }}>
-      <Container>
+      <Container modal>
         <Header closeButton onClose={() => setVisible(false)} />
         <View style={styles.content}>
           <EmojiSelector

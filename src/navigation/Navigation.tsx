@@ -5,11 +5,11 @@ import { FC, PropsWithChildren } from 'react'
 import { useTheme } from '../theme'
 
 export const Navigation: FC<PropsWithChildren> = ({ children }) => {
-  const { isDark } = useTheme()
+  const { isDark, colors } = useTheme()
 
   return (
     <NavigationContainer>
-      <StatusBar style={isDark ? 'light' : 'dark'} animated />
+      <StatusBar style={isDark ? 'light' : 'dark'} animated backgroundColor={colors.background} />
       {children}
     </NavigationContainer>
   )
