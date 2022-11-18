@@ -9,19 +9,33 @@ interface HeaderProps {
   title?: string
   iconRight?: ReactNode
   backButton?: boolean
+  closeButton?: boolean
+  onClose?: () => void
 }
 
-export const Header: FC<HeaderProps> = ({ title, iconRight, backButton }) => {
+export const Header: FC<HeaderProps> = ({ title, iconRight, backButton, closeButton, onClose }) => {
   const { colors } = useTheme()
   const { goBack } = useNavigation()
 
-  const BackButton = () => (
+  const LeftActionButton = () => (
     <TouchableOpacity
       style={styles.backButton}
       onPress={() => {
-        goBack()
+        if (backButton) {
+          goBack()
+
+          return
+        }
+
+        if (closeButton && onClose) {
+          onClose()
+        }
       }}>
-      <Ionicons name="ios-arrow-back" color={colors.foreground} size={24} />
+      <Ionicons
+        name={closeButton ? 'ios-close-sharp' : 'ios-arrow-back'}
+        color={colors.foreground}
+        size={24}
+      />
     </TouchableOpacity>
   )
 
@@ -35,7 +49,7 @@ export const Header: FC<HeaderProps> = ({ title, iconRight, backButton }) => {
 
   return (
     <View style={{ ...styles.headerContainer, backgroundColor: colors.background }}>
-      {backButton && <BackButton />}
+      {(backButton || closeButton) && <LeftActionButton />}
       {title && <Title />}
       {iconRight && <RightIcon />}
     </View>

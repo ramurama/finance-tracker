@@ -7,6 +7,7 @@ import {
   RadioButtonGroupProps,
   RadioButtonItem,
 } from '../../../components/fragments'
+import { i18n } from '../../../locales'
 import { useTheme } from '../../../theme'
 
 export type TransactionTypeRadioButtonProps = Pick<
@@ -32,8 +33,8 @@ export const TransactionTypeRadioButton: FC<TransactionTypeRadioButtonProps> = (
         selectedRadioColor={colors.foreground}
         deSelectedRadioColor={colors.background}
         radioStyle={styles.radio}>
-        <RadioButtonItem value={1} label="Expense" />
-        <RadioButtonItem value={2} label="Income" />
+        <RadioButtonItem value={1} label={i18n.t('common.expense')} />
+        <RadioButtonItem value={2} label={i18n.t('common.income')} />
       </RadioButtonGroup>
     </View>
   )

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { StyleSheet, Text } from 'react-native'
 
-import { useTheme } from '../../../theme'
+import { useTheme } from '../../theme'
 
 export type InputErrorProps = {
   error?: string | undefined

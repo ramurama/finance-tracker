@@ -3,12 +3,14 @@ import { Keyboard, SafeAreaView, StyleSheet, TouchableWithoutFeedback } from 're
 
 import { useTheme } from '../theme'
 
-export const Container: FC<PropsWithChildren> = ({ children }) => {
+export type ContainerProps = PropsWithChildren
+
+export const Container: FC<ContainerProps> = ({ children }) => {
   const { colors } = useTheme()
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
+      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         {children}
       </SafeAreaView>
     </TouchableWithoutFeedback>
