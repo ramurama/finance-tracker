@@ -91,7 +91,7 @@ const CategoriesList: FC<CategoriesListProps> = ({ categories, setCategories }) 
     <FlatList
       data={categories.filter((item) => item.type === activeType)}
       extraData={categories}
-      ListEmptyComponent={<EmptyCategories />}
+      ListEmptyComponent={<EmptyCategories activeType={activeType} />}
       renderItem={({ item }) => (
         <CategoryItem
           name={item.name}
@@ -107,7 +107,9 @@ const CategoriesList: FC<CategoriesListProps> = ({ categories, setCategories }) 
   const AddCategories = () => (
     <HeaderAddButton
       onPress={() => {
-        navigate(routes.CREATE_CATEGORY)
+        navigate(routes.CREATE_CATEGORY, {
+          activeType,
+        })
       }}
     />
   )

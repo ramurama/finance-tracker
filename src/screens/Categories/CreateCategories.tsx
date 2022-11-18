@@ -33,7 +33,7 @@ const CreateCategories: FC<CategoriesListProps> = ({ setCategories }) => {
 
   const initialValues: ValuesType = {
     categoryName: '',
-    type: 1,
+    type: params.activeType || 1,
     emoji: '',
   }
 
