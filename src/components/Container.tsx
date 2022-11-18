@@ -15,7 +15,9 @@ export const Container: FC<ContainerProps> = ({ children, modal }) => {
   const { colors } = useTheme()
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback
+      onPress={Keyboard.dismiss}
+      style={{ backgroundColor: colors.background }}>
       <SafeAreaView
         style={[
           styles.container,
@@ -33,6 +35,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   margin: {
-    marginTop: 23,
+    paddingTop: 35,
   },
 })
