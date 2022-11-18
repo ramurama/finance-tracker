@@ -64,7 +64,7 @@ export const BookItem: FC<BookItemProps> = ({
       style={{
         ...styles.container,
         backgroundColor: colors.background,
-        borderBottomColor: colors.borderColor,
+        borderBottomColor: colors.listItemBorderColor,
       }}>
       <Icon />
       <Content />

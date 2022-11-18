@@ -31,7 +31,7 @@ export const CategoryItem: FC<CategoryItemProps> = ({ name, emoji, onPress, onLo
 
   return (
     <TouchableOpacity
-      style={{ ...styles.container, borderBottomColor: colors.borderColor }}
+      style={{ ...styles.container, borderBottomColor: colors.listItemBorderColor }}
       onPress={onPress}
       onLongPress={onLongPress}>
       <Emoji />

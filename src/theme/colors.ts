@@ -8,6 +8,7 @@ export type ColorType = {
   tabIconInactiveColor: string
   error: string
   borderColor: string
+  listItemBorderColor: string
   inputFieldBgColor: string
 }
 
@@ -20,6 +21,7 @@ export const lightColors: ColorType = {
   tabIconInactiveColor: '#bdbdbd',
   error: '#fc050d',
   borderColor: '#bab8b8',
+  listItemBorderColor: '#ededed',
   inputFieldBgColor: '#f5f5f5',
   grey: '#bdbdbd',
 } as const
@@ -33,6 +35,7 @@ export const darkColors: ColorType = {
   tabIconInactiveColor: '#616161',
   error: '#fc050d',
   borderColor: '#525050',
+  listItemBorderColor: '#262626',
   inputFieldBgColor: '#1b1b1b',
   grey: '#616161',
 } as const
