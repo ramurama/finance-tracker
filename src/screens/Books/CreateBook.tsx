@@ -97,7 +97,7 @@ const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
       validationSchema={bookValidationSchema}
       initialValues={initialValues}
       onSubmit={submitHandler}>
-      {({ handleChange, handleBlur, handleSubmit, setFieldValue, values, errors, isValid }) => (
+      {({ handleChange, handleSubmit, setFieldValue, values, errors, isValid }) => (
         <>
           <InputField
             label={i18n.t('books.bookName')}
@@ -105,7 +105,6 @@ const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
             placeholder={i18n.t('books.bookName')}
             value={values.bookName}
             onChangeText={handleChange('bookName')}
-            onBlur={handleBlur('bookName')}
             keyboardType="default"
             autoCapitalize="words"
           />

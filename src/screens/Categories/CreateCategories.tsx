@@ -85,7 +85,7 @@ const CreateCategories: FC<CategoriesListProps> = ({ setCategories }) => {
       validationSchema={categoriesValidationSchema}
       initialValues={initialValues}
       onSubmit={submitHandler}>
-      {({ handleChange, handleBlur, handleSubmit, setFieldValue, values, errors, isValid }) => (
+      {({ handleChange, handleSubmit, setFieldValue, values, errors, isValid }) => (
         <>
           <InputField
             label={i18n.t('categories.categoryName')}
@@ -93,7 +93,7 @@ const CreateCategories: FC<CategoriesListProps> = ({ setCategories }) => {
             placeholder={i18n.t('categories.categoryName')}
             value={values.categoryName}
             onChangeText={handleChange('categoryName')}
-            onBlur={handleBlur('categoryName')}
+            // onBlur={handleBlur('categoryName')}
             keyboardType="default"
             autoCapitalize="words"
           />
