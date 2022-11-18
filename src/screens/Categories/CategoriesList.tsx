@@ -1,6 +1,6 @@
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/core'
-import { FC, useCallback, useEffect } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import { Alert, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 
@@ -15,6 +15,7 @@ import { setCategories as setCategoriesAction } from '../../redux/actions'
 import { TransactionType } from '../../types'
 import { CategoryItem } from './components/CategoryItem'
 import { EmptyCategories } from './components/EmptyCategories'
+import { Filters } from './components/Filters'
 
 export type CategoriesListProps = {
   categories: CategoryEntity[]
@@ -25,6 +26,8 @@ const CategoriesList: FC<CategoriesListProps> = ({ categories, setCategories }) 
   const { navigate } = useNavigation()
   const { categoryService } = useDb()
   const { showActionSheetWithOptions } = useActionSheet()
+
+  const [activeType, setActiveType] = useState<TransactionType>(1)
 
   const loadCategories = useCallback(async () => {
     setCategories(await categoryService.getCategories())
@@ -86,7 +89,7 @@ const CategoriesList: FC<CategoriesListProps> = ({ categories, setCategories }) 
 
   const Categories = () => (
     <FlatList
-      data={categories}
+      data={categories.filter((item) => item.type === activeType)}
       extraData={categories}
       ListEmptyComponent={<EmptyCategories />}
       renderItem={({ item }) => (
@@ -112,6 +115,12 @@ const CategoriesList: FC<CategoriesListProps> = ({ categories, setCategories }) 
   return (
     <Container>
       <Header title={i18n.t('categories.categories')} iconRight={<AddCategories />} />
+      <Filters
+        value={activeType}
+        onChange={(type) => {
+          setActiveType(type)
+        }}
+      />
       <Categories />
     </Container>
   )

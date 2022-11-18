@@ -10,5 +10,6 @@
   "create": "Create",
   "update": "Update",
   "expense": "Expense",
-  "income": "Income"
+  "income": "Income",
+  "all": "All"
 }
