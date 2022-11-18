@@ -18,7 +18,7 @@ export const EmptyList: FC<EmptyListProps> = ({ icon, caption, suggestion, onPre
       <View style={styles.container}>
         {icon}
         <Text style={{ ...styles.emptyMessageText, color: colors.text }}>{caption}</Text>
-        <Text style={{ ...styles.createBookText, color: colors.greyText }}>{suggestion}</Text>
+        <Text style={{ ...styles.createBookText, color: colors.grey }}>{suggestion}</Text>
       </View>
     </TouchableWithoutFeedback>
   )

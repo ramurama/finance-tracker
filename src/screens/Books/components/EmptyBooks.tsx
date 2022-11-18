@@ -12,7 +12,7 @@ export const EmptyBooks = () => {
 
   return (
     <EmptyList
-      icon={<MaterialCommunityIcons name="book-plus" size={50} color={colors.greyText} />}
+      icon={<MaterialCommunityIcons name="book-plus" size={50} color={colors.grey} />}
       caption={i18n.t('books.emptyBooks')}
       suggestion={i18n.t('books.createBookMessage')}
       onPress={() => {

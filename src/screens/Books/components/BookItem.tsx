@@ -31,7 +31,7 @@ export const BookItem: FC<BookItemProps> = ({
 
   const Currency = () => (
     <View style={styles.currencyView}>
-      <Text style={{ ...styles.currency, color: colors.greyText }}>{currency}</Text>
+      <Text style={{ ...styles.currency, color: colors.grey }}>{currency}</Text>
     </View>
   )
 

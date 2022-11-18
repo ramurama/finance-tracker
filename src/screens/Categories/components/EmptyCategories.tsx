@@ -12,7 +12,7 @@ export const EmptyCategories = () => {
 
   return (
     <EmptyList
-      icon={<MaterialIcons name="category" size={50} color={colors.greyText} />}
+      icon={<MaterialIcons name="category" size={50} color={colors.grey} />}
       caption={i18n.t('categories.emptyCategories')}
       suggestion={i18n.t('categories.createCategoryMessage')}
       onPress={() => {
