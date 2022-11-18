@@ -6,17 +6,19 @@ import * as yup from 'yup'
 
 import { Container } from '../../components'
 import { Button } from '../../components/atoms'
-import { Header, InputField } from '../../components/fragments'
+import { TransactionTypeRadioButton } from '../../components/fragments/TransactionTypeRadioButton'
+import { Header, InputField } from '../../components/molecules'
+import { EmojiPicker } from '../../components/molecules'
 import { CategoryEntity } from '../../db/entities/Category.entity'
 import { useDb } from '../../db/useDb'
 import { i18n } from '../../locales'
 import { setCategories as setCategoriesAction } from '../../redux/actions'
 import { TransactionType } from '../../types'
-import { TransactionTypeRadioButton } from '../shared/components/TransactionTypeRadioButton'
 
 type ValuesType = {
   categoryName: string
   type: TransactionType
+  emoji: string
 }
 
 export type CategoriesListProps = {
@@ -31,16 +33,18 @@ const CreateCategories: FC<CategoriesListProps> = ({ setCategories }) => {
   const initialValues: ValuesType = {
     categoryName: '',
     type: 1,
+    emoji: '',
   }
 
   const categoriesValidationSchema = yup.object().shape({
     categoryName: yup.string().required(i18n.t('categories.errorCategoryName')),
     type: yup.number().default(2).required(),
+    emoji: yup.string().required(i18n.t('categories.errorEmoji')),
   })
 
   const isEditMode = params && params.category && params.category.id
 
-  const submitHandler = async ({ categoryName, type }: ValuesType) => {
+  const submitHandler = async ({ categoryName, type, emoji }: ValuesType) => {
     let categoriesList: CategoryEntity[] | undefined
 
     const name = categoryName.trim()
@@ -50,11 +54,13 @@ const CreateCategories: FC<CategoriesListProps> = ({ setCategories }) => {
         id: params.category.id,
         name,
         type,
+        emoji,
       })
     } else {
       categoriesList = await categoryService.createCategory({
         name,
         type,
+        emoji,
       })
     }
 
@@ -83,10 +89,19 @@ const CreateCategories: FC<CategoriesListProps> = ({ setCategories }) => {
           />
 
           <TransactionTypeRadioButton
-            label="Type"
+            label={i18n.t('categories.type')}
             selected={values.type}
             onSelected={(value) => {
               setFieldValue('type', value)
+            }}
+          />
+
+          <EmojiPicker
+            label="Pick an emoji"
+            value={values.emoji}
+            error={errors.emoji}
+            onSelection={(emoji) => {
+              setFieldValue('emoji', emoji)
             }}
           />
 

@@ -14,11 +14,13 @@ export type EmojiPickerProps = {
   onSelection: (emoji: string) => void
 } & InputErrorProps
 
-export const EmojiPicker: FC<EmojiPickerProps> = ({ label, value, onSelection, error }) => {
+export const EmojiPicker: FC<EmojiPickerProps> = ({ label, value = '', onSelection, error }) => {
   const { colors } = useTheme()
 
   const [visible, setVisible] = useState<boolean>(false)
-  const [selectedEmoji, setSelectedEmoji] = useState<string | undefined>(value)
+  const [selectedEmoji, setSelectedEmoji] = useState<string>(value)
+
+  const isEmojiExists = selectedEmoji !== ''
 
   const EmojiTouchable = () => (
     <TouchableOpacity
@@ -28,8 +30,8 @@ export const EmojiPicker: FC<EmojiPickerProps> = ({ label, value, onSelection, e
         borderColor: colors.borderColor,
       }}
       onPress={() => setVisible(true)}>
-      {!selectedEmoji && <MaterialIcons name="emoji-emotions" size={30} color={colors.grey} />}
-      {selectedEmoji && <Text style={styles.emojiText}>{selectedEmoji}</Text>}
+      {!isEmojiExists && <MaterialIcons name="emoji-emotions" size={30} color={colors.grey} />}
+      {isEmojiExists && <Text style={styles.emojiText}>{selectedEmoji}</Text>}
     </TouchableOpacity>
   )
 

@@ -14,10 +14,11 @@ export class CategoryService {
   async createCategory(createCategoryDto: CreateCategoryDto) {
     const category = new CategoryEntity()
 
-    const { name, type } = createCategoryDto
+    const { name, type, emoji } = createCategoryDto
 
     category.name = name
     category.type = type
+    category.emoji = emoji
 
     await this.repository.save(category)
 
@@ -31,10 +32,11 @@ export class CategoryService {
       return
     }
 
-    const { name, type } = updateCategoryDto
+    const { name, type, emoji } = updateCategoryDto
 
     category.name = name
     category.type = type
+    category.emoji = emoji
 
     await this.repository.save(category)
 

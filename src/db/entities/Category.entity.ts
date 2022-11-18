@@ -10,8 +10,11 @@ export class CategoryEntity {
   @Column({ type: 'text' })
   name!: string
 
-  @Column({ type: 'integer', nullable: false })
+  @Column({ type: 'integer' })
   type!: number
+
+  @Column({ type: 'text' })
+  emoji!: string
 
   @CreateDateColumn()
   created!: Date
