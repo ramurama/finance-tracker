@@ -19,7 +19,8 @@ export const Filters: FC<FiltersProps> = ({ value, onChange }) => {
         onPress={() => {
           onChange(1)
         }}
-        touchable={value !== 1}
+        touchable
+        touchDisabled={value === 1}
       />
       <Chip
         text={i18n.t('common.income')}
@@ -27,7 +28,8 @@ export const Filters: FC<FiltersProps> = ({ value, onChange }) => {
         onPress={() => {
           onChange(2)
         }}
-        touchable={value !== 2}
+        touchable
+        touchDisabled={value === 2}
       />
     </View>
   )

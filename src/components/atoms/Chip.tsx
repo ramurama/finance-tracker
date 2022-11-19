@@ -6,16 +6,17 @@ import { useTheme } from '../../theme'
 export type ChipProps = {
   text: string
   touchable?: boolean
+  touchDisabled?: boolean
   onPress?: () => void
   isActive?: boolean
 }
 
-export const Chip: FC<ChipProps> = ({ text, touchable, onPress, isActive }) => {
+export const Chip: FC<ChipProps> = ({ text, touchable, touchDisabled, onPress, isActive }) => {
   const { colors } = useTheme()
 
   return (
     <TouchableOpacity
-      disabled={!touchable}
+      disabled={touchDisabled}
       onPress={() => {
         if (touchable && onPress) {
           onPress()
@@ -24,7 +25,7 @@ export const Chip: FC<ChipProps> = ({ text, touchable, onPress, isActive }) => {
       style={[
         {
           ...styles.container,
-          backgroundColor: colors.background,
+          backgroundColor: touchable ? colors.background : colors.secondaryBackground,
           borderColor: colors.listItemBorderColor,
         },
         isActive
@@ -33,12 +34,12 @@ export const Chip: FC<ChipProps> = ({ text, touchable, onPress, isActive }) => {
               ...styles.activeChip,
             }
           : {},
-        touchable || isActive ? styles.touchableChip : {},
+        touchable ? styles.touchableChip : {},
       ]}>
       <Text
         style={[
           { ...styles.text, color: colors.secondaryForeground },
-          touchable || isActive ? styles.touchableText : {},
+          touchable ? styles.touchableText : {},
         ]}>
         {text}
       </Text>
@@ -63,6 +64,7 @@ const styles = StyleSheet.create({
   },
   touchableChip: {
     marginLeft: 10,
+    borderRadius: 8,
   },
   activeChip: {
     borderWidth: 1,
