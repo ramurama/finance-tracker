@@ -11,5 +11,6 @@
   "update": "Update",
   "expense": "Expense",
   "income": "Income",
-  "all": "All"
+  "all": "All",
+  "today": "Today"
 }

@@ -1,19 +1,26 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/core'
-import { FC, ReactNode } from 'react'
+import { FC, PropsWithChildren, ReactNode } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../../theme'
 
-interface HeaderProps {
+export type HeaderProps = {
   title?: string
   iconRight?: ReactNode
   backButton?: boolean
   closeButton?: boolean
   onClose?: () => void
-}
+} & Partial<PropsWithChildren>
 
-export const Header: FC<HeaderProps> = ({ title, iconRight, backButton, closeButton, onClose }) => {
+export const Header: FC<HeaderProps> = ({
+  title,
+  iconRight,
+  backButton,
+  closeButton,
+  onClose,
+  children,
+}) => {
   const { colors } = useTheme()
   const { goBack } = useNavigation()
 
@@ -50,7 +57,8 @@ export const Header: FC<HeaderProps> = ({ title, iconRight, backButton, closeBut
   return (
     <View style={{ ...styles.headerContainer, backgroundColor: colors.background }}>
       {(backButton || closeButton) && <LeftActionButton />}
-      {title && <Title />}
+      {title && !children && <Title />}
+      {!title && children && <>{children}</>}
       {iconRight && <RightIcon />}
     </View>
   )

@@ -1,3 +1,5 @@
+import { format } from 'date-fns'
+
 export function getDateStartTime(date: Date) {
   const newDate = new Date(date)
 
@@ -16,4 +18,8 @@ export function getDateEndTime(date: Date) {
   newDate.setSeconds(59)
 
   return newDate
+}
+
+export function getDatePickerFormattedDate(date: Date) {
+  return format(date, 'yyyy-MM-dd')
 }
