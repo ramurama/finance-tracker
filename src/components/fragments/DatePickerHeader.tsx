@@ -74,7 +74,7 @@ export const DatePickerHeader: FC<DatePickerHeaderProps> = ({ value, onChange })
 
 const styles = StyleSheet.create({
   headerTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '600',
   },
   headerTitleChip: {
