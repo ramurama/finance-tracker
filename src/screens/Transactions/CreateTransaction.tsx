@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/core'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 
@@ -10,6 +11,7 @@ type ValuesType = {
 }
 
 export const CreateTransactions = () => {
+  const { addListener } = useNavigation()
   const transactionValidationSchema = yup.object().shape({})
 
   const initialValues: ValuesType = {
@@ -26,14 +28,21 @@ export const CreateTransactions = () => {
         validationSchema={transactionValidationSchema}
         initialValues={initialValues}
         onSubmit={submitHandler}>
-        {({ setFieldValue, values }) => (
-          <>
-            <DatePickerHeader
-              value={values.date}
-              onChange={(dateString) => setFieldValue('date', dateString)}
-            />
-          </>
-        )}
+        {({ setFieldValue, values, resetForm }) => {
+          // reset form on user navigating to other screen
+          addListener('focus', () => {
+            resetForm()
+          })
+
+          return (
+            <>
+              <DatePickerHeader
+                value={values.date}
+                onChange={(dateString) => setFieldValue('date', dateString)}
+              />
+            </>
+          )
+        }}
       </Formik>
     </Container>
   )
