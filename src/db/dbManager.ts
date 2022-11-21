@@ -18,6 +18,7 @@ export async function initDatabase() {
     type: 'expo',
     driver: require('expo-sqlite'),
     // !! synchronize should not be used in production
+    dropSchema: config.dbSynchronize,
     synchronize: config.dbSynchronize,
     entities,
   })
