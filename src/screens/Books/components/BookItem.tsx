@@ -5,14 +5,9 @@ import { Chip } from '../../../components/atoms'
 import { i18n } from '../../../locales'
 import { useTheme } from '../../../theme'
 
-// TODO: emoji picker should be added for create emoji screen
-// TODO: below 4 options should be available for the emoji picker
-// TODO: emoji value should be saved to the database
-const BookEmojis = ['📕', '📗', '📘', '📙']
-
 export type BookItemProps = {
-  index: number
   title: string
+  emoji: string
   currency: string
   isDefault?: boolean
   onPress: () => void
@@ -20,8 +15,8 @@ export type BookItemProps = {
 }
 
 export const BookItem: FC<BookItemProps> = ({
-  index,
   title,
+  emoji,
   currency,
   isDefault,
   onPress,
@@ -31,7 +26,7 @@ export const BookItem: FC<BookItemProps> = ({
 
   const Icon = () => (
     <View style={styles.iconView}>
-      <Text style={styles.emoji}>{BookEmojis[index % BookEmojis.length]}</Text>
+      <Text style={styles.emoji}>{emoji}</Text>
     </View>
   )
 

@@ -6,5 +6,6 @@
   "defaultBook": "Make this book default",
   "deleteBookConfirmation": "This can't be undone. Deleting a book will also delete all of its transactions. Are you sure want to delete?",
   "emptyBooks": "You don't have any books.",
-  "createBookMessage": "Tap to create a book."
+  "createBookMessage": "Tap to create a book.",
+  "pickBookEmoji": "Pick an emoji"
 }

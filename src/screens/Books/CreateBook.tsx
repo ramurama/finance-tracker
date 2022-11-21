@@ -13,10 +13,12 @@ import { i18n } from '../../locales'
 import { setBooks as setBooksAction } from '../../redux/actions'
 import { Book } from '../../types'
 import { capitalizeFirstLetter } from '../../utils'
+import { BookEmojiPicker, BookEmojis } from './components/BookEmojiPicker'
 import { CurrencyPicker } from './components/CurrencyPicker'
 
 type ValuesType = {
   bookName: string
+  emoji: string
   currencyCode: string
   currencySymbol: string
   isDefault: boolean
@@ -33,6 +35,7 @@ const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
 
   const initialValues: ValuesType = {
     bookName: '',
+    emoji: BookEmojis[0]!,
     currencyCode: 'USD',
     currencySymbol: '$',
     isDefault: false,
@@ -60,6 +63,7 @@ const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
 
   const submitHandler = async ({
     bookName,
+    emoji,
     currencyCode,
     currencySymbol,
     isDefault,
@@ -72,6 +76,7 @@ const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
       booksList = await bookService.updateBook({
         id: params.book.id,
         name,
+        emoji,
         currencyCode,
         currencySymbol,
         isDefault,
@@ -79,6 +84,7 @@ const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
     } else {
       booksList = await bookService.createBook({
         name,
+        emoji,
         currencyCode,
         currencySymbol,
         isDefault: books.length === 0 ? true : isDefault,
@@ -107,6 +113,13 @@ const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
             onChangeText={handleChange('bookName')}
             keyboardType="default"
             autoCapitalize="words"
+          />
+
+          <BookEmojiPicker
+            value={values.emoji}
+            onChange={(emoji) => {
+              setFieldValue('emoji', emoji)
+            }}
           />
 
           <CurrencyPicker

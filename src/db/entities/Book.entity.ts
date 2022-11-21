@@ -11,6 +11,9 @@ export class BookEntity {
   name!: string
 
   @Column({ type: 'text' })
+  emoji!: string
+
+  @Column({ type: 'text' })
   currencyCode!: string
 
   @Column({ type: 'text' })

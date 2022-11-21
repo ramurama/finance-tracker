@@ -13,9 +13,10 @@ export class BookService {
   async createBook(createBookDto: CreateBookDto) {
     const book = new BookEntity()
 
-    const { name, currencyCode, currencySymbol, isDefault } = createBookDto
+    const { name, emoji, currencyCode, currencySymbol, isDefault } = createBookDto
 
     book.name = name
+    book.emoji = emoji
     book.currencyCode = currencyCode
     book.currencySymbol = currencySymbol
     book.isDefault = Number(isDefault)
@@ -41,9 +42,10 @@ export class BookService {
       return
     }
 
-    const { name, currencyCode, currencySymbol, isDefault } = updateBookDto
+    const { name, emoji, currencyCode, currencySymbol, isDefault } = updateBookDto
 
     book.name = name
+    book.emoji = emoji
     book.currencyCode = currencyCode
     book.currencySymbol = currencySymbol
     book.isDefault = Number(isDefault)
