@@ -1,7 +1,8 @@
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/core'
 import { FC, useCallback, useEffect, useState } from 'react'
-import { Alert, FlatList } from 'react-native'
+import { Alert, FlatList, StyleSheet } from 'react-native'
+import GestureRecognizer from 'react-native-swipe-gestures'
 import { connect } from 'react-redux'
 
 import { Container } from '../../components'
@@ -115,16 +116,30 @@ const CategoriesList: FC<CategoriesListProps> = ({ categories, setCategories }) 
   )
 
   return (
-    <Container>
-      <Header title={i18n.t('categories.categories')} iconRight={<AddCategories />} />
-      <Filters
-        value={activeType}
-        onChange={(type) => {
-          setActiveType(type)
-        }}
-      />
-      <Categories />
-    </Container>
+    <GestureRecognizer
+      onSwipeLeft={() => {
+        setActiveType(2)
+      }}
+      onSwipeRight={() => {
+        setActiveType(1)
+      }}
+      config={{
+        velocityThreshold: 0.1,
+        directionalOffsetThreshold: 80,
+      }}
+      style={styles.gestureContainer}>
+      <Container>
+        <Header title={i18n.t('categories.categories')} iconRight={<AddCategories />} />
+        <Filters
+          value={activeType}
+          onChange={(type) => {
+            setActiveType(type)
+          }}
+        />
+
+        <Categories />
+      </Container>
+    </GestureRecognizer>
   )
 }
 
@@ -138,3 +153,9 @@ const mapDispatchToProps = (dispatch: (arg0: any) => void) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoriesList)
+
+const styles = StyleSheet.create({
+  gestureContainer: {
+    flex: 1,
+  },
+})
