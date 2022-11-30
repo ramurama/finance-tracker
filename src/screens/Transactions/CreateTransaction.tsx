@@ -34,14 +34,17 @@ const CreateTransactions: FC<CreateTransactionsProps> = ({ booksList }) => {
     return
   }, [booksList])
 
+  // TODO: if bookId is 0, means there is no book and the book list is empty
+  // TODO: then prompt user to create a book
   const initialValues: ValuesType = useMemo(
     () => ({
       date: getDatePickerFormattedDate(new Date()),
-      bookId: 0,
+      bookId: 0, // ! bookId should not be 0 after loading
     }),
     [],
   )
 
+  // update bookId on load
   useEffect(() => {
     initialValues.bookId = getDefaultBook()?.id || 0
   }, [booksList, getDefaultBook, initialValues])
