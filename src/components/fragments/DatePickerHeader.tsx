@@ -1,17 +1,24 @@
 import { AntDesign } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/core'
 import { format } from 'date-fns'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { i18n } from '../../locales'
 import { useTheme } from '../../theme'
 import { DatePicker, DatePickerProps, Header } from '../molecules'
 
-export type DatePickerHeaderProps = {} & Omit<DatePickerProps, 'maxDate'>
+export type DatePickerHeaderProps = {
+  datePickerVisible: boolean
+  setDatePickerVisible: (value: boolean) => void
+} & Omit<DatePickerProps, 'maxDate'>
 
-export const DatePickerHeader: FC<DatePickerHeaderProps> = ({ value, onChange }) => {
-  const [datePickerVisible, setDatePickerVisible] = useState<boolean>(false)
+export const DatePickerHeader: FC<DatePickerHeaderProps> = ({
+  value,
+  onChange,
+  datePickerVisible,
+  setDatePickerVisible,
+}) => {
   const { colors } = useTheme()
   const { goBack } = useNavigation()
 

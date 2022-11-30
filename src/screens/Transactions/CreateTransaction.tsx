@@ -13,6 +13,7 @@ import { AmountInput, BookSelector, Keyboard, NoBooks } from './components'
 
 type ValuesType = {
   date: string
+  datePickerVisible: boolean
   bookId: number
   currency: string
   amount: string
@@ -40,6 +41,7 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
   const initialValues: ValuesType = useMemo(
     () => ({
       date: getDatePickerFormattedDate(new Date()),
+      datePickerVisible: false,
       bookId: 0, // ! bookId should not be 0 after loading
       currency: '',
       amount: '0',
@@ -82,6 +84,10 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
             <DatePickerHeader
               value={values.date}
               onChange={(dateString) => setFieldValue('date', dateString)}
+              datePickerVisible={values.datePickerVisible}
+              setDatePickerVisible={(value) => {
+                setFieldValue('datePickerVisible', value)
+              }}
             />
 
             <InnerContainer>
