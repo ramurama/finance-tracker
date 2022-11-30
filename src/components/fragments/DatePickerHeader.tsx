@@ -1,4 +1,5 @@
 import { AntDesign } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/core'
 import { format } from 'date-fns'
 import { FC, useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
@@ -12,6 +13,7 @@ export type DatePickerHeaderProps = {} & Omit<DatePickerProps, 'maxDate'>
 export const DatePickerHeader: FC<DatePickerHeaderProps> = ({ value, onChange }) => {
   const [datePickerVisible, setDatePickerVisible] = useState<boolean>(false)
   const { colors } = useTheme()
+  const { goBack } = useNavigation()
 
   const formatDate = (date: Date) => format(date, 'dd. MMM')
 
@@ -44,7 +46,12 @@ export const DatePickerHeader: FC<DatePickerHeaderProps> = ({ value, onChange })
   )
 
   const HeaderComponent = () => (
-    <Header iconRight={<RecurringTransactionButton />}>
+    <Header
+      closeButton
+      onClose={() => {
+        goBack()
+      }}
+      iconRight={<RecurringTransactionButton />}>
       <View style={styles.titleContainer}>
         <Text style={{ ...styles.headerTitle, color: colors.foreground }}>
           {formatWeekDay(new Date(value)) + ', '}

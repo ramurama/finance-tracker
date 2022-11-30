@@ -15,12 +15,19 @@ const Tab = createBottomTabNavigator()
 
 const iconSize = 30
 
+const tabBarShownRoutes = [
+  routes.BOOKS_NAV,
+  routes.REPORTS,
+  routes.CATEGORIES_NAV,
+  routes.SETTINGS_NAV,
+]
+
 export const TabNavigator = () => {
   const { colors } = useTheme()
 
   return (
     <Tab.Navigator
-      backBehavior="none"
+      backBehavior="history"
       screenOptions={({ route }) => {
         return {
           tabBarIcon: ({ focused }) => {
@@ -56,7 +63,10 @@ export const TabNavigator = () => {
           },
           tabBarShowLabel: false,
           headerShown: false,
-          tabBarStyle: { borderTopWidth: 0 },
+          tabBarStyle: {
+            borderTopWidth: 0,
+            display: tabBarShownRoutes.includes(route.name) ? 'flex' : 'none',
+          },
         }
       }}>
       <Tab.Screen name={routes.BOOKS_NAV} component={BooksNavigator} />
