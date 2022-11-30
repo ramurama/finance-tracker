@@ -4,7 +4,7 @@ import { useTheme } from '../../../theme'
 
 export type AmountInputProps = {
   currency: string | undefined
-  value: number
+  value: string
 }
 
 export const AmountInput = (props: AmountInputProps) => {
@@ -44,10 +44,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   currency: {
-    fontSize: 35,
+    fontSize: 55,
     marginRight: 5,
   },
   value: {
-    fontSize: 50,
+    fontSize: 65,
   },
 })
