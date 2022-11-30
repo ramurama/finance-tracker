@@ -8,7 +8,7 @@ import { Container } from '../../components'
 import { Button } from '../../components/atoms'
 import { Checkbox, Header, InputField } from '../../components/molecules'
 import { BookEntity } from '../../db/entities/Book.entity'
-import { useDb } from '../../db/useDb'
+import { useDB } from '../../db/useDB'
 import { i18n } from '../../locales'
 import { setBooks as setBooksAction } from '../../redux/actions'
 import { Book } from '../../types'
@@ -59,7 +59,7 @@ const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
     isDefault: yup.boolean().default(false),
   })
 
-  const { bookService } = useDb()
+  const { bookService } = useDB()
 
   const submitHandler = async ({
     bookName,

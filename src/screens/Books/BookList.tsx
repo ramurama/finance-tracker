@@ -8,7 +8,7 @@ import { Container } from '../../components'
 import { HeaderAddButton } from '../../components/atoms'
 import { Header } from '../../components/molecules'
 import { BookEntity } from '../../db/entities/Book.entity'
-import { useDb } from '../../db/useDb'
+import { useDB } from '../../db/useDB'
 import { i18n } from '../../locales'
 import { routes } from '../../navigation/routes'
 import { setBooks as setBooksAction } from '../../redux/actions'
@@ -22,7 +22,7 @@ export type BooksListProps = {
 
 const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
   const { navigate } = useNavigation()
-  const { bookService } = useDb()
+  const { bookService } = useDB()
   const { showActionSheetWithOptions } = useActionSheet()
 
   const loadBooks = useCallback(async () => {

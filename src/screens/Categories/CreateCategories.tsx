@@ -10,7 +10,7 @@ import { TransactionTypeRadioButton } from '../../components/fragments/Transacti
 import { Header, InputField } from '../../components/molecules'
 import { EmojiPicker } from '../../components/molecules'
 import { CategoryEntity } from '../../db/entities/Category.entity'
-import { useDb } from '../../db/useDb'
+import { useDB } from '../../db/useDB'
 import { i18n } from '../../locales'
 import { setCategories as setCategoriesAction } from '../../redux/actions'
 import { Category, TransactionType } from '../../types'
@@ -29,7 +29,7 @@ export type CategoriesListProps = {
 const CreateCategories: FC<CategoriesListProps> = ({ setCategories }) => {
   const { goBack } = useNavigation()
   const { params } = useRoute()
-  const { categoryService } = useDb()
+  const { categoryService } = useDB()
 
   const initialValues: ValuesType = {
     categoryName: '',

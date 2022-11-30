@@ -9,7 +9,7 @@ import { Container } from '../../components'
 import { HeaderAddButton } from '../../components/atoms'
 import { Header } from '../../components/molecules'
 import { CategoryEntity } from '../../db/entities/Category.entity'
-import { useDb } from '../../db/useDb'
+import { useDB } from '../../db/useDB'
 import { i18n } from '../../locales'
 import { routes } from '../../navigation/routes'
 import { setCategories as setCategoriesAction } from '../../redux/actions'
@@ -25,7 +25,7 @@ export type CategoriesListProps = {
 
 const CategoriesList: FC<CategoriesListProps> = ({ categories, setCategories }) => {
   const { navigate } = useNavigation()
-  const { categoryService } = useDb()
+  const { categoryService } = useDB()
   const { showActionSheetWithOptions } = useActionSheet()
 
   const [activeType, setActiveType] = useState<TransactionType>(1)
