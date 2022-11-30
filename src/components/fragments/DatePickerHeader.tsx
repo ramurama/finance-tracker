@@ -34,7 +34,8 @@ export const DatePickerHeader: FC<DatePickerHeaderProps> = ({ value, onChange })
       style={{ ...styles.headerTitleChip, backgroundColor: colors.secondaryBackground }}
       onPress={() => {
         setDatePickerVisible(true)
-      }}>
+      }}
+      disabled={datePickerVisible}>
       <Text
         style={{
           ...styles.headerTitle,
