@@ -12,8 +12,7 @@ import { useDB } from '../../db/useDB'
 import { i18n } from '../../locales'
 import { routes } from '../../navigation/routes'
 import { setBooks as setBooksAction } from '../../redux/actions'
-import { BookItem } from './components/BookItem'
-import { EmptyBooks } from './components/EmptyBooks'
+import { BookItem, EmptyBooks } from './components'
 
 export type BooksListProps = {
   books: BookEntity[]

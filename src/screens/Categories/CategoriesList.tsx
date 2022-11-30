@@ -14,9 +14,7 @@ import { i18n } from '../../locales'
 import { routes } from '../../navigation/routes'
 import { setCategories as setCategoriesAction } from '../../redux/actions'
 import { TransactionType } from '../../types'
-import { CategoryItem } from './components/CategoryItem'
-import { EmptyCategories } from './components/EmptyCategories'
-import { Filters } from './components/Filters'
+import { CategoryItem, EmptyCategories, Filters } from './components'
 
 export type CategoriesListProps = {
   categories: CategoryEntity[]

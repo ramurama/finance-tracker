@@ -1,9 +1,7 @@
 import { useNavigation } from '@react-navigation/core'
 import { Formik } from 'formik'
-import { useMemo } from 'react'
-import { useCallback } from 'react'
-import { useEffect } from 'react'
-import { FC } from 'react'
+import { FC, PropsWithChildren, useCallback, useEffect, useMemo, useState } from 'react'
+import { StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 import * as yup from 'yup'
 
@@ -11,31 +9,33 @@ import { Container } from '../../components'
 import { DatePickerHeader } from '../../components/fragments/DatePickerHeader'
 import { BookEntity } from '../../db/entities/Book.entity'
 import { getDatePickerFormattedDate } from '../../utils'
-import { BookSelector } from './components/BookSelector'
+import { AmountInput, BookSelector, Keyboard, NoBooks } from './components'
 
 type ValuesType = {
   date: string
   bookId: number
 }
 
-export type CreateTransactionsProps = {
+export type CreateTransactionProps = {
   booksList: BookEntity[]
 }
 
-const CreateTransactions: FC<CreateTransactionsProps> = ({ booksList }) => {
-  const { addListener } = useNavigation()
+const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
+  const { addListener, navigate } = useNavigation()
+  const [book, setBook] = useState<BookEntity>()
+
   const transactionValidationSchema = yup.object().shape({})
 
   const getDefaultBook = useCallback(() => {
     if (booksList.length > 0) {
-      return booksList.filter((book) => book.isDefault)[0]
+      return booksList.filter((bookElement) => bookElement.isDefault)[0]
     }
 
     return
   }, [booksList])
 
-  // TODO: if bookId is 0, means there is no book and the book list is empty
-  // TODO: then prompt user to create a book
+  const getBookById = (id: number) => booksList.filter((item) => item.id === id)[0]
+
   const initialValues: ValuesType = useMemo(
     () => ({
       date: getDatePickerFormattedDate(new Date()),
@@ -46,43 +46,69 @@ const CreateTransactions: FC<CreateTransactionsProps> = ({ booksList }) => {
 
   // update bookId on load
   useEffect(() => {
-    initialValues.bookId = getDefaultBook()?.id || 0
-  }, [booksList, getDefaultBook, initialValues])
+    const defaultBook = getDefaultBook()
+    initialValues.bookId = defaultBook?.id || 0
+
+    // set book to state
+    setBook(defaultBook)
+  }, [booksList, getDefaultBook, initialValues, navigate])
 
   const submitHandler = ({ date }: ValuesType) => {
     console.log(date)
   }
 
+  const InnerContainer = (props: PropsWithChildren) => (
+    <View style={styles.innerContainer}>{props.children}</View>
+  )
+
+  const ContentContainer = (props: PropsWithChildren) => (
+    <View style={styles.contentContainer}>{props.children}</View>
+  )
+
+  const CreateTransactionForm = () => (
+    <Formik
+      validationSchema={transactionValidationSchema}
+      initialValues={initialValues}
+      onSubmit={submitHandler}>
+      {({ setFieldValue, values, resetForm }) => {
+        // reset form on user navigating to other screen
+        addListener('focus', () => {
+          resetForm()
+        })
+
+        return (
+          <>
+            <DatePickerHeader
+              value={values.date}
+              onChange={(dateString) => setFieldValue('date', dateString)}
+            />
+
+            <InnerContainer>
+              <ContentContainer>
+                <BookSelector
+                  booksList={booksList}
+                  value={values.bookId}
+                  onChange={(id) => {
+                    setFieldValue('bookId', id)
+                    setBook(getBookById(id))
+                  }}
+                />
+
+                <AmountInput value={24} currency={book?.currencySymbol} />
+              </ContentContainer>
+
+              <Keyboard />
+            </InnerContainer>
+          </>
+        )
+      }}
+    </Formik>
+  )
+
   return (
     <Container>
-      <Formik
-        validationSchema={transactionValidationSchema}
-        initialValues={initialValues}
-        onSubmit={submitHandler}>
-        {({ setFieldValue, values, resetForm }) => {
-          // reset form on user navigating to other screen
-          addListener('focus', () => {
-            resetForm()
-          })
-
-          return (
-            <>
-              <DatePickerHeader
-                value={values.date}
-                onChange={(dateString) => setFieldValue('date', dateString)}
-              />
-
-              <BookSelector
-                booksList={booksList}
-                value={values.bookId}
-                onChange={(id) => {
-                  setFieldValue('bookId', id)
-                }}
-              />
-            </>
-          )
-        }}
-      </Formik>
+      {booksList.length > 0 && <CreateTransactionForm />}
+      {booksList.length === 0 && <NoBooks />}
     </Container>
   )
 }
@@ -95,4 +121,15 @@ const mapDispatchToProps = (dispatch: (arg0: any) => void) => ({
   dispatch,
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateTransactions)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTransaction)
+
+const styles = StyleSheet.create({
+  innerContainer: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  contentContainer: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+})

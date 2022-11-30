@@ -13,8 +13,7 @@ import { i18n } from '../../locales'
 import { setBooks as setBooksAction } from '../../redux/actions'
 import { Book } from '../../types'
 import { capitalizeFirstLetter } from '../../utils'
-import { BookEmojiPicker, BookEmojis } from './components/BookEmojiPicker'
-import { CurrencyPicker } from './components/CurrencyPicker'
+import { BookEmojiPicker, BookEmojis, CurrencyPicker } from './components/'
 
 type ValuesType = {
   bookName: string
