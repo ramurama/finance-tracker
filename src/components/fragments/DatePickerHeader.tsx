@@ -21,8 +21,9 @@ export const DatePickerHeader: FC<DatePickerHeaderProps> = ({ value, onChange })
     formatDate(new Date()) === formattedDate ? i18n.t('common.today') : format(date, 'EEE')
 
   const RecurringTransactionButton = () => (
-    <TouchableOpacity style={styles.recurringTransactionButton}>
-      <AntDesign name="retweet" size={20} color={colors.foreground} />
+    <TouchableOpacity
+      style={{ ...styles.recurringTransactionButton, backgroundColor: colors.secondaryBackground }}>
+      <AntDesign name="retweet" size={18} color={colors.foreground} />
     </TouchableOpacity>
   )
 
@@ -96,5 +97,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: 25,
   },
 })
