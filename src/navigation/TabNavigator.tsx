@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import { Reports } from '../screens/Reports'
-import { CreateTransactions } from '../screens/Transactions'
+import CreateTransactions from '../screens/Transactions/CreateTransaction'
 import { useTheme } from '../theme'
 import { BooksNavigator } from './BooksNavigator'
 import { CategoriesNavigator } from './CategoriesNavigator'

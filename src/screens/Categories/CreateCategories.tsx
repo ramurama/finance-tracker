@@ -96,6 +96,7 @@ const CreateCategories: FC<CategoriesListProps> = ({ setCategories }) => {
             // onBlur={handleBlur('categoryName')}
             keyboardType="default"
             autoCapitalize="words"
+            maxLength={20}
           />
 
           <TransactionTypeRadioButton

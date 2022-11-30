@@ -1,22 +1,50 @@
 import { useNavigation } from '@react-navigation/core'
 import { Formik } from 'formik'
+import { useMemo } from 'react'
+import { useCallback } from 'react'
+import { useEffect } from 'react'
+import { FC } from 'react'
+import { connect } from 'react-redux'
 import * as yup from 'yup'
 
 import { Container } from '../../components'
 import { DatePickerHeader } from '../../components/fragments/DatePickerHeader'
+import { BookEntity } from '../../db/entities/Book.entity'
 import { getDatePickerFormattedDate } from '../../utils'
+import { BookSelector } from './components/BookSelector'
 
 type ValuesType = {
   date: string
+  bookId: number
 }
 
-export const CreateTransactions = () => {
+export type CreateTransactionsProps = {
+  booksList: BookEntity[]
+}
+
+const CreateTransactions: FC<CreateTransactionsProps> = ({ booksList }) => {
   const { addListener } = useNavigation()
   const transactionValidationSchema = yup.object().shape({})
 
-  const initialValues: ValuesType = {
-    date: getDatePickerFormattedDate(new Date()),
-  }
+  const getDefaultBook = useCallback(() => {
+    if (booksList.length > 0) {
+      return booksList.filter((book) => book.isDefault)[0]
+    }
+
+    return
+  }, [booksList])
+
+  const initialValues: ValuesType = useMemo(
+    () => ({
+      date: getDatePickerFormattedDate(new Date()),
+      bookId: 0,
+    }),
+    [],
+  )
+
+  useEffect(() => {
+    initialValues.bookId = getDefaultBook()?.id || 0
+  }, [booksList, getDefaultBook, initialValues])
 
   const submitHandler = ({ date }: ValuesType) => {
     console.log(date)
@@ -40,6 +68,14 @@ export const CreateTransactions = () => {
                 value={values.date}
                 onChange={(dateString) => setFieldValue('date', dateString)}
               />
+
+              <BookSelector
+                booksList={booksList}
+                value={values.bookId}
+                onChange={(id) => {
+                  setFieldValue('bookId', id)
+                }}
+              />
             </>
           )
         }}
@@ -47,3 +83,13 @@ export const CreateTransactions = () => {
     </Container>
   )
 }
+
+const mapStateToProps = (state: any) => ({
+  booksList: state.books.list,
+})
+
+const mapDispatchToProps = (dispatch: (arg0: any) => void) => ({
+  dispatch,
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTransactions)

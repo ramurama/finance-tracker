@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     height: 30,
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 5,
   },
   titleView: {
     flex: 1,
