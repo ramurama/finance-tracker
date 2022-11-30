@@ -33,7 +33,7 @@ export const BookEmojiPicker: FC<BookEmojiPickerProps> = ({ value, onChange }) =
       <Label label={i18n.t('books.pickBookEmoji')} />
       <View style={styles.emojiContainer}>
         {BookEmojis.map((emoji) => (
-          <EmojiTouchable emoji={emoji} />
+          <EmojiTouchable emoji={emoji} key={emoji} />
         ))}
       </View>
     </View>
