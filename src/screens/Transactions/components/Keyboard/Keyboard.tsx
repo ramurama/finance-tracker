@@ -1,7 +1,8 @@
 import { FC, PropsWithChildren } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { View } from 'react-native'
 
 import { ButtonKey } from './ButtonKey'
+import { styles } from './styles'
 
 export type KeyboardProps = {
   value: string
@@ -114,15 +115,3 @@ export const Keyboard: FC<KeyboardProps> = ({ value, onChange }) => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1.2,
-    flexDirection: 'row',
-    marginRight: 10,
-    marginLeft: 10,
-  },
-  column: {
-    flex: 1,
-  },
-})
