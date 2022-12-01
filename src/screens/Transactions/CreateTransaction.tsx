@@ -6,25 +6,31 @@ import { connect } from 'react-redux'
 import * as yup from 'yup'
 
 import { Container } from '../../components'
-import { DatePickerHeader } from '../../components/fragments/DatePickerHeader'
+import { DatePickerHeader, Selector } from '../../components/fragments'
 import { BookEntity } from '../../db/entities/Book.entity'
+import { CategoryEntity } from '../../db/entities/Category.entity'
 import { TransactionType } from '../../types'
 import { getDatePickerFormattedDate } from '../../utils'
-import { AmountInput, BookSelector, Keyboard, NoBooks, TypeSelector } from './components'
+import { AmountInput, Keyboard, NoBooks, TypeSelector } from './components'
 
 type ValuesType = {
   date: string
   datePickerVisible: boolean
   bookId: number
+  categoryId: number
   currency: string
   amount: string
   type: TransactionType
 }
 
+// TODO: one default category for expense should be added during app init (id 1)
+// TODO: one default category for income should be added during app init (id 2)
+
 const initialValues: ValuesType = {
   date: getDatePickerFormattedDate(new Date()),
   datePickerVisible: false,
   bookId: 0, // ! bookId should not be 0 after loading
+  categoryId: 1, // ! category id 1 is default expense
   currency: '',
   amount: '0',
   type: 1,
@@ -32,9 +38,10 @@ const initialValues: ValuesType = {
 
 export type CreateTransactionProps = {
   booksList: BookEntity[]
+  categoriesList: CategoryEntity[]
 }
 
-const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
+const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesList }) => {
   const { addListener, navigate } = useNavigation()
 
   const transactionValidationSchema = yup.object().shape({})
@@ -59,8 +66,11 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
     initialValues.currency = defaultBook?.currencySymbol || ''
   }, [booksList, getDefaultBook, navigate])
 
-  const submitHandler = ({ date, amount, bookId, type }: ValuesType) => {
+  useEffect(() => {}, [])
+
+  const submitHandler = ({ date, amount, bookId, type, categoryId }: ValuesType) => {
     console.log(date, amount, bookId, type)
+    console.log(categoryId)
 
     // TODO: validate and submit data
   }
@@ -101,8 +111,8 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
 
             <InnerContainer>
               <ContentContainer>
-                <BookSelector
-                  booksList={booksList}
+                <Selector
+                  list={booksList}
                   value={values.bookId}
                   onChange={(id) => {
                     setFieldValue('bookId', id)
@@ -127,13 +137,28 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
                       setFieldValue('amount', newValue)
                     }}
                   />
+
                   <TypeSelector
                     value={values.type}
                     onChange={(value) => {
                       setFieldValue('type', value)
+
+                      // type is reset, therefore set the category to default one of the selected type
+                      if (value === 2) {
+                        // ! category id 2 is default income
+                        setFieldValue('categoryId', 3)
+                      }
                     }}
                   />
                 </InputContainer>
+
+                <Selector
+                  list={categoriesList.filter((item) => item.type === values.type)}
+                  value={values.categoryId}
+                  onChange={(id) => {
+                    setFieldValue('categoryId', id)
+                  }}
+                />
               </ContentContainer>
 
               <Keyboard
@@ -172,6 +197,7 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
 
 const mapStateToProps = (state: any) => ({
   booksList: state.books.list,
+  categoriesList: state.categories.list,
 })
 
 const mapDispatchToProps = (dispatch: (arg0: any) => void) => ({

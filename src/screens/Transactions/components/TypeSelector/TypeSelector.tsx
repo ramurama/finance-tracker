@@ -13,18 +13,23 @@ export type TypeSelectorProps = {
 export const TypeSelector = (props: TypeSelectorProps) => {
   const { value, onChange } = props
 
+  const isValue1 = value === 1
+  const isValue2 = value === 2
+
   return (
     <View style={styles.selectorContainer}>
       <TypeSelectorItem
         name={i18n.t('common.expense')}
-        selected={value === 1}
+        selected={isValue1}
+        disabled={isValue1}
         onPress={() => {
           onChange(1)
         }}
       />
       <TypeSelectorItem
         name={i18n.t('common.income')}
-        selected={value === 2}
+        selected={isValue2}
+        disabled={isValue2}
         onPress={() => {
           onChange(2)
         }}

@@ -6,7 +6,7 @@ import * as yup from 'yup'
 
 import { Container } from '../../components'
 import { Button } from '../../components/atoms'
-import { TransactionTypeRadioButton } from '../../components/fragments/TransactionTypeRadioButton'
+import { TransactionTypeRadioButton } from '../../components/fragments'
 import { Header, InputField } from '../../components/molecules'
 import { EmojiPicker } from '../../components/molecules'
 import { CategoryEntity } from '../../db/entities/Category.entity'
