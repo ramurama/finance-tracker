@@ -52,7 +52,7 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
     [],
   )
 
-  // update bookId on load
+  // ! update bookId on load
   useEffect(() => {
     const defaultBook = getDefaultBook()
     initialValues.bookId = defaultBook?.id || 0
@@ -129,7 +129,7 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
                 onChange={(value) => {
                   let valueToUpdate = value
 
-                  // ! there should be
+                  // ! if more than 2 digits present after the decimal place, trim digits
                   if (value.indexOf('.') !== -1) {
                     const split = value.split('.')
                     const afterDecimal = split[1]!
