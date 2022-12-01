@@ -23,6 +23,14 @@ type ValuesType = {
   isDefault: boolean
 }
 
+const initialValues: ValuesType = {
+  bookName: '',
+  emoji: BookEmojis[0]!,
+  currencyCode: 'USD',
+  currencySymbol: '$',
+  isDefault: false,
+}
+
 export type CreateBookProps = {
   books: BookEntity[]
   setBooks: (books: BookEntity[]) => void
@@ -31,14 +39,6 @@ export type CreateBookProps = {
 const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
   const { goBack } = useNavigation()
   const { params } = useRoute()
-
-  const initialValues: ValuesType = {
-    bookName: '',
-    emoji: BookEmojis[0]!,
-    currencyCode: 'USD',
-    currencySymbol: '$',
-    isDefault: false,
-  }
 
   const isEditMode = params && params.book && params.book.id
 

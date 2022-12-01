@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import { Formik } from 'formik'
-import { FC, PropsWithChildren, useCallback, useEffect, useMemo } from 'react'
+import { FC, PropsWithChildren, useCallback, useEffect } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 import * as yup from 'yup'
@@ -19,6 +19,15 @@ type ValuesType = {
   currency: string
   amount: string
   type: TransactionType
+}
+
+const initialValues: ValuesType = {
+  date: getDatePickerFormattedDate(new Date()),
+  datePickerVisible: false,
+  bookId: 0, // ! bookId should not be 0 after loading
+  currency: '',
+  amount: '0',
+  type: 1,
 }
 
 export type CreateTransactionProps = {
@@ -43,24 +52,12 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
     [booksList],
   )
 
-  const initialValues: ValuesType = useMemo(
-    () => ({
-      date: getDatePickerFormattedDate(new Date()),
-      datePickerVisible: false,
-      bookId: 0, // ! bookId should not be 0 after loading
-      currency: '',
-      amount: '0',
-      type: 1,
-    }),
-    [],
-  )
-
   // ! update bookId on load
   useEffect(() => {
     const defaultBook = getDefaultBook()
     initialValues.bookId = defaultBook?.id || 0
     initialValues.currency = defaultBook?.currencySymbol || ''
-  }, [booksList, getDefaultBook, initialValues, navigate])
+  }, [booksList, getDefaultBook, navigate])
 
   const submitHandler = ({ date, amount, bookId, type }: ValuesType) => {
     console.log(date, amount, bookId, type)
