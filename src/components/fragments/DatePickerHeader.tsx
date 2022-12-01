@@ -1,4 +1,4 @@
-import { AntDesign } from '@expo/vector-icons'
+// import { AntDesign } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/core'
 import { format } from 'date-fns'
 import { FC } from 'react'
@@ -29,12 +29,12 @@ export const DatePickerHeader: FC<DatePickerHeaderProps> = ({
   const formatWeekDay = (date: Date) =>
     formatDate(new Date()) === formattedDate ? i18n.t('common.today') : format(date, 'EEE')
 
-  const RecurringTransactionButton = () => (
-    <TouchableOpacity
-      style={{ ...styles.recurringTransactionButton, backgroundColor: colors.secondaryBackground }}>
-      <AntDesign name="retweet" size={18} color={colors.foreground} />
-    </TouchableOpacity>
-  )
+  // const RecurringTransactionButton = () => (
+  //   <TouchableOpacity
+  //     style={{ ...styles.recurringTransactionButton, backgroundColor: colors.secondaryBackground }}>
+  //     <AntDesign name="retweet" size={18} color={colors.foreground} />
+  //   </TouchableOpacity>
+  // )
 
   const TouchableDateText = () => (
     <TouchableOpacity
@@ -59,7 +59,8 @@ export const DatePickerHeader: FC<DatePickerHeaderProps> = ({
       onClose={() => {
         goBack()
       }}
-      iconRight={<RecurringTransactionButton />}>
+      // iconRight={<RecurringTransactionButton />}
+    >
       <View style={styles.titleContainer}>
         <Text style={{ ...styles.headerTitle, color: colors.foreground }}>
           {formatWeekDay(new Date(value)) + ', '}
@@ -106,12 +107,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  recurringTransactionButton: {
-    height: 30,
-    width: 30,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 25,
-  },
+  // recurringTransactionButton: {
+  //   height: 30,
+  //   width: 30,
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   borderRadius: 25,
+  // },
 })
