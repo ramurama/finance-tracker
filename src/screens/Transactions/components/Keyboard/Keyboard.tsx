@@ -7,9 +7,10 @@ import { styles } from './styles'
 export type KeyboardProps = {
   value: string
   onChange: (value: string) => void
+  onDone: () => void
 }
 
-export const Keyboard: FC<KeyboardProps> = ({ value, onChange }) => {
+export const Keyboard: FC<KeyboardProps> = ({ value, onChange, onDone }) => {
   const Column = (props: PropsWithChildren) => <View style={styles.column}>{props.children}</View>
 
   const isValueZero = value === '0'
@@ -103,7 +104,7 @@ export const Keyboard: FC<KeyboardProps> = ({ value, onChange }) => {
           appendValue('9')
         }}
       />
-      <ButtonKey done onPress={() => {}} disabled={!enableDoneBtn} />
+      <ButtonKey done onPress={onDone} disabled={!enableDoneBtn} />
     </Column>
   )
 

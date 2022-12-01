@@ -59,8 +59,8 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
     initialValues.currency = defaultBook?.currencySymbol || ''
   }, [booksList, getDefaultBook, initialValues, navigate])
 
-  const submitHandler = ({ date }: ValuesType) => {
-    console.log(date)
+  const submitHandler = ({ date, amount, bookId }: ValuesType) => {
+    console.log(date, amount, bookId)
 
     // TODO: validate and submit data
   }
@@ -78,7 +78,7 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
       validationSchema={transactionValidationSchema}
       initialValues={initialValues}
       onSubmit={submitHandler}>
-      {({ setFieldValue, values, resetForm }) => {
+      {({ setFieldValue, values, resetForm, handleSubmit }) => {
         // reset form on user navigating to other screen
         addListener('focus', () => {
           resetForm()
@@ -141,6 +141,7 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
 
                   setFieldValue('amount', valueToUpdate)
                 }}
+                onDone={handleSubmit}
               />
             </InnerContainer>
           </>
