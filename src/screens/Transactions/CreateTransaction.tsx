@@ -8,8 +8,9 @@ import * as yup from 'yup'
 import { Container } from '../../components'
 import { DatePickerHeader } from '../../components/fragments/DatePickerHeader'
 import { BookEntity } from '../../db/entities/Book.entity'
+import { TransactionType } from '../../types'
 import { getDatePickerFormattedDate } from '../../utils'
-import { AmountInput, BookSelector, Keyboard, NoBooks } from './components'
+import { AmountInput, BookSelector, Keyboard, NoBooks, TypeSelector } from './components'
 
 type ValuesType = {
   date: string
@@ -17,6 +18,7 @@ type ValuesType = {
   bookId: number
   currency: string
   amount: string
+  type: TransactionType
 }
 
 export type CreateTransactionProps = {
@@ -48,6 +50,7 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
       bookId: 0, // ! bookId should not be 0 after loading
       currency: '',
       amount: '0',
+      type: 1,
     }),
     [],
   )
@@ -59,8 +62,8 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
     initialValues.currency = defaultBook?.currencySymbol || ''
   }, [booksList, getDefaultBook, initialValues, navigate])
 
-  const submitHandler = ({ date, amount, bookId }: ValuesType) => {
-    console.log(date, amount, bookId)
+  const submitHandler = ({ date, amount, bookId, type }: ValuesType) => {
+    console.log(date, amount, bookId, type)
 
     // TODO: validate and submit data
   }
@@ -71,6 +74,10 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
 
   const ContentContainer = (props: PropsWithChildren) => (
     <View style={styles.contentContainer}>{props.children}</View>
+  )
+
+  const InputContainer = (props: PropsWithChildren) => (
+    <View style={styles.inputContainer}>{props.children}</View>
   )
 
   const CreateTransactionForm = () => (
@@ -108,20 +115,28 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
                   }}
                 />
 
-                <AmountInput
-                  value={values.amount}
-                  currency={values.currency}
-                  onBackspace={() => {
-                    const value = values.amount
-                    let newValue = value.substring(0, value.length - 1)
+                <InputContainer>
+                  <AmountInput
+                    value={values.amount}
+                    currency={values.currency}
+                    onBackspace={() => {
+                      const value = values.amount
+                      let newValue = value.substring(0, value.length - 1)
 
-                    if (newValue === '') {
-                      newValue = '0'
-                    }
+                      if (newValue === '') {
+                        newValue = '0'
+                      }
 
-                    setFieldValue('amount', newValue)
-                  }}
-                />
+                      setFieldValue('amount', newValue)
+                    }}
+                  />
+                  <TypeSelector
+                    value={values.type}
+                    onChange={(value) => {
+                      setFieldValue('type', value)
+                    }}
+                  />
+                </InputContainer>
               </ContentContainer>
 
               <Keyboard
@@ -176,5 +191,10 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 2,
     flexDirection: 'column',
+  },
+  inputContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
 })

@@ -1,4 +1,4 @@
-import { FlatList } from 'react-native'
+import { FlatList, View } from 'react-native'
 
 import { BookEntity } from '../../../../db/entities/Book.entity'
 import { BookSelectorItem } from './BookSelectorItem'
@@ -17,20 +17,22 @@ export const BookSelector = (props: BookSelectorProps) => {
   }
 
   return (
-    <FlatList
-      data={booksList}
-      extraData={booksList}
-      renderItem={({ item }) => (
-        <BookSelectorItem
-          name={item.name}
-          emoji={item.emoji}
-          selected={item.id === value}
-          onPress={() => {
-            onChange(item.id)
-          }}
-        />
-      )}
-      horizontal
-    />
+    <View>
+      <FlatList
+        data={booksList}
+        extraData={booksList}
+        renderItem={({ item }) => (
+          <BookSelectorItem
+            name={item.name}
+            emoji={item.emoji}
+            selected={item.id === value}
+            onPress={() => {
+              onChange(item.id)
+            }}
+          />
+        )}
+        horizontal
+      />
+    </View>
   )
 }

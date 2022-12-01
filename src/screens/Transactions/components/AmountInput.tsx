@@ -32,7 +32,7 @@ export const AmountInput = (props: AmountInputProps) => {
     <TouchableOpacity
       style={{ ...styles.backspaceButton, backgroundColor: colors.secondaryBackground }}
       onPress={onBackspace}>
-      <MaterialIcons name="backspace" size={18} color={colors.grey} />
+      <MaterialIcons name="backspace" size={18} color={colors.grey} style={styles.backspaceIcon} />
     </TouchableOpacity>
   )
 
@@ -47,7 +47,6 @@ export const AmountInput = (props: AmountInputProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
   },
@@ -73,5 +72,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  backspaceIcon: {
+    marginLeft: -1,
+    marginTop: 1,
   },
 })
