@@ -36,7 +36,10 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
     return
   }, [booksList])
 
-  const getBookById = (id: number) => booksList.filter((item) => item.id === id)[0]
+  const getBookById = useCallback(
+    (id: number) => booksList.filter((item) => item.id === id)[0],
+    [booksList],
+  )
 
   const initialValues: ValuesType = useMemo(
     () => ({
