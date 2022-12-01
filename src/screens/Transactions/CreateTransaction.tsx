@@ -146,7 +146,10 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
                       // type is reset, therefore set the category to default one of the selected type
                       if (value === 2) {
                         // ! category id 2 is default income
-                        setFieldValue('categoryId', 3)
+                        const filteredCategories = categoriesList.filter(
+                          (category) => category.type === value,
+                        )
+                        setFieldValue('categoryId', filteredCategories[0]!.id)
                       }
                     }}
                   />
