@@ -61,6 +61,8 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
 
   const submitHandler = ({ date }: ValuesType) => {
     console.log(date)
+
+    // TODO: validate and submit data
   }
 
   const InnerContainer = (props: PropsWithChildren) => (
@@ -106,13 +108,38 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList }) => {
                   }}
                 />
 
-                <AmountInput value={values.amount} currency={values.currency} />
+                <AmountInput
+                  value={values.amount}
+                  currency={values.currency}
+                  onBackspace={() => {
+                    const value = values.amount
+                    let newValue = value.substring(0, value.length - 1)
+
+                    if (newValue === '') {
+                      newValue = '0'
+                    }
+
+                    setFieldValue('amount', newValue)
+                  }}
+                />
               </ContentContainer>
 
               <Keyboard
                 value={values.amount}
                 onChange={(value) => {
-                  setFieldValue('amount', value)
+                  let valueToUpdate = value
+
+                  // ! there should be
+                  if (value.indexOf('.') !== -1) {
+                    const split = value.split('.')
+                    const afterDecimal = split[1]!
+
+                    if (afterDecimal.length > 2) {
+                      valueToUpdate = split[0] + '.' + afterDecimal.substring(0, 2)
+                    }
+                  }
+
+                  setFieldValue('amount', valueToUpdate)
                 }}
               />
             </InnerContainer>

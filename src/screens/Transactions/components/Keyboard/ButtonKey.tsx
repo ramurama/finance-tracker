@@ -16,7 +16,7 @@ export const ButtonKey = (props: ButtonKeyProps) => {
 
   const { colors } = useTheme()
 
-  let bgColor = colors.secondaryBackground
+  let bgColor = colors.buttonBg
 
   if (done && disabled) {
     bgColor = colors.successDark
