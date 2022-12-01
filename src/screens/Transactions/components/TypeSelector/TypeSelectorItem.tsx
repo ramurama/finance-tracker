@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../../../../theme'
 import { styles } from './styles'
@@ -22,6 +22,18 @@ export const TypeSelectorItem = (props: TypeSelectorItemProps) => {
           ? { ...styles.selectedItemContainer, borderColor: colors.secondaryForeground }
           : {},
       ]}>
+      <View
+        style={[
+          { ...styles.radioOuterCircle, borderColor: colors.grey },
+          selected ? { borderColor: colors.secondaryForeground } : {},
+        ]}>
+        <View
+          style={[
+            { ...styles.radioInnerCircle, backgroundColor: colors.grey },
+            selected ? { backgroundColor: colors.secondaryForeground } : {},
+          ]}
+        />
+      </View>
       <Text style={{ ...styles.itemName, color: colors.secondaryForeground }}>{name}</Text>
     </TouchableOpacity>
   )
