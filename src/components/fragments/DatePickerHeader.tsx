@@ -56,6 +56,7 @@ export const DatePickerHeader: FC<DatePickerHeaderProps> = ({
   const HeaderComponent = () => (
     <Header
       closeButton
+      moreMargin
       onClose={() => {
         goBack()
       }}

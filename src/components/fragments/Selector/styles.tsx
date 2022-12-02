@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native'
 export const styles = StyleSheet.create({
   selectorContainer: {
     height: 36,
+    marginBottom: 5,
   },
   itemContainer: {
     flexDirection: 'row',
