@@ -1,8 +1,6 @@
-import { useNavigation, useRoute } from '@react-navigation/core'
 import { Formik } from 'formik'
 import { FC } from 'react'
 import { connect } from 'react-redux'
-import * as yup from 'yup'
 
 import { Container } from '../../components'
 import { Button } from '../../components/atoms'
@@ -10,75 +8,19 @@ import { TransactionTypeRadioButton } from '../../components/fragments'
 import { Header, InputField } from '../../components/molecules'
 import { EmojiPicker } from '../../components/molecules'
 import { CategoryEntity } from '../../db/entities/Category.entity'
-import { useDB } from '../../db/useDB'
 import { i18n } from '../../locales'
 import { setCategories as setCategoriesAction } from '../../redux/actions'
-import { Category, TransactionType } from '../../types'
-import { capitalizeFirstLetter } from '../../utils'
+import { useCreateCategories } from './useCreateCategories'
 
-type ValuesType = {
-  categoryName: string
-  type: TransactionType
-  emoji: string
-}
-
-export type CategoriesListProps = {
+export type CreateCategoryProps = {
   setCategories: (categories: CategoryEntity[]) => void
 }
 
-const CreateCategories: FC<CategoriesListProps> = ({ setCategories }) => {
-  const { goBack } = useNavigation()
-  const { params } = useRoute()
-  const { categoryService } = useDB()
-
-  const initialValues: ValuesType = {
-    categoryName: '',
-    type: params.activeType || 1,
-    emoji: '',
-  }
-
-  const isEditMode = params && params.category && params.category.id
-
-  if (isEditMode) {
-    const { name, type, emoji } = params.category as Category
-
-    initialValues.categoryName = name
-    initialValues.type = type
-    initialValues.emoji = emoji
-  }
-
-  const categoriesValidationSchema = yup.object().shape({
-    categoryName: yup.string().required(i18n.t('categories.errorCategoryName')),
-    type: yup.number().required(),
-    emoji: yup.string().required(i18n.t('categories.errorEmoji')),
-  })
-
-  const submitHandler = async ({ categoryName, type, emoji }: ValuesType) => {
-    let categoriesList: CategoryEntity[] | undefined
-
-    const name = capitalizeFirstLetter(categoryName.trim())
-
-    if (isEditMode) {
-      categoriesList = await categoryService.updateCategory({
-        id: params.category.id,
-        name,
-        type,
-        emoji,
-      })
-    } else {
-      categoriesList = await categoryService.createCategory({
-        name,
-        type,
-        emoji,
-      })
-    }
-
-    if (categoriesList) {
-      setCategories(categoriesList)
-    }
-
-    goBack()
-  }
+const CreateCategories: FC<CreateCategoryProps> = ({ setCategories }) => {
+  const { initialValues, isEditMode, categoriesValidationSchema, submitHandler } =
+    useCreateCategories({
+      setCategories,
+    })
 
   const CategoryForm = () => (
     <Formik
