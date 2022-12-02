@@ -9,36 +9,9 @@ import { Container } from '../../components'
 import { DatePickerHeader, Selector } from '../../components/fragments'
 import { BookEntity } from '../../db/entities/Book.entity'
 import { CategoryEntity } from '../../db/entities/Category.entity'
-import { TransactionType } from '../../types'
-import { getDatePickerFormattedDate } from '../../utils'
 import { AmountInput, Keyboard, NoBooks, TypeSelector } from './components'
 import { NotesInput } from './components/NotesInput'
 import { useCreateTransaction } from './useCreateTransaction'
-
-export type ValuesType = {
-  date: string
-  datePickerVisible: boolean
-  bookId: number
-  categoryId: number
-  currency: string
-  amount: string
-  type: TransactionType
-  remarks: string
-}
-
-// TODO: one default category for expense should be added during app init (id 1)
-// TODO: one default category for income should be added during app init (id 2)
-
-const initialValues: ValuesType = {
-  date: getDatePickerFormattedDate(new Date()),
-  datePickerVisible: false,
-  bookId: 0, // ! bookId should not be 0 after loading
-  categoryId: 1, // ! category id 1 is default expense
-  currency: '',
-  amount: '0',
-  type: 1,
-  remarks: '',
-}
 
 export type CreateTransactionProps = {
   booksList: BookEntity[]
@@ -50,15 +23,7 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
 
   const transactionValidationSchema = yup.object().shape({})
 
-  const { getBookById } = useCreateTransaction({ booksList, initialValues })
-
-  const submitHandler = ({ date, amount, bookId, type, categoryId, remarks }: ValuesType) => {
-    console.log(date, amount, bookId, type)
-    console.log(categoryId)
-    console.log(remarks)
-
-    // TODO: validate and submit data
-  }
+  const { initialValues, getBookById, submitHandler } = useCreateTransaction({ booksList })
 
   const InnerContainer = (props: PropsWithChildren) => (
     <View style={styles.innerContainer}>{props.children}</View>
