@@ -12,6 +12,7 @@ import { CategoryEntity } from '../../db/entities/Category.entity'
 import { TransactionType } from '../../types'
 import { getDatePickerFormattedDate } from '../../utils'
 import { AmountInput, Keyboard, NoBooks, TypeSelector } from './components'
+import { NotesInput } from './components/NotesInput'
 
 type ValuesType = {
   date: string
@@ -21,6 +22,7 @@ type ValuesType = {
   currency: string
   amount: string
   type: TransactionType
+  remarks: string
 }
 
 // TODO: one default category for expense should be added during app init (id 1)
@@ -34,6 +36,7 @@ const initialValues: ValuesType = {
   currency: '',
   amount: '0',
   type: 1,
+  remarks: '',
 }
 
 export type CreateTransactionProps = {
@@ -68,9 +71,10 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
 
   useEffect(() => {}, [])
 
-  const submitHandler = ({ date, amount, bookId, type, categoryId }: ValuesType) => {
+  const submitHandler = ({ date, amount, bookId, type, categoryId, remarks }: ValuesType) => {
     console.log(date, amount, bookId, type)
     console.log(categoryId)
+    console.log(remarks)
 
     // TODO: validate and submit data
   }
@@ -149,6 +153,13 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
                         .sort((a, b) => a.id - b.id)
 
                       setFieldValue('categoryId', filteredCategories[0]!.id)
+                    }}
+                  />
+
+                  <NotesInput
+                    value={values.remarks}
+                    onChange={(value) => {
+                      setFieldValue('remarks', value)
                     }}
                   />
                 </InputContainer>
