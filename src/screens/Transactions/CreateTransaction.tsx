@@ -121,6 +121,7 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
 
               <Keyboard
                 value={values.amount}
+                disabled={values.amount.length > 8}
                 onChange={(value) => {
                   let valueToUpdate = value
 

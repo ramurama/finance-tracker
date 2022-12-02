@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
-    margin: 6,
+    margin: 3,
   },
   buttonKeyText: {
     fontSize: 25,
