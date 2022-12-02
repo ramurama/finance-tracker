@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import { Formik } from 'formik'
-import { FC, PropsWithChildren, useCallback, useEffect } from 'react'
+import { FC, PropsWithChildren } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 import * as yup from 'yup'
@@ -13,8 +13,9 @@ import { TransactionType } from '../../types'
 import { getDatePickerFormattedDate } from '../../utils'
 import { AmountInput, Keyboard, NoBooks, TypeSelector } from './components'
 import { NotesInput } from './components/NotesInput'
+import { useCreateTransaction } from './useCreateTransaction'
 
-type ValuesType = {
+export type ValuesType = {
   date: string
   datePickerVisible: boolean
   bookId: number
@@ -45,31 +46,11 @@ export type CreateTransactionProps = {
 }
 
 const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesList }) => {
-  const { addListener, navigate } = useNavigation()
+  const { addListener } = useNavigation()
 
   const transactionValidationSchema = yup.object().shape({})
 
-  const getDefaultBook = useCallback(() => {
-    if (booksList.length > 0) {
-      return booksList.filter((bookElement) => bookElement.isDefault)[0]
-    }
-
-    return
-  }, [booksList])
-
-  const getBookById = useCallback(
-    (id: number) => booksList.filter((item) => item.id === id)[0],
-    [booksList],
-  )
-
-  // ! update bookId on load
-  useEffect(() => {
-    const defaultBook = getDefaultBook()
-    initialValues.bookId = defaultBook?.id || 0
-    initialValues.currency = defaultBook?.currencySymbol || ''
-  }, [booksList, getDefaultBook, navigate])
-
-  useEffect(() => {}, [])
+  const { getBookById } = useCreateTransaction({ booksList, initialValues })
 
   const submitHandler = ({ date, amount, bookId, type, categoryId, remarks }: ValuesType) => {
     console.log(date, amount, bookId, type)

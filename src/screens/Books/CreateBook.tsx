@@ -43,12 +43,13 @@ const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
   const isEditMode = params && params.book && params.book.id
 
   if (isEditMode) {
-    const { name, currencyCode, currencySymbol, isDefault } = params.book as Book
+    const { name, currencyCode, currencySymbol, isDefault, emoji } = params.book as Book
 
     initialValues.bookName = name
     initialValues.currencyCode = currencyCode
     initialValues.currencySymbol = currencySymbol
     initialValues.isDefault = isDefault
+    initialValues.emoji = emoji
   }
 
   const bookValidationSchema = yup.object().shape({

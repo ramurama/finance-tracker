@@ -1,7 +1,5 @@
-import { useActionSheet } from '@expo/react-native-action-sheet'
-import { useNavigation } from '@react-navigation/core'
-import { FC, useCallback, useEffect, useState } from 'react'
-import { Alert, FlatList, StyleSheet } from 'react-native'
+import { FC } from 'react'
+import { FlatList, StyleSheet } from 'react-native'
 import GestureRecognizer from 'react-native-swipe-gestures'
 import { connect } from 'react-redux'
 
@@ -9,12 +7,11 @@ import { Container } from '../../components'
 import { HeaderAddButton } from '../../components/atoms'
 import { Header } from '../../components/molecules'
 import { CategoryEntity } from '../../db/entities/Category.entity'
-import { useDB } from '../../db/useDB'
 import { i18n } from '../../locales'
-import { routes } from '../../navigation/routes'
 import { setCategories as setCategoriesAction } from '../../redux/actions'
 import { TransactionType } from '../../types'
 import { CategoryItem, EmptyCategories, Filters } from './components'
+import { useCategoriesList } from './useCategoriesList'
 
 export type CategoriesListProps = {
   categories: CategoryEntity[]
@@ -22,69 +19,16 @@ export type CategoriesListProps = {
 }
 
 const CategoriesList: FC<CategoriesListProps> = ({ categories, setCategories }) => {
-  const { navigate } = useNavigation()
-  const { categoryService } = useDB()
-  const { showActionSheetWithOptions } = useActionSheet()
-
-  const [activeType, setActiveType] = useState<TransactionType>(1)
-
-  const loadCategories = useCallback(async () => {
-    setCategories(await categoryService.getCategories())
-  }, [categoryService, setCategories])
-
-  useEffect(() => {
-    loadCategories()
-  }, [loadCategories])
-
-  const goToEditMode = (category: CategoryEntity) => {
-    navigate(routes.CREATE_CATEGORY, {
-      category: {
-        id: category.id,
-        name: category.name,
-        emoji: category.emoji,
-        type: category.type,
-      },
-    })
-  }
-
-  const deleteCategory = (categoryId: number) => {
-    Alert.alert(i18n.t('common.caution'), i18n.t('categories.deleteCategoryConfirmation'), [
-      {
-        text: i18n.t('common.yes'),
-        onPress: async () => {
-          await categoryService.deleteCategory(categoryId)
-          await loadCategories()
-        },
-      },
-      {
-        text: i18n.t('common.no'),
-      },
-    ])
-  }
-
-  const longPressHandler = (category: CategoryEntity) => {
-    const options = [i18n.t('common.delete'), i18n.t('common.edit'), i18n.t('common.cancel')]
-    const destructiveButtonIndex = 0
-    const cancelButtonIndex = 2
-
-    showActionSheetWithOptions(
-      { options, cancelButtonIndex, destructiveButtonIndex },
-      async (selectedIndex?: number) => {
-        switch (selectedIndex) {
-          case 1:
-            goToEditMode(category)
-            break
-
-          case destructiveButtonIndex:
-            await deleteCategory(category.id)
-            break
-
-          default:
-            break
-        }
-      },
-    )
-  }
+  const {
+    activeType,
+    setActiveType,
+    longPressHandler,
+    goToCreateCategory,
+    onSwipeLeft,
+    onSwipeRight,
+  } = useCategoriesList({
+    setCategories,
+  })
 
   const Categories = () => (
     <FlatList
@@ -103,24 +47,12 @@ const CategoriesList: FC<CategoriesListProps> = ({ categories, setCategories }) 
     />
   )
 
-  const AddCategories = () => (
-    <HeaderAddButton
-      onPress={() => {
-        navigate(routes.CREATE_CATEGORY, {
-          activeType,
-        })
-      }}
-    />
-  )
+  const AddCategories = () => <HeaderAddButton onPress={goToCreateCategory} />
 
   return (
     <GestureRecognizer
-      onSwipeLeft={() => {
-        setActiveType(2)
-      }}
-      onSwipeRight={() => {
-        setActiveType(1)
-      }}
+      onSwipeLeft={onSwipeLeft}
+      onSwipeRight={onSwipeRight}
       config={{
         velocityThreshold: 0.1,
         directionalOffsetThreshold: 80,
