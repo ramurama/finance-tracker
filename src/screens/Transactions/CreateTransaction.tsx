@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/core'
 import { Formik } from 'formik'
 import { FC, PropsWithChildren } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 import * as yup from 'yup'
 
@@ -9,8 +9,7 @@ import { Container } from '../../components'
 import { DatePickerHeader, Selector } from '../../components/fragments'
 import { BookEntity } from '../../db/entities/Book.entity'
 import { CategoryEntity } from '../../db/entities/Category.entity'
-import { AmountInput, Keyboard, NoBooks, TypeSelector } from './components'
-import { NotesInput } from './components/NotesInput'
+import { NoBooks, TransactionMainInputs } from './components'
 import { useCreateTransaction } from './useCreateTransaction'
 
 export type CreateTransactionProps = {
@@ -26,15 +25,13 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
   const { initialValues, getBookById, submitHandler } = useCreateTransaction({ booksList })
 
   const InnerContainer = (props: PropsWithChildren) => (
-    <View style={styles.innerContainer}>{props.children}</View>
+    <KeyboardAvoidingView style={styles.innerContainer} behavior="padding">
+      {props.children}
+    </KeyboardAvoidingView>
   )
 
   const ContentContainer = (props: PropsWithChildren) => (
     <View style={styles.contentContainer}>{props.children}</View>
-  )
-
-  const InputContainer = (props: PropsWithChildren) => (
-    <View style={styles.inputContainer}>{props.children}</View>
   )
 
   const CreateTransactionForm = () => (
@@ -42,7 +39,7 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
       validationSchema={transactionValidationSchema}
       initialValues={initialValues}
       onSubmit={submitHandler}>
-      {({ setFieldValue, values, resetForm, handleSubmit }) => {
+      {({ setFieldValue, values, resetForm }) => {
         // reset form on user navigating to other screen
         addListener('focus', () => {
           resetForm()
@@ -72,43 +69,43 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
                   }}
                 />
 
-                <InputContainer>
-                  <AmountInput
-                    value={values.amount}
-                    currency={values.currency}
-                    onBackspace={() => {
-                      const value = values.amount
-                      let newValue = value.substring(0, value.length - 1)
+                <TransactionMainInputs
+                  currency={values.currency}
+                  amount={values.amount}
+                  onChangeAmount={(value) => {
+                    // ! this logic is to ensure that there is only one decimal point at any time
+                    if (value.indexOf('.') !== -1) {
+                      const split = value.split('.')
 
-                      if (newValue === '') {
-                        newValue = '0'
+                      if (split.length <= 2) {
+                        setFieldValue('amount', value)
                       }
+                    } else if (value.indexOf(',') !== -1) {
+                      const split = value.split(',')
 
-                      setFieldValue('amount', newValue)
-                    }}
-                  />
+                      if (split.length <= 2) {
+                        setFieldValue('amount', value)
+                      }
+                    } else {
+                      setFieldValue('amount', value)
+                    }
+                  }}
+                  notes={values.remarks}
+                  onChangeNotes={(value: string) => {
+                    setFieldValue('remarks', value)
+                  }}
+                  type={values.type}
+                  onChangeType={(value) => {
+                    setFieldValue('type', value)
 
-                  <TypeSelector
-                    value={values.type}
-                    onChange={(value) => {
-                      setFieldValue('type', value)
+                    // ! type is reset, therefore set the category to default one of the selected type
+                    const filteredCategories = categoriesList
+                      .filter((category) => category.type === value)
+                      .sort((a, b) => a.id - b.id)
 
-                      // ! type is reset, therefore set the category to default one of the selected type
-                      const filteredCategories = categoriesList
-                        .filter((category) => category.type === value)
-                        .sort((a, b) => a.id - b.id)
-
-                      setFieldValue('categoryId', filteredCategories[0]!.id)
-                    }}
-                  />
-
-                  <NotesInput
-                    value={values.remarks}
-                    onChange={(value) => {
-                      setFieldValue('remarks', value)
-                    }}
-                  />
-                </InputContainer>
+                    setFieldValue('categoryId', filteredCategories[0]!.id)
+                  }}
+                />
 
                 <Selector
                   list={categoriesList.filter((item) => item.type === values.type)}
@@ -119,7 +116,7 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
                 />
               </ContentContainer>
 
-              <Keyboard
+              {/* <Keyboard
                 value={values.amount}
                 disabled={values.amount.length > 8}
                 onChange={(value) => {
@@ -138,7 +135,7 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
                   setFieldValue('amount', valueToUpdate)
                 }}
                 onDone={handleSubmit}
-              />
+              /> */}
             </InnerContainer>
           </>
         )
@@ -147,7 +144,7 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
   )
 
   return (
-    <Container>
+    <Container noDismissKeyboard>
       {booksList.length > 0 && <CreateTransactionForm />}
       {booksList.length === 0 && <NoBooks />}
     </Container>
@@ -173,10 +170,5 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 2,
     flexDirection: 'column',
-  },
-  inputContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
   },
 })

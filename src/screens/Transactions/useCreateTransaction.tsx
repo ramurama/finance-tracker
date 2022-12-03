@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/core'
 import { useCallback, useEffect } from 'react'
 
 import { TransactionType } from '../../types'
@@ -25,7 +24,7 @@ const initialValues: CreateTransactionValuesType = {
   bookId: 0, // ! bookId should not be 0 after loading
   categoryId: 1, // ! category id 1 is default expense
   currency: '',
-  amount: '0',
+  amount: '',
   type: 1,
   remarks: '',
 }
@@ -33,8 +32,6 @@ const initialValues: CreateTransactionValuesType = {
 export type UseTransactionProps = Pick<CreateTransactionProps, 'booksList'>
 
 export const useCreateTransaction = ({ booksList }: UseTransactionProps) => {
-  const { navigate } = useNavigation()
-
   const getDefaultBook = useCallback(() => {
     if (booksList.length > 0) {
       return booksList.filter((bookElement) => bookElement.isDefault)[0]
@@ -53,7 +50,7 @@ export const useCreateTransaction = ({ booksList }: UseTransactionProps) => {
     const defaultBook = getDefaultBook()
     initialValues.bookId = defaultBook?.id || 0
     initialValues.currency = defaultBook?.currencySymbol || ''
-  }, [booksList, getDefaultBook, navigate])
+  }, [booksList, getDefaultBook])
 
   const submitHandler = ({
     date,
