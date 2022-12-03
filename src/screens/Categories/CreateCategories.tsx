@@ -10,7 +10,7 @@ import { EmojiPicker } from '../../components/molecules'
 import { CategoryEntity } from '../../db/entities/Category.entity'
 import { i18n } from '../../locales'
 import { setCategories as setCategoriesAction } from '../../redux/actions'
-import { useCreateCategories } from './useCreateCategories'
+import { useCreateCategory } from './useCreateCategory'
 
 export type CreateCategoryProps = {
   setCategories: (categories: CategoryEntity[]) => void
@@ -18,7 +18,7 @@ export type CreateCategoryProps = {
 
 const CreateCategories: FC<CreateCategoryProps> = ({ setCategories }) => {
   const { initialValues, isEditMode, categoriesValidationSchema, submitHandler } =
-    useCreateCategories({
+    useCreateCategory({
       setCategories,
     })
 
