@@ -8,15 +8,33 @@ export type ButtonProps = {
   style?: FlexStyle
   bottom?: boolean
   fullWidth?: boolean
+  doneButton?: boolean
+  disabled?: boolean
 } & TouchableOpacityProps
 
-export const Button: FC<ButtonProps> = ({ label, style, bottom, fullWidth, ...props }) => {
+export const Button: FC<ButtonProps> = ({
+  label,
+  style,
+  bottom,
+  fullWidth,
+  doneButton,
+  disabled,
+  ...props
+}) => {
   const { colors } = useTheme()
+
+  let bgColor = colors.secondaryForeground
+
+  if (doneButton && disabled) {
+    bgColor = colors.successDark
+  } else if (doneButton && !disabled) {
+    bgColor = colors.successLight
+  }
 
   return (
     <TouchableOpacity
       style={[
-        { ...styles.button, backgroundColor: colors.secondaryForeground },
+        { ...styles.button, backgroundColor: bgColor },
         bottom ? styles.bottom : {},
         fullWidth ? styles.fullWidth : {},
         style,

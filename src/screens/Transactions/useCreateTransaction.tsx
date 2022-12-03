@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from 'react'
+import * as yup from 'yup'
 
 import { TransactionType } from '../../types'
 import { getDatePickerFormattedDate } from '../../utils'
@@ -30,6 +31,15 @@ const initialValues: CreateTransactionValuesType = {
 }
 
 export type UseTransactionProps = Pick<CreateTransactionProps, 'booksList'>
+
+const transactionValidationSchema = yup.object().shape({
+  date: yup.date().required(),
+  bookId: yup.number().integer().required().min(1),
+  categoryId: yup.number().integer().required().min(1),
+  amount: yup.number().required(),
+  type: yup.number().integer().oneOf([1, 2]),
+  remarks: yup.string().optional(),
+})
 
 export const useCreateTransaction = ({ booksList }: UseTransactionProps) => {
   const getDefaultBook = useCallback(() => {
@@ -69,6 +79,7 @@ export const useCreateTransaction = ({ booksList }: UseTransactionProps) => {
 
   return {
     initialValues,
+    transactionValidationSchema,
     getBookById,
     submitHandler,
   }

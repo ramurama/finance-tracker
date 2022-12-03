@@ -3,9 +3,9 @@ import { Formik } from 'formik'
 import { FC, PropsWithChildren } from 'react'
 import { KeyboardAvoidingView, StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
-import * as yup from 'yup'
 
 import { Container } from '../../components'
+import { Button } from '../../components/atoms'
 import { DatePickerHeader, Selector } from '../../components/fragments'
 import { BookEntity } from '../../db/entities/Book.entity'
 import { CategoryEntity } from '../../db/entities/Category.entity'
@@ -20,9 +20,8 @@ export type CreateTransactionProps = {
 const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesList }) => {
   const { addListener } = useNavigation()
 
-  const transactionValidationSchema = yup.object().shape({})
-
-  const { initialValues, getBookById, submitHandler } = useCreateTransaction({ booksList })
+  const { initialValues, transactionValidationSchema, getBookById, submitHandler } =
+    useCreateTransaction({ booksList })
 
   const InnerContainer = (props: PropsWithChildren) => (
     <KeyboardAvoidingView style={styles.innerContainer} behavior="padding">
@@ -34,16 +33,37 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
     <View style={styles.contentContainer}>{props.children}</View>
   )
 
+  const trimAmount = (value: string, cb: (amount: string) => void) => {
+    // ! this logic is to ensure that there is only one decimal point at any time
+    if (value.indexOf('.') !== -1) {
+      const split = value.split('.')
+
+      if (split.length <= 2) {
+        cb(value)
+      }
+    } else if (value.indexOf(',') !== -1) {
+      const split = value.split(',')
+
+      if (split.length <= 2) {
+        cb(value)
+      }
+    } else {
+      cb(value)
+    }
+  }
+
   const CreateTransactionForm = () => (
     <Formik
       validationSchema={transactionValidationSchema}
       initialValues={initialValues}
       onSubmit={submitHandler}>
-      {({ setFieldValue, values, resetForm }) => {
+      {({ setFieldValue, values, resetForm, handleSubmit, isValid }) => {
         // reset form on user navigating to other screen
         addListener('focus', () => {
           resetForm()
         })
+
+        const isAmountExists = values.amount === '0' || values.amount === ''
 
         return (
           <>
@@ -73,22 +93,9 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
                   currency={values.currency}
                   amount={values.amount}
                   onChangeAmount={(value) => {
-                    // ! this logic is to ensure that there is only one decimal point at any time
-                    if (value.indexOf('.') !== -1) {
-                      const split = value.split('.')
-
-                      if (split.length <= 2) {
-                        setFieldValue('amount', value)
-                      }
-                    } else if (value.indexOf(',') !== -1) {
-                      const split = value.split(',')
-
-                      if (split.length <= 2) {
-                        setFieldValue('amount', value)
-                      }
-                    } else {
-                      setFieldValue('amount', value)
-                    }
+                    trimAmount(value, (amount) => {
+                      setFieldValue('amount', amount)
+                    })
                   }}
                   notes={values.remarks}
                   onChangeNotes={(value: string) => {
@@ -114,28 +121,15 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
                     setFieldValue('categoryId', id)
                   }}
                 />
+
+                <Button
+                  label="Done"
+                  onPress={handleSubmit}
+                  disabled={isAmountExists || !isValid}
+                  fullWidth
+                  doneButton
+                />
               </ContentContainer>
-
-              {/* <Keyboard
-                value={values.amount}
-                disabled={values.amount.length > 8}
-                onChange={(value) => {
-                  let valueToUpdate = value
-
-                  // ! if more than 2 digits present after the decimal place, trim digits
-                  if (value.indexOf('.') !== -1) {
-                    const split = value.split('.')
-                    const afterDecimal = split[1]!
-
-                    if (afterDecimal.length > 2) {
-                      valueToUpdate = split[0] + '.' + afterDecimal.substring(0, 2)
-                    }
-                  }
-
-                  setFieldValue('amount', valueToUpdate)
-                }}
-                onDone={handleSubmit}
-              /> */}
             </InnerContainer>
           </>
         )
