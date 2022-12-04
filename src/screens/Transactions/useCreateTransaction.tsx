@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 import * as yup from 'yup'
 
 import { TransactionType } from '../../types'
-import { getDatePickerFormattedDate } from '../../utils'
+import { formatNumberForDb, getDatePickerFormattedDate } from '../../utils'
 import { CreateTransactionProps } from './CreateTransaction'
 
 export type CreateTransactionValuesType = {
@@ -37,7 +37,10 @@ const transactionValidationSchema = yup.object().shape({
   date: yup.date().required(),
   bookId: yup.number().integer().required().min(1),
   categoryId: yup.number().integer().required().min(1),
-  amount: yup.number().required(),
+  amount: yup
+    .string()
+    .required()
+    .test('', '', (value) => (value ? formatNumberForDb(value) > 0 : false)),
   type: yup.number().integer().oneOf([1, 2]),
   remarks: yup.string().optional(),
 })
@@ -77,7 +80,7 @@ export const useCreateTransaction = ({ booksList }: UseTransactionProps) => {
     categoryId,
     remarks,
   }: CreateTransactionValuesType) => {
-    console.log(date, amount, bookId, type)
+    console.log(date, formatNumberForDb(amount), bookId, type)
     console.log(categoryId)
     console.log(remarks)
 
