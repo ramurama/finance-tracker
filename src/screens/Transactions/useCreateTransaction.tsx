@@ -1,4 +1,5 @@
-import { useCallback, useEffect } from 'react'
+import { useNavigation } from '@react-navigation/core'
+import { useCallback, useEffect, useState } from 'react'
 import * as yup from 'yup'
 
 import { TransactionType } from '../../types'
@@ -42,6 +43,12 @@ const transactionValidationSchema = yup.object().shape({
 })
 
 export const useCreateTransaction = ({ booksList }: UseTransactionProps) => {
+  const [showDone, setShowDone] = useState<boolean>(false)
+  const { goBack } = useNavigation()
+
+  const showDoneFeedback = () => setShowDone(true)
+  const resetDoneFeedback = () => setShowDone(false)
+
   const getDefaultBook = useCallback(() => {
     if (booksList.length > 0) {
       return booksList.filter((bookElement) => bookElement.isDefault)[0]
@@ -75,6 +82,8 @@ export const useCreateTransaction = ({ booksList }: UseTransactionProps) => {
     console.log(remarks)
 
     // TODO: validate and submit data
+
+    showDoneFeedback()
   }
 
   return {
@@ -82,5 +91,8 @@ export const useCreateTransaction = ({ booksList }: UseTransactionProps) => {
     transactionValidationSchema,
     getBookById,
     submitHandler,
+    showDone,
+    goBack,
+    resetDoneFeedback,
   }
 }

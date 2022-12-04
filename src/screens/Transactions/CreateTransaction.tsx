@@ -10,6 +10,7 @@ import { DatePickerHeader, Selector } from '../../components/fragments'
 import { BookEntity } from '../../db/entities/Book.entity'
 import { CategoryEntity } from '../../db/entities/Category.entity'
 import { NoBooks, TransactionMainInputs } from './components'
+import { FeedbackAnimated } from './components/FeedbackAnimated'
 import { useCreateTransaction } from './useCreateTransaction'
 
 export type CreateTransactionProps = {
@@ -20,8 +21,15 @@ export type CreateTransactionProps = {
 const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesList }) => {
   const { addListener } = useNavigation()
 
-  const { initialValues, transactionValidationSchema, getBookById, submitHandler } =
-    useCreateTransaction({ booksList })
+  const {
+    initialValues,
+    transactionValidationSchema,
+    getBookById,
+    submitHandler,
+    showDone,
+    goBack,
+    resetDoneFeedback,
+  } = useCreateTransaction({ booksList })
 
   const InnerContainer = (props: PropsWithChildren) => (
     <KeyboardAvoidingView style={styles.innerContainer} behavior="padding">
@@ -61,6 +69,7 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
         // reset form on user navigating to other screen
         addListener('focus', () => {
           resetForm()
+          resetDoneFeedback()
         })
 
         const isAmountExists = values.amount === '0' || values.amount === ''
@@ -139,7 +148,11 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
 
   return (
     <Container noDismissKeyboard>
-      {booksList.length > 0 && <CreateTransactionForm />}
+      {showDone ? (
+        <FeedbackAnimated onFeedbackEnd={goBack} />
+      ) : (
+        booksList.length > 0 && <CreateTransactionForm />
+      )}
       {booksList.length === 0 && <NoBooks />}
     </Container>
   )
