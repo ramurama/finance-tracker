@@ -32,6 +32,7 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
     resetDoneFeedback,
   } = useCreateTransaction({ booksList })
 
+  // TODO: keyboard avoiding view should be fixed in Android
   const InnerContainer = (props: PropsWithChildren) => (
     <KeyboardAvoidingView style={styles.innerContainer} behavior="padding">
       {props.children}
@@ -56,6 +57,8 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
 
         const isAmountExists = values.amount === '0' || values.amount === ''
 
+        // TODO: Date picker should be fixed for both Android and iOS
+        // TODO: Amount input should be fixed for Android - both . and , present in German mode
         return (
           <>
             <DatePickerHeader
