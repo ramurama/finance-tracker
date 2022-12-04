@@ -1,43 +1,18 @@
 import { useNavigation } from '@react-navigation/core'
 import { Formik } from 'formik'
-import { FC, PropsWithChildren, useCallback, useEffect } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { FC, PropsWithChildren } from 'react'
+import { KeyboardAvoidingView, StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
-import * as yup from 'yup'
 
 import { Container } from '../../components'
+import { Button } from '../../components/atoms'
 import { DatePickerHeader, Selector } from '../../components/fragments'
 import { BookEntity } from '../../db/entities/Book.entity'
 import { CategoryEntity } from '../../db/entities/Category.entity'
-import { TransactionType } from '../../types'
-import { getDatePickerFormattedDate } from '../../utils'
-import { AmountInput, Keyboard, NoBooks, TypeSelector } from './components'
-import { NotesInput } from './components/NotesInput'
-
-type ValuesType = {
-  date: string
-  datePickerVisible: boolean
-  bookId: number
-  categoryId: number
-  currency: string
-  amount: string
-  type: TransactionType
-  remarks: string
-}
-
-// TODO: one default category for expense should be added during app init (id 1)
-// TODO: one default category for income should be added during app init (id 2)
-
-const initialValues: ValuesType = {
-  date: getDatePickerFormattedDate(new Date()),
-  datePickerVisible: false,
-  bookId: 0, // ! bookId should not be 0 after loading
-  categoryId: 1, // ! category id 1 is default expense
-  currency: '',
-  amount: '0',
-  type: 1,
-  remarks: '',
-}
+import { NoBooks, TransactionMainInputs } from './components'
+import { FeedbackAnimated } from './components/FeedbackAnimated'
+import { trimAmount } from './createTransactions.helpers'
+import { useCreateTransaction } from './useCreateTransaction'
 
 export type CreateTransactionProps = {
   booksList: BookEntity[]
@@ -45,50 +20,26 @@ export type CreateTransactionProps = {
 }
 
 const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesList }) => {
-  const { addListener, navigate } = useNavigation()
+  const { addListener } = useNavigation()
 
-  const transactionValidationSchema = yup.object().shape({})
-
-  const getDefaultBook = useCallback(() => {
-    if (booksList.length > 0) {
-      return booksList.filter((bookElement) => bookElement.isDefault)[0]
-    }
-
-    return
-  }, [booksList])
-
-  const getBookById = useCallback(
-    (id: number) => booksList.filter((item) => item.id === id)[0],
-    [booksList],
-  )
-
-  // ! update bookId on load
-  useEffect(() => {
-    const defaultBook = getDefaultBook()
-    initialValues.bookId = defaultBook?.id || 0
-    initialValues.currency = defaultBook?.currencySymbol || ''
-  }, [booksList, getDefaultBook, navigate])
-
-  useEffect(() => {}, [])
-
-  const submitHandler = ({ date, amount, bookId, type, categoryId, remarks }: ValuesType) => {
-    console.log(date, amount, bookId, type)
-    console.log(categoryId)
-    console.log(remarks)
-
-    // TODO: validate and submit data
-  }
+  const {
+    initialValues,
+    transactionValidationSchema,
+    getBookById,
+    submitHandler,
+    showDone,
+    goBack,
+    resetDoneFeedback,
+  } = useCreateTransaction({ booksList })
 
   const InnerContainer = (props: PropsWithChildren) => (
-    <View style={styles.innerContainer}>{props.children}</View>
+    <KeyboardAvoidingView style={styles.innerContainer} behavior="padding">
+      {props.children}
+    </KeyboardAvoidingView>
   )
 
   const ContentContainer = (props: PropsWithChildren) => (
     <View style={styles.contentContainer}>{props.children}</View>
-  )
-
-  const InputContainer = (props: PropsWithChildren) => (
-    <View style={styles.inputContainer}>{props.children}</View>
   )
 
   const CreateTransactionForm = () => (
@@ -96,11 +47,14 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
       validationSchema={transactionValidationSchema}
       initialValues={initialValues}
       onSubmit={submitHandler}>
-      {({ setFieldValue, values, resetForm, handleSubmit }) => {
+      {({ setFieldValue, values, resetForm, handleSubmit, isValid }) => {
         // reset form on user navigating to other screen
         addListener('focus', () => {
           resetForm()
+          resetDoneFeedback()
         })
+
+        const isAmountExists = values.amount === '0' || values.amount === ''
 
         return (
           <>
@@ -126,43 +80,30 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
                   }}
                 />
 
-                <InputContainer>
-                  <AmountInput
-                    value={values.amount}
-                    currency={values.currency}
-                    onBackspace={() => {
-                      const value = values.amount
-                      let newValue = value.substring(0, value.length - 1)
+                <TransactionMainInputs
+                  currency={values.currency}
+                  amount={values.amount}
+                  onChangeAmount={(value) => {
+                    trimAmount(value, (amount) => {
+                      setFieldValue('amount', amount)
+                    })
+                  }}
+                  notes={values.remarks}
+                  onChangeNotes={(value: string) => {
+                    setFieldValue('remarks', value)
+                  }}
+                  type={values.type}
+                  onChangeType={(value) => {
+                    setFieldValue('type', value)
 
-                      if (newValue === '') {
-                        newValue = '0'
-                      }
+                    // ! type is reset, therefore set the category to default one of the selected type
+                    const filteredCategories = categoriesList
+                      .filter((category) => category.type === value)
+                      .sort((a, b) => a.id - b.id)
 
-                      setFieldValue('amount', newValue)
-                    }}
-                  />
-
-                  <TypeSelector
-                    value={values.type}
-                    onChange={(value) => {
-                      setFieldValue('type', value)
-
-                      // ! type is reset, therefore set the category to default one of the selected type
-                      const filteredCategories = categoriesList
-                        .filter((category) => category.type === value)
-                        .sort((a, b) => a.id - b.id)
-
-                      setFieldValue('categoryId', filteredCategories[0]!.id)
-                    }}
-                  />
-
-                  <NotesInput
-                    value={values.remarks}
-                    onChange={(value) => {
-                      setFieldValue('remarks', value)
-                    }}
-                  />
-                </InputContainer>
+                    setFieldValue('categoryId', filteredCategories[0]!.id)
+                  }}
+                />
 
                 <Selector
                   list={categoriesList.filter((item) => item.type === values.type)}
@@ -171,27 +112,15 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
                     setFieldValue('categoryId', id)
                   }}
                 />
+
+                <Button
+                  label="Done"
+                  onPress={handleSubmit}
+                  disabled={isAmountExists || !isValid}
+                  fullWidth
+                  doneButton
+                />
               </ContentContainer>
-
-              <Keyboard
-                value={values.amount}
-                onChange={(value) => {
-                  let valueToUpdate = value
-
-                  // ! if more than 2 digits present after the decimal place, trim digits
-                  if (value.indexOf('.') !== -1) {
-                    const split = value.split('.')
-                    const afterDecimal = split[1]!
-
-                    if (afterDecimal.length > 2) {
-                      valueToUpdate = split[0] + '.' + afterDecimal.substring(0, 2)
-                    }
-                  }
-
-                  setFieldValue('amount', valueToUpdate)
-                }}
-                onDone={handleSubmit}
-              />
             </InnerContainer>
           </>
         )
@@ -200,8 +129,12 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
   )
 
   return (
-    <Container>
-      {booksList.length > 0 && <CreateTransactionForm />}
+    <Container noDismissKeyboard>
+      {showDone ? (
+        <FeedbackAnimated onFeedbackEnd={goBack} />
+      ) : (
+        booksList.length > 0 && <CreateTransactionForm />
+      )}
       {booksList.length === 0 && <NoBooks />}
     </Container>
   )
@@ -226,10 +159,5 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 2,
     flexDirection: 'column',
-  },
-  inputContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
   },
 })

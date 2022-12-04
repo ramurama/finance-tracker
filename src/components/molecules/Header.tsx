@@ -11,6 +11,7 @@ export type HeaderProps = {
   backButton?: boolean
   closeButton?: boolean
   onClose?: () => void
+  moreMargin?: boolean
 } & Partial<PropsWithChildren>
 
 export const Header: FC<HeaderProps> = ({
@@ -19,6 +20,7 @@ export const Header: FC<HeaderProps> = ({
   backButton,
   closeButton,
   onClose,
+  moreMargin,
   children,
 }) => {
   const { colors } = useTheme()
@@ -55,7 +57,11 @@ export const Header: FC<HeaderProps> = ({
   const RightIcon = () => <View style={styles.iconContainer}>{iconRight}</View>
 
   return (
-    <View style={{ ...styles.headerContainer, backgroundColor: colors.background }}>
+    <View
+      style={[
+        { ...styles.headerContainer, backgroundColor: colors.background },
+        moreMargin ? styles.headerMargin : {},
+      ]}>
       {(backButton || closeButton) && <LeftActionButton />}
       {title && !children && <Title />}
       {!title && children && <>{children}</>}
@@ -70,6 +76,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 5,
+  },
+  headerMargin: {
+    marginBottom: 15,
   },
   titleView: {
     flex: 1,

@@ -13,6 +13,7 @@ export type ColorType = {
   inputFieldBgColor: string
   successLight: string
   successDark: string
+  white: string
 }
 
 export const lightColors: ColorType = {
@@ -30,6 +31,7 @@ export const lightColors: ColorType = {
   grey: '#bdbdbd',
   successLight: '#5aad39',
   successDark: '#5a7350',
+  white: '#ffffff',
 } as const
 
 export const darkColors: ColorType = {
@@ -47,4 +49,5 @@ export const darkColors: ColorType = {
   grey: '#616161',
   successLight: '#5aad39',
   successDark: '#2e591d',
+  white: '#ffffff',
 } as const

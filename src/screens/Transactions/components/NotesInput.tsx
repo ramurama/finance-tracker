@@ -10,7 +10,7 @@ export type NotesInputProps = {
 }
 
 export const NotesInput = ({ value, onChange }: NotesInputProps) => {
-  const { colors } = useTheme()
+  const { colors, isDark } = useTheme()
 
   return (
     <View style={{ ...styles.container, borderColor: colors.borderColor }}>
@@ -29,7 +29,9 @@ export const NotesInput = ({ value, onChange }: NotesInputProps) => {
         autoComplete="off"
         value={value}
         onChangeText={onChange}
+        keyboardAppearance={isDark ? 'dark' : 'light'}
         maxLength={30}
+        // autoFocus
       />
     </View>
   )
@@ -38,7 +40,7 @@ export const NotesInput = ({ value, onChange }: NotesInputProps) => {
 const styles = StyleSheet.create({
   textInput: {
     height: 35,
-    fontSize: 13,
+    fontSize: 15,
     padding: 4,
     borderWidth: 0,
     borderRadius: 10,

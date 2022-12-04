@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1.2,
+    flex: 1,
     flexDirection: 'row',
     marginRight: 10,
     marginLeft: 10,
@@ -15,8 +15,8 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
-    margin: 6,
+    borderRadius: 8,
+    margin: 3,
   },
   buttonKeyText: {
     fontSize: 25,

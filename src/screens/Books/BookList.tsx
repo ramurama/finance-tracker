@@ -1,18 +1,15 @@
-import { useActionSheet } from '@expo/react-native-action-sheet'
-import { useNavigation } from '@react-navigation/core'
-import { FC, useCallback, useEffect } from 'react'
-import { Alert, FlatList } from 'react-native'
+import { FC } from 'react'
+import { FlatList } from 'react-native'
 import { connect } from 'react-redux'
 
 import { Container } from '../../components'
 import { HeaderAddButton } from '../../components/atoms'
 import { Header } from '../../components/molecules'
 import { BookEntity } from '../../db/entities/Book.entity'
-import { useDB } from '../../db/useDB'
 import { i18n } from '../../locales'
-import { routes } from '../../navigation/routes'
 import { setBooks as setBooksAction } from '../../redux/actions'
 import { BookItem, EmptyBooks } from './components'
+import { useBookList } from './useBookList'
 
 export type BooksListProps = {
   books: BookEntity[]
@@ -20,83 +17,7 @@ export type BooksListProps = {
 }
 
 const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
-  const { navigate } = useNavigation()
-  const { bookService } = useDB()
-  const { showActionSheetWithOptions } = useActionSheet()
-
-  const loadBooks = useCallback(async () => {
-    setBooks(await bookService.getBooks())
-  }, [bookService, setBooks])
-
-  useEffect(() => {
-    loadBooks()
-  }, [loadBooks])
-
-  const deleteBook = (bookId: number) => {
-    Alert.alert(i18n.t('common.caution'), i18n.t('books.deleteBookConfirmation'), [
-      {
-        text: i18n.t('common.yes'),
-        onPress: async () => {
-          await bookService.deleteBook(bookId)
-          await loadBooks()
-        },
-      },
-      {
-        text: i18n.t('common.no'),
-      },
-    ])
-  }
-
-  const makeBookDefault = async (bookId: number) => {
-    await bookService.makeBookDefault(bookId)
-    await loadBooks()
-  }
-
-  const goToEditMode = (book: BookEntity) => {
-    navigate(routes.CREATE_BOOK, {
-      book: {
-        id: book.id,
-        name: book.name,
-        currencyCode: book.currencyCode,
-        currencySymbol: book.currencySymbol,
-        isDefault: Boolean(book.isDefault),
-      },
-    })
-  }
-
-  const longPressHandler = (book: BookEntity) => {
-    const options = [
-      i18n.t('common.delete'),
-      i18n.t('common.edit'),
-      i18n.t('books.defaultBook'),
-      i18n.t('common.cancel'),
-    ]
-    const destructiveButtonIndex = 0
-    const cancelButtonIndex = 3
-    const disabledButtonIndices = book.isDefault ? [0] : []
-
-    showActionSheetWithOptions(
-      { options, cancelButtonIndex, destructiveButtonIndex, disabledButtonIndices },
-      async (selectedIndex?: number) => {
-        switch (selectedIndex) {
-          case 1:
-            goToEditMode(book)
-            break
-
-          case 2:
-            await makeBookDefault(book.id)
-            break
-
-          case destructiveButtonIndex:
-            await deleteBook(book.id)
-            break
-
-          default:
-            break
-        }
-      },
-    )
-  }
+  const { longPressHandler, goToCreateMode } = useBookList({ setBooks })
 
   const Books = () => (
     <FlatList
@@ -117,13 +38,7 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
     />
   )
 
-  const AddBook = () => (
-    <HeaderAddButton
-      onPress={() => {
-        navigate(routes.CREATE_BOOK)
-      }}
-    />
-  )
+  const AddBook = () => <HeaderAddButton onPress={goToCreateMode} />
 
   return (
     <Container>

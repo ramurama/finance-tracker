@@ -9,14 +9,17 @@ import {
 
 import { useTheme } from '../theme'
 
-export type ContainerProps = PropsWithChildren & { modal?: boolean }
+export type ContainerProps = PropsWithChildren & {
+  modal?: boolean
+  noDismissKeyboard?: boolean
+}
 
-export const Container: FC<ContainerProps> = ({ children, modal }) => {
+export const Container: FC<ContainerProps> = ({ children, modal, noDismissKeyboard }) => {
   const { colors } = useTheme()
 
   return (
     <TouchableWithoutFeedback
-      onPress={Keyboard.dismiss}
+      onPress={noDismissKeyboard ? undefined : Keyboard.dismiss}
       style={{ backgroundColor: colors.background }}>
       <SafeAreaView
         style={[
