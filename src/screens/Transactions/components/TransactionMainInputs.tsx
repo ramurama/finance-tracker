@@ -33,6 +33,7 @@ export const TransactionMainInputs = ({
     </View>
   )
 
+  // TODO: auto focus bug in amount input
   return (
     <View style={styles.inputContainer}>
       <View style={{ ...styles.container }}>
