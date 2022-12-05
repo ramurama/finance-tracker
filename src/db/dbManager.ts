@@ -43,3 +43,5 @@ export function getDataSource() {
 
   return null
 }
+
+// TODO: create categories with their names internationalized and save it to the database

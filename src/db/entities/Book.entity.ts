@@ -2,6 +2,8 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateCol
 
 import { TABLE_NAMES } from '../tableNames'
 
+// TODO: add balance field to the book
+
 @Entity(TABLE_NAMES.BOOKS)
 export class BookEntity {
   @PrimaryGeneratedColumn('increment')

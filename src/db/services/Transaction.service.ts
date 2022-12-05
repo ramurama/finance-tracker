@@ -34,6 +34,8 @@ export class TransactionService {
 
     const { id } = await this.repository.save(transaction)
 
+    // TODO: update the balance field in the book by adding this transaction value
+
     return this.getTransactionById(id)
   }
 
@@ -61,6 +63,8 @@ export class TransactionService {
     }
 
     const { id } = await this.repository.save(transaction)
+
+    // TODO: update the balance field in the book by subtracting the old transaction value and adding the new transaction value
 
     return this.getTransactionById(id)
   }
@@ -202,6 +206,8 @@ export class TransactionService {
   }
 
   async deleteTransactionsByBook(bookId: number) {
+    // TODO: subtract the transaction value from the book
+
     return await this.repository
       .createQueryBuilder()
       .delete()
@@ -211,6 +217,8 @@ export class TransactionService {
   }
 
   async deleteTransactionsByCategory(categoryId: number) {
+    // TODO: subtract the transaction value from the book
+
     return await this.repository
       .createQueryBuilder()
       .delete()
