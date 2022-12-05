@@ -15,6 +15,7 @@ export type CurrencyPickerProps = {
 export const CurrencyPicker: FC<CurrencyPickerProps> = ({ value, onChange, disabled = false }) => {
   const { colors } = useTheme()
 
+  // TODO: currency picker should be checked for Android as the text color is displayed in white and cannot be seen
   return (
     <View style={styles.container}>
       <Label label="Currency" />
