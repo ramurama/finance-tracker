@@ -9,6 +9,7 @@ import { Button } from '../../components/atoms'
 import { DatePickerHeader, Selector } from '../../components/fragments'
 import { BookEntity } from '../../db/entities/Book.entity'
 import { CategoryEntity } from '../../db/entities/Category.entity'
+import { i18n } from '../../locales'
 import { NoBooks, TransactionMainInputs } from './components'
 import { FeedbackAnimated } from './components/FeedbackAnimated'
 import { trimAmount } from './createTransactions.helpers'
@@ -117,7 +118,7 @@ const CreateTransaction: FC<CreateTransactionProps> = ({ booksList, categoriesLi
                 />
 
                 <Button
-                  label="Done"
+                  label={i18n.t('common.done')}
                   onPress={handleSubmit}
                   disabled={isAmountExists || !isValid}
                   fullWidth
