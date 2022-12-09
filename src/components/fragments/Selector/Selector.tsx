@@ -34,6 +34,7 @@ export const Selector = <T extends BookEntity | CategoryEntity>(props: SelectorP
           />
         )}
         horizontal
+        keyboardShouldPersistTaps="always"
       />
     </View>
   )
