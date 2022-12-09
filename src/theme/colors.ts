@@ -35,7 +35,7 @@ export const lightColors: ColorType = {
 } as const
 
 export const darkColors: ColorType = {
-  background: '#1b1b1b',
+  background: '#000000',
   secondaryBackground: '#424242',
   buttonBg: '#2f2f2f',
   foreground: '#ffffff',
