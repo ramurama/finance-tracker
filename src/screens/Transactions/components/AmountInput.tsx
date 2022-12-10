@@ -22,6 +22,8 @@ export const AmountInput = ({ value, onChange }: AmountInputProps) => {
         spellCheck={false}
         autoCapitalize="none"
         maxLength={9}
+        pointerEvents="box-only"
+        caretHidden
         autoFocus
       />
     </View>
