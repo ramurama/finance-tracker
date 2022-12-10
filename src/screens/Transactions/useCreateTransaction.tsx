@@ -40,7 +40,7 @@ const transactionValidationSchema = yup.object().shape({
   amount: yup
     .string()
     .required()
-    .test('', '', (value) => (value ? formatNumberForDb(value) > 0 : false)),
+    .test('', '', (value) => !!value && formatNumberForDb(value) > 0),
   type: yup.number().integer().oneOf([1, 2]),
   remarks: yup.string().optional(),
 })
