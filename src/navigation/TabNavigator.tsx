@@ -33,6 +33,8 @@ export const TabNavigator = () => {
           tabBarIcon: ({ focused }) => {
             const iconColor = focused ? colors.tabIconActiveColor : colors.tabIconInactiveColor
 
+            // TODO: replace books nav by home nav
+            // TODO: replace settings nav by budget nav
             return {
               [routes.BOOKS_NAV]: (
                 <MaterialCommunityIcons name="bookshelf" size={iconSize} color={iconColor} />

@@ -19,6 +19,7 @@ export type BooksListProps = {
 const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
   const { longPressHandler, goToCreateMode } = useBookList({ setBooks })
 
+  // TODO: change book listing design
   const Books = () => (
     <FlatList
       data={books}
