@@ -35,6 +35,7 @@ const CategoriesList: FC<CategoriesListProps> = ({ categories, setCategories }) 
       data={categories.filter((item) => item.type === activeType)}
       extraData={categories}
       ListEmptyComponent={<EmptyCategories activeType={activeType} />}
+      keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
         <CategoryItem
           name={item.name}

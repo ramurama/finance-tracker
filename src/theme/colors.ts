@@ -14,6 +14,7 @@ export type ColorType = {
   successLight: string
   successDark: string
   white: string
+  tile: string
 }
 
 export const lightColors: ColorType = {
@@ -32,6 +33,7 @@ export const lightColors: ColorType = {
   successLight: '#5aad39',
   successDark: '#5a7350',
   white: '#ffffff',
+  tile: '#efefef',
 } as const
 
 export const darkColors: ColorType = {
@@ -50,4 +52,5 @@ export const darkColors: ColorType = {
   successLight: '#5aad39',
   successDark: '#2e591d',
   white: '#ffffff',
+  tile: '#0c0c0c',
 } as const

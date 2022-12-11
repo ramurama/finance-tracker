@@ -1,4 +1,6 @@
 export const routes = {
+  HOME_NAV: 'Home Nav',
+  HOME: 'Home',
   BOOKS_NAV: 'Books',
   BOOKS_LIST: 'Books List',
   REPORTS: 'Reports',

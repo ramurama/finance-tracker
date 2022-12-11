@@ -1,13 +1,13 @@
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
+import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import { Reports } from '../screens/Reports'
 import CreateTransactions from '../screens/Transactions/CreateTransaction'
 import { useTheme } from '../theme'
-import { BooksNavigator } from './BooksNavigator'
 import { CategoriesNavigator } from './CategoriesNavigator'
 import { AddLogTabButton } from './components/AddLogTabButton'
+import { HomeNavigator } from './HomeNavigator'
 import { routes } from './routes'
 import { SettingsNavigator } from './SettingsNavigator'
 
@@ -16,7 +16,7 @@ const Tab = createBottomTabNavigator()
 const iconSize = 30
 
 const tabBarShownRoutes = [
-  routes.BOOKS_NAV,
+  routes.HOME_NAV,
   routes.REPORTS,
   routes.CATEGORIES_NAV,
   routes.SETTINGS_NAV,
@@ -36,9 +36,7 @@ export const TabNavigator = () => {
             // TODO: replace books nav by home nav
             // TODO: replace settings nav by budget nav
             return {
-              [routes.BOOKS_NAV]: (
-                <MaterialCommunityIcons name="bookshelf" size={iconSize} color={iconColor} />
-              ),
+              [routes.HOME_NAV]: <Ionicons name="home" size={iconSize - 4} color={iconColor} />,
               [routes.REPORTS]: (
                 <MaterialIcons name="insert-chart" size={iconSize} color={iconColor} />
               ),
@@ -71,7 +69,7 @@ export const TabNavigator = () => {
           },
         }
       }}>
-      <Tab.Screen name={routes.BOOKS_NAV} component={BooksNavigator} />
+      <Tab.Screen name={routes.HOME_NAV} component={HomeNavigator} />
       <Tab.Screen name={routes.REPORTS} component={Reports} />
       <Tab.Screen name={routes.CREATE_TRANSACTION} component={CreateTransactions} />
       <Tab.Screen name={routes.CATEGORIES_NAV} component={CategoriesNavigator} />

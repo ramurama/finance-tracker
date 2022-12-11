@@ -37,6 +37,7 @@ const CreateBook: FC<CreateBookProps> = ({ books, setBooks }) => {
             onChangeText={handleChange('bookName')}
             keyboardType="default"
             autoCapitalize="words"
+            maxLength={20}
           />
 
           <BookEmojiPicker

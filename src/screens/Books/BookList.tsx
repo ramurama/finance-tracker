@@ -25,6 +25,7 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
       data={books}
       extraData={books}
       ListEmptyComponent={<EmptyBooks />}
+      keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
         <BookItem
           key={item.id}
@@ -43,7 +44,7 @@ const BookList: FC<BooksListProps> = ({ books, setBooks }) => {
 
   return (
     <Container>
-      <Header title={i18n.t('books.books')} iconRight={<AddBook />} />
+      <Header title={i18n.t('books.books')} iconRight={<AddBook />} backButton />
       <Books />
     </Container>
   )
